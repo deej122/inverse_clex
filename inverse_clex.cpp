@@ -16,13 +16,20 @@ vector< vector<int> > generate_matrix(int N)
 	vector<int> row (N, 0);
 	vector< vector<int> > random_matrix (N, row);
 
+	srand(time(NULL));
 	for (i=0; i<N-1; i++)
 	{
 		for (j=0; j<N-1; j++)
 		{
-
+			random_matrix.at(i).at(j) = rand()%2;		
+			if (random_matrix.at(i).at(j) == 0)
+			{
+				random_matrix.at(i).at(j) = -1;
+			}	
 		}
 	}
+	return random_matrix;
+
 }
 
 //Function to create vector of correlation values
