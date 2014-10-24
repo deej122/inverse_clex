@@ -12,6 +12,17 @@ vector<double> ECI;
 vector< vector<int> > generate_matrix(int N)
 {
 	//should generate an NxN 2D vector
+	int i,j;
+	vector<int> row (N, 0);
+	vector< vector<int> > random_matrix (N, row);
+
+	for (i=0; i<N-1; i++)
+	{
+		for (j=0; j<N-1; j++)
+		{
+
+		}
+	}
 }
 
 //Function to create vector of correlation values
@@ -38,7 +49,7 @@ double calc_corr_1NN(vector< vector<int> > matrix)
 			//multiply site basis function’s of each atom with atom above (if on top row, assumes periodicity) and adds to 1NN correlation matrix
 			if (i-1<0)
 			{
-				corr_1NN_matrix.at(i).at(j) =+ matrix.at(i).at(j)*matrix.at(matrix.size()-1).at(j);
+				corr_1NN_matrix.at(i).at(j) += matrix.at(i).at(j)*matrix.at(matrix.size()-1).at(j);
 			}
 			else
 			{
@@ -48,7 +59,7 @@ double calc_corr_1NN(vector< vector<int> > matrix)
 			//multiply site basis function’s of each atom with atom to the left (if on first column, assumes periodicity) and adds to 1NN correlation matrix
 			if (i-1<0)
 			{
-				corr_1NN_matrix.at(i).at(j) =+ matrix.at(i).at(j)*matrix.at(i).at(matrix.size()-1);
+				corr_1NN_matrix.at(i).at(j) += matrix.at(i).at(j)*matrix.at(i).at(matrix.size()-1);
 			}
 			else
 			{
@@ -62,7 +73,7 @@ double calc_corr_1NN(vector< vector<int> > matrix)
 	{
 		for (j=0; j<matrix.size()-1; j++)
 		{
-			sum_corr_1NN =+ corr_1NN_matrix.at(i).at(j);
+			sum_corr_1NN += corr_1NN_matrix.at(i).at(j);
 		}
 	}
 	
