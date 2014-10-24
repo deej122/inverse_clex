@@ -12,12 +12,6 @@ vector< vector<int> > generate_matrix(int N)
 	//should generate an NxN 2D vector
 }
 
-//Function to create vector of correlation values
-vector<double> calc_corr(vector< vector<int> > matrix)
-{
-	//produces vector of correlation values to be used in final calculation?
-}
-
 //Functions to calculate correlation values and generate sum
 double calc_corr_1NN(vector< vector<int> > matrix)
 {
@@ -32,6 +26,12 @@ double calc_corr_2NN(vector< vector<int> > matrix)
 double calc_corr_3NN(vector< vector<int> > matrix)
 {
 	//calculates 3rd Neighbor correlation values
+}
+
+//Function to create vector of correlation values
+vector<double> calc_corr(vector< vector<int> > matrix)
+{
+	//produces vector of correlation values to be used in final calculation?
 }
 
 //Function to create vector of correlation values on atom change
@@ -55,6 +55,7 @@ double calc_delta_corr_3NN(vector< vector<int> > matrix, int row, int col, int s
 {
 	//calculates new 3rd Neighbor correlation values
 }
+
 
 //Function to calculate energy of the system using a simple dot product of our ECI vector and our vector of correlation values
 double dot(vector<double> vector1, vector<double> vector2)
