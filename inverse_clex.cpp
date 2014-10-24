@@ -125,6 +125,18 @@ double dot(vector<double> vector1, vector<double> vector2)
 {
 	//dot product of corresponding ECI and correlation values
 	//ECI = vector1, correlation values = vector2
+	int count;
+	double dot=0;
+	if (vector1.size() != vector2.size() )
+	{
+		cout << "ECI vector and corelation values vector are not the same size" << endl;
+	}
+	for (count=0; count<vector1.size(); count++)
+	{
+		dot += vector1.at(count)*vector2.at(count);
+	}
+	return dot;
+
 }
 
 //MAIN
