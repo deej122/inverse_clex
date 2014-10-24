@@ -37,14 +37,30 @@ vector< vector<int> > generate_matrix(int N)
 			}	
 		}
 	}
-	return random_matrix;
 
+	//print random matrix to screen (comment out later)
+	cout << "Random square matrix:" << endl;
+	for (i=0; i<N; i++)
+	{
+		for (j=0; j<N; j++)
+		{
+			cout << random_matrix.at(i).at(j) << "  ";
+		}
+		cout << endl;
+	}
+
+	return random_matrix;
 }
 
 //Function to create vector of correlation values
 vector<double> calc_corr(vector< vector<int> > matrix)
 {
 	//produces vector of correlation values to be used in final calculation?
+	vector<double> corr_vec (3);
+	corr_vec.at(0) = calc_corr_1NN(matrix);
+	corr_vec.at(1) = calc_corr_2NN(matrix);
+	corr_vec.at(2) = calc_corr_2NN(matrix);
+	return corr_vec;
 }
 
 //Functions to calculate correlation values and generate sum
@@ -83,7 +99,7 @@ double calc_corr_1NN(vector< vector<int> > matrix)
 			}
 		}
 	} 
-	
+
 	//sums all the 1NN correlation values
 	for (i=0; i<matrix.size(); i++)
 	{
@@ -92,6 +108,18 @@ double calc_corr_1NN(vector< vector<int> > matrix)
 			sum_corr_1NN += corr_1NN_matrix.at(i).at(j);
 		}
 	}
+
+//print corr values for each site and sum 1NN corr values (comment out later)
+	cout << "The 1NN correlation values for each site: " << endl;
+	for (i=0; i<matrix.size(); i++)
+	{
+		for (j=0; j<matrix.size(); j++)
+		{
+			cout << corr_1NN_matrix.at(i).at(j) << "  ";
+		}
+		cout << endl;
+	}
+	cout << "The total 1NN correlation value is " << sum_corr_1NN << endl;
 	
 	return sum_corr_1NN;
 }
@@ -177,7 +205,13 @@ int main()
 		 << "Please enter value of the 3NN ECI: ";
 	cin >> ECI_3;
 	cout << endl;
+
 	//initialie the ECI vector
 	vector<double> ECI_vec = ECI_vec (ECI_1, ECI_2, ECI_3);
+	//generate the NxN matrix
+	vector< vector<int> > random_matrix;
+	random_matrix = generate_matrix (N);
+
+
 	return 0;
 }
