@@ -7,7 +7,15 @@
 using namespace std;
 
 //Initialize our ECI vector
-vector<double> ECI;
+// why can't we do this in main?
+vector<double> ECI_vec (double ECI_1, double ECI_2, double ECI_3)
+{
+	vector<double> ECI_vec (3);
+	ECI_vec.at(0) = ECI_1;
+	ECI_vec.at(1) = ECI_2;
+	ECI_vec.at(2) = ECI_3;
+	return ECI_vec;
+}
 
 //Function to generate an NxN matrix
 vector< vector<int> > generate_matrix(int N)
@@ -154,5 +162,22 @@ int main()
 {
 	//should prompt user for:
 	//1. an N value (size of matrix)
+	int N;
+	cout << "Please enter value of the size of the square matrix: ";
+	cin >> N;
+	Cout << endl;
 	//2. the contents of the ECI (V) vector
+	double ECI_1, ECI_2, ECI_3;
+	cout << "Please enter value of the 1NN ECI: ";
+	cin >> ECI_1;
+	cout << endl
+		 << "Please enter value of the 2NN ECI: ";
+	cin >> ECI_2;
+	cout << endl
+		 << "Please enter value of the 3NN ECI: ";
+	cin >> ECI_3;
+	cout << endl;
+	//initialie the ECI vector
+	vector<double> ECI_vec = ECI_vec (ECI_1, ECI_2, ECI_3);
+	return 0;
 }
