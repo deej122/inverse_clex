@@ -105,19 +105,29 @@ vector<double> calc_delta_corr(vector< vector<int> > matrix)
 }
 
 //Functions to calculate new correlation values and generate sum
+//why do we need the start atom? don't we know the start atom from the input matrix?
 double calc_delta_corr_1NN(vector< vector<int> > matrix, int row, int col, int start_atom, int end_atom)
 {
 	//calculates new 1st Neighbor correlation values
+	vector< vector<int> > new_matrix = matrix;
+	new_matrix.at(row).at(col) = end_atom;
+	return calc_corr_1NN(new_matrix) - calc_corr_1NN(matrix);
 }
 
 double calc_delta_corr_2NN(vector< vector<int> > matrix, int row, int col, int start_atom, int end_atom)
 {
 	//calculates new 2nd Neighbor correlation values
+	vector< vector<int> > new_matrix = matrix;
+	new_matrix.at(row).at(col) = end_atom;
+	return calc_corr_2NN(new_matrix) - calc_corr_2NN(matrix);
 }
 
 double calc_delta_corr_3NN(vector< vector<int> > matrix, int row, int col, int start_atom, int end_atom)
 {
 	//calculates new 3rd Neighbor correlation values
+	vector< vector<int> > new_matrix = matrix;
+	new_matrix.at(row).at(col) = end_atom;
+	return calc_corr_3NN(new_matrix) - calc_corr_3NN(matrix);
 }
 
 //Function to calculate energy of the system using a simple dot product of our ECI vector and our vector of correlation values
