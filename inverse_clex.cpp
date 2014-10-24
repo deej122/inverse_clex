@@ -13,10 +13,10 @@ vector<double> calc_corr(vector< vector<int> > matrix);
 double calc_corr_1NN(vector< vector<int> > matrix);
 double calc_corr_2NN(vector< vector<int> > matrix);
 double calc_corr_3NN(vector< vector<int> > matrix);
-vector<double> calc_delta_corr(vector< vector<int> > matrix);
-double calc_delta_corr_1NN(vector< vector<int> > matrix, int row, int col, int start_atom, int end_atom);
-double calc_delta_corr_2NN(vector< vector<int> > matrix, int row, int col, int start_atom, int end_atom);
-double calc_delta_corr_3NN(vector< vector<int> > matrix, int row, int col, int start_atom, int end_atom);
+vector<double> calc_delta_corr(vector< vector<int> > , int row, int col, int end_atom);
+double calc_delta_corr_1NN(vector< vector<int> > matrix, int row, int col, int end_atom);
+double calc_delta_corr_2NN(vector< vector<int> > matrix, int row, int col, int end_atom);
+double calc_delta_corr_3NN(vector< vector<int> > matrix, int row, int col, int end_atom);
 double dot(vector<double> vector1, vector<double> vector2);
 
 
@@ -149,14 +149,18 @@ double calc_corr_3NN(vector< vector<int> > matrix)
 }
 
 //Function to create vector of correlation values on atom change
-vector<double> calc_delta_corr(vector< vector<int> > matrix)
+vector<double> calc_delta_corr(vector< vector<int> > matrix, int row, int col, int end_atom)
 {
-	//produces vector of new correlation values to be used in final calculation?
+	//produces vector of the change in correlation values
+	vector<double> delta_corr_vec(3);
+	delta_corr_vec.at(0) = calc_delta_corr_1NN(matrix, row, col, end_atom);
+	delta_corr_vec.at(1) = calc_delta_corr_2NN(matrix, row, col, end_atom);
+	delta_corr_vec.at(2) = calc_delta_corr_3NN(matrix, row, col, end_atom);
+	return delta_corr_vec;	
 }
 
 //Functions to calculate new correlation values and generate sum
-//why do we need the start atom? don't we know the start atom from the input matrix?
-double calc_delta_corr_1NN(vector< vector<int> > matrix, int row, int col, int start_atom, int end_atom)
+double calc_delta_corr_1NN(vector< vector<int> > matrix, int row, int col, int end_atom)
 {
 	//calculates new 1st Neighbor correlation values
 	vector< vector<int> > new_matrix = matrix;
@@ -164,7 +168,7 @@ double calc_delta_corr_1NN(vector< vector<int> > matrix, int row, int col, int s
 	return calc_corr_1NN(new_matrix) - calc_corr_1NN(matrix);
 }
 
-double calc_delta_corr_2NN(vector< vector<int> > matrix, int row, int col, int start_atom, int end_atom)
+double calc_delta_corr_2NN(vector< vector<int> > matrix, int row, int col, int end_atom)
 {
 	//calculates new 2nd Neighbor correlation values
 	vector< vector<int> > new_matrix = matrix;
@@ -172,7 +176,7 @@ double calc_delta_corr_2NN(vector< vector<int> > matrix, int row, int col, int s
 	return calc_corr_2NN(new_matrix) - calc_corr_2NN(matrix);
 }
 
-double calc_delta_corr_3NN(vector< vector<int> > matrix, int row, int col, int start_atom, int end_atom)
+double calc_delta_corr_3NN(vector< vector<int> > matrix, int row, int col, int end_atom)
 {
 	//calculates new 3rd Neighbor correlation values
 	vector< vector<int> > new_matrix = matrix;
