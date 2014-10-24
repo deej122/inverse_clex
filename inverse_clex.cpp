@@ -24,6 +24,49 @@ vector<double> calc_corr(vector< vector<int> > matrix)
 double calc_corr_1NN(vector< vector<int> > matrix)
 {
 	//calculates 1st Neighbor correlation values
+	
+	int i, j;
+	double sum_corr_1NN = 0;
+	//create’s a matrix of the same size as input matrix, filled with 0’s
+	vector<double> temp_vec (matrix.size(), 0);
+	vector< vector<double> > corr_1NN_matrix (matrix.size(), temp_vec);
+
+	for (i=0; i<matrix.size()-1; i++)
+	{
+		for(j=0; j<matrix.size()-1; j++)
+		{
+			//multiply site basis function’s of each atom with atom above (if on top row, assumes periodicity) and adds to 1NN correlation matrix
+			if (i-1<0)
+			{
+				corr_1NN_matrix.at(i).at(j) =+ matrix.at(i).at(j)*matrix.at(matrix.size()-1).at(j);
+			}
+			else
+			{
+				corr_1NN_matrix.at(i).at(j) += matrix.at(i).at(j)*matrix.at(i-1).at(j);
+			}
+
+			//multiply site basis function’s of each atom with atom to the left (if on first column, assumes periodicity) and adds to 1NN correlation matrix
+			if (i-1<0)
+			{
+				corr_1NN_matrix.at(i).at(j) =+ matrix.at(i).at(j)*matrix.at(i).at(matrix.size()-1);
+			}
+			else
+			{
+				corr_1NN_matrix.at(i).at(j) += matrix.at(i).at(j)*matrix.at(i).at(j-1);
+			}
+		}
+	} 
+	
+	//sums all the 1NN correlation values
+	for (i=0; i<matrix.size()-1; i++)
+	{
+		for (j=0; j<matrix.size()-1; j++)
+		{
+			sum_corr_1NN =+ corr_1NN_matrix.at(i).at(j);
+		}
+	}
+	
+	return sum_corr_1NN;
 }
 
 double calc_corr_2NN(vector< vector<int> > matrix)
