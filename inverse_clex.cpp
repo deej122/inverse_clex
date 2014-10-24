@@ -13,7 +13,7 @@ vector<double> calc_corr(vector< vector<int> > matrix);
 double calc_corr_1NN(vector< vector<int> > matrix);
 double calc_corr_2NN(vector< vector<int> > matrix);
 double calc_corr_3NN(vector< vector<int> > matrix);
-vector<double> calc_delta_corr(vector< vector<int> > , int row, int col, int end_atom);
+vector<double> calc_delta_corr(vector< vector<int> > matrix , int row, int col, int end_atom);
 double calc_delta_corr_1NN(vector< vector<int> > matrix, int row, int col, int end_atom);
 double calc_delta_corr_2NN(vector< vector<int> > matrix, int row, int col, int end_atom);
 double calc_delta_corr_3NN(vector< vector<int> > matrix, int row, int col, int end_atom);
@@ -231,6 +231,29 @@ int main()
 	random_matrix = generate_matrix (N);
 	//calculate correlation value
 	vector<double> corr_vec = calc_corr(random_matrix);
+	//calculate energy of the system
+	double total_energy = dot(ECI_vec, corr_vec)
+	cout << "The total energy of the configuration is: " << total_energy << endl;
+
+	//promt user to make a change to matrix
+	int change_row, change_col, new_value;
+	cout << "Please enter row number of site to change: ";
+	cin >> change_row;
+	cout << endl
+		 << "Please enter column number of site to change: ";
+	cin >> change_col;
+	cout << endl
+		 << "Please enter value to change site to: ";
+	cin >> new_value;
+	cout << endl;
+
+	//calculate delta corr
+	vector<double> delta_corr = calc_delta_corr(random_matrix, change_row, change_col, new_value);
+	//calculate total change in energy of the system
+	double delta_total_energy = dot(delta_corr, ECI_vec);
+	cout < "The change in total energy of the configuration is: " << delta_total_energy << endl;
+
+
 
 
 	return 0;
