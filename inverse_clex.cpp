@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cstdlib>
 
 //kristen’s branch
 
@@ -17,9 +18,9 @@ vector< vector<int> > generate_matrix(int N)
 	vector< vector<int> > random_matrix (N, row);
 
 	srand(time(NULL));
-	for (i=0; i<N-1; i++)
+	for (i=0; i<N; i++)
 	{
-		for (j=0; j<N-1; j++)
+		for (j=0; j<N; j++)
 		{
 			random_matrix.at(i).at(j) = rand()%2;		
 			if (random_matrix.at(i).at(j) == 0)
@@ -49,9 +50,9 @@ double calc_corr_1NN(vector< vector<int> > matrix)
 	vector<double> temp_vec (matrix.size(), 0);
 	vector< vector<double> > corr_1NN_matrix (matrix.size(), temp_vec);
 
-	for (i=0; i<matrix.size()-1; i++)
+	for (i=0; i<matrix.size(); i++)
 	{
-		for(j=0; j<matrix.size()-1; j++)
+		for(j=0; j<matrix.size(); j++)
 		{
 			//multiply site basis function’s of each atom with atom above (if on top row, assumes periodicity) and adds to 1NN correlation matrix
 			if (i-1<0)
@@ -64,7 +65,7 @@ double calc_corr_1NN(vector< vector<int> > matrix)
 			}
 
 			//multiply site basis function’s of each atom with atom to the left (if on first column, assumes periodicity) and adds to 1NN correlation matrix
-			if (i-1<0)
+			if (j-1<0)
 			{
 				corr_1NN_matrix.at(i).at(j) += matrix.at(i).at(j)*matrix.at(i).at(matrix.size()-1);
 			}
@@ -76,9 +77,9 @@ double calc_corr_1NN(vector< vector<int> > matrix)
 	} 
 	
 	//sums all the 1NN correlation values
-	for (i=0; i<matrix.size()-1; i++)
+	for (i=0; i<matrix.size(); i++)
 	{
-		for (j=0; j<matrix.size()-1; j++)
+		for (j=0; j<matrix.size(); j++)
 		{
 			sum_corr_1NN += corr_1NN_matrix.at(i).at(j);
 		}
