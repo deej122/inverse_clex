@@ -6,9 +6,23 @@
 
 using namespace std;
 
+//declare functions
+vector<double> create_ECI_vec (double ECI_1, double ECI_2, double ECI_3);
+vector< vector<int> > generate_matrix(int N);
+vector<double> calc_corr(vector< vector<int> > matrix);
+double calc_corr_1NN(vector< vector<int> > matrix);
+double calc_corr_2NN(vector< vector<int> > matrix);
+double calc_corr_3NN(vector< vector<int> > matrix);
+vector<double> calc_delta_corr(vector< vector<int> > matrix);
+double calc_delta_corr_1NN(vector< vector<int> > matrix, int row, int col, int start_atom, int end_atom);
+double calc_delta_corr_2NN(vector< vector<int> > matrix, int row, int col, int start_atom, int end_atom);
+double calc_delta_corr_3NN(vector< vector<int> > matrix, int row, int col, int start_atom, int end_atom);
+double dot(vector<double> vector1, vector<double> vector2);
+
+
 //Initialize our ECI vector
 // why can't we do this in main?
-vector<double> ECI_vec (double ECI_1, double ECI_2, double ECI_3)
+vector<double> create_ECI_vec (double ECI_1, double ECI_2, double ECI_3)
 {
 	vector<double> ECI_vec (3);
 	ECI_vec.at(0) = ECI_1;
@@ -193,7 +207,7 @@ int main()
 	int N;
 	cout << "Please enter value of the size of the square matrix: ";
 	cin >> N;
-	Cout << endl;
+	cout << endl;
 	//2. the contents of the ECI (V) vector
 	double ECI_1, ECI_2, ECI_3;
 	cout << "Please enter value of the 1NN ECI: ";
@@ -207,10 +221,12 @@ int main()
 	cout << endl;
 
 	//initialie the ECI vector
-	vector<double> ECI_vec = ECI_vec (ECI_1, ECI_2, ECI_3);
+	vector<double> ECI_vec = create_ECI_vec(ECI_1, ECI_2, ECI_3);
 	//generate the NxN matrix
 	vector< vector<int> > random_matrix;
 	random_matrix = generate_matrix (N);
+	//calculate correlation value
+	vector<double> corr_vec = calc_corr(random_matrix);
 
 
 	return 0;
