@@ -27,45 +27,45 @@ double calc_corr_2NN(vector< vector<int> > matrix)
 	vector<double> temp_vec (matrix.size(), 0);
 	vector< vector<double> > corr_2NN_matrix(matrix.size(), temp_vec);
 
-	for(i=0; i < matrix.size(); i++)
+	for(i=0; i < matrix[i].size(); i++)
 	{
-		for(j=0; j < matrix.size(); j++)
+		for(j=0; j < matrix[j].size(); j++)
 		{
 			//multiply site basis function by sbf of atom to top-right (top row/right-most column assume periodicity)
-			if(i-1<0 && j+1<matrix.size())
+			if(i-1<0 && j+1<matrix[j].size())
 			{
-				corr_2NN_matrix.at(i).at(j) += matrix.at(i).at(j)*matrix.at(matrix.size()-1).at(j+1);
+				corr_2NN_matrix[i][j] += matrix[i][j]*matrix[matrix.size()-1][j+1];
 			}
-			else if(i-1<0 && j+1 >= matrix.size())
+			else if(i-1<0 && j+1 >= matrix[j].size())
 			{
-				corr_2NN_matrix.at(i).at(j) += matrix.at(i).at(j)*matrix.at(matrix.size()-1).at(0);
+				corr_2NN_matrix[i][j] += matrix[i][j]*matrix[matrix.size()-1][0];
 			}
 			else
 			{
-				corr_2NN_matrix.at(i).at(j) += matrix.at(i).at(j)*matrix.at(i-1).at(j+1);
+				corr_2NN_matrix[i][j] += matrix[i][j]*matrix[i-1][j+1];
 			}
 			//multiply site basis function by sbf of atom to bottom-right (bottom row/right-most column assume periodicity)
-			if(i+1>=matrix.size() && j+1 < matrix.size())
+			if(i+1>=matrix[i].size() && j+1 < matrix[j].size())
 			{
-				corr_2NN_matrix.at(i).at(j) += matrix.at(i).at(j)*matrix.at(0).at(j+1);
+				corr_2NN_matrix[i][j] += matrix[i][j]*matrix[0][j+1];
 			}
-			else if(i+1>=matrix.size() && j+1 >= matrix.size())
+			else if(i+1>=matrix[i].size() && j+1 >= matrix[j].size())
 			{
-				corr_2NN_matrix.at(i).at(j) += matrix.at(i).at(j)*matrix.at(0).at(0);
+				corr_2NN_matrix[i][j] += matrix[i][j]*matrix[0][0];
 			}
 			else
 			{
-				corr_2NN_matrix.at(i).at(j) += matrix.at(i).at(j)*matrix.at(i+1).at(j+1);
+				corr_2NN_matrix[i][j] += matrix[i][j]*matrix[i+1][j+1];
 			}
 		}
 	}
 
 	//add all 2NN correlation values
-	for(i=0;i<matrix.size();i++)
+	for(i=0;i<matrix[i].size();i++)
 	{
-		for(j=0;j<matrix.size();j++)
+		for(j=0;j<matrix[j].size();j++)
 		{
-			sum_corr_2NN += corr_2NN_matrix.at(i).at(j);
+			sum_corr_2NN += corr_2NN_matrix[i][j];
 		}
 	}
 
