@@ -85,31 +85,31 @@ double calc_corr_1NN(vector< vector<int> > matrix)
 	int i, j;
 	double sum_corr_1NN = 0;
 	//create’s a matrix of the same size as input matrix, filled with 0’s
-	vector<double> temp_vec (matrix.size(), 0);
+	vector<double> temp_vec (matrix[0].size(), 0);
 	vector< vector<double> > corr_1NN_matrix (matrix.size(), temp_vec);
 
 	for (i=0; i<matrix.size(); i++)
 	{
-		for(j=0; j<matrix.size(); j++)
+		for(j=0; j<matrix[i].size(); j++)
 		{
 			//multiply site basis function’s of each atom with atom above (if on top row, assumes periodicity) and adds to 1NN correlation matrix
 			if (i-1<0)
 			{
-				corr_1NN_matrix.at(i).at(j) += matrix.at(i).at(j)*matrix.at(matrix.size()-1).at(j);
+				corr_1NN_matrix[i][j] += matrix[i][j]*matrix[matrix[i].size()-1][j];
 			}
 			else
 			{
-				corr_1NN_matrix.at(i).at(j) += matrix.at(i).at(j)*matrix.at(i-1).at(j);
+				corr_1NN_matrix[i][j] += matrix[i][j]*matrix[i-1][j];
 			}
 
 			//multiply site basis function’s of each atom with atom to the left (if on first column, assumes periodicity) and adds to 1NN correlation matrix
 			if (j-1<0)
 			{
-				corr_1NN_matrix.at(i).at(j) += matrix.at(i).at(j)*matrix.at(i).at(matrix.size()-1);
+				corr_1NN_matrix[i][j] += matrix[i][j]*matrix[i][matrix[i].size()-1];
 			}
 			else
 			{
-				corr_1NN_matrix.at(i).at(j) += matrix.at(i).at(j)*matrix.at(i).at(j-1);
+				corr_1NN_matrix[i][j] += matrix[i][j]*matrix[i][j-1];
 			}
 		}
 	} 
@@ -117,9 +117,9 @@ double calc_corr_1NN(vector< vector<int> > matrix)
 	//sums all the 1NN correlation values
 	for (i=0; i<matrix.size(); i++)
 	{
-		for (j=0; j<matrix.size(); j++)
+		for (j=0; j<matrix[i].size(); j++)
 		{
-			sum_corr_1NN += corr_1NN_matrix.at(i).at(j);
+			sum_corr_1NN += corr_1NN_matrix[i][j];
 		}
 	}
 
@@ -127,9 +127,9 @@ double calc_corr_1NN(vector< vector<int> > matrix)
 	cout << "The 1NN correlation values for each site: " << endl;
 	for (i=0; i<matrix.size(); i++)
 	{
-		for (j=0; j<matrix.size(); j++)
+		for (j=0; j<matrix[i].size(); j++)
 		{
-			cout << corr_1NN_matrix.at(i).at(j) << "  ";
+			cout << corr_1NN_matrix[i][j] << "  ";
 		}
 		cout << endl;
 	}
@@ -153,9 +153,9 @@ vector<double> calc_delta_corr(vector< vector<int> > matrix, int row, int col, i
 {
 	//produces vector of the change in correlation values
 	vector<double> delta_corr_vec(3);
-	delta_corr_vec.at(0) = calc_delta_corr_1NN(matrix, row, col, end_atom);
-	delta_corr_vec.at(1) = calc_delta_corr_2NN(matrix, row, col, end_atom);
-	delta_corr_vec.at(2) = calc_delta_corr_3NN(matrix, row, col, end_atom);
+	delta_corr_vec[0] = calc_delta_corr_1NN(matrix, row, col, end_atom);
+	delta_corr_vec[1] = calc_delta_corr_2NN(matrix, row, col, end_atom);
+	delta_corr_vec[2] = calc_delta_corr_3NN(matrix, row, col, end_atom);
 	return delta_corr_vec;	
 }
 
@@ -164,7 +164,7 @@ double calc_delta_corr_1NN(vector< vector<int> > matrix, int row, int col, int e
 {
 	//calculates new 1st Neighbor correlation values
 	vector< vector<int> > new_matrix = matrix;
-	new_matrix.at(row).at(col) = end_atom;
+	new_matrix[row][col] = end_atom;
 	return calc_corr_1NN(new_matrix) - calc_corr_1NN(matrix);
 }
 
@@ -172,7 +172,7 @@ double calc_delta_corr_2NN(vector< vector<int> > matrix, int row, int col, int e
 {
 	//calculates new 2nd Neighbor correlation values
 	vector< vector<int> > new_matrix = matrix;
-	new_matrix.at(row).at(col) = end_atom;
+	new_matrix[row][col] = end_atom;
 	return calc_corr_2NN(new_matrix) - calc_corr_2NN(matrix);
 }
 
@@ -180,7 +180,7 @@ double calc_delta_corr_3NN(vector< vector<int> > matrix, int row, int col, int e
 {
 	//calculates new 3rd Neighbor correlation values
 	vector< vector<int> > new_matrix = matrix;
-	new_matrix.at(row).at(col) = end_atom;
+	new_matrix[row][col] = end_atom;
 	return calc_corr_3NN(new_matrix) - calc_corr_3NN(matrix);
 }
 
@@ -197,7 +197,7 @@ double dot(vector<double> vector1, vector<double> vector2)
 	}
 	for (count=0; count<vector1.size(); count++)
 	{
-		dot += vector1.at(count)*vector2.at(count);
+		dot += vector1[count]*vector2[count];
 	}
 	return dot;
 
@@ -232,7 +232,7 @@ int main()
 	//calculate correlation value
 	vector<double> corr_vec = calc_corr(random_matrix);
 	//calculate energy of the system
-	double total_energy = dot(ECI_vec, corr_vec)
+	double total_energy = dot(ECI_vec, corr_vec);
 	cout << "The total energy of the configuration is: " << total_energy << endl;
 
 	//promt user to make a change to matrix
