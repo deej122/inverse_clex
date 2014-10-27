@@ -21,11 +21,109 @@ double calc_corr_1NN(vector< vector<int> > matrix)
 double calc_corr_2NN(vector< vector<int> > matrix)
 {
 	//calculates 2nd Neighbor correlation values
+	int i, j;
+	double sum_corr_2NN = 0;
+
+	vector<double> temp_vec (matrix.size(), 0);
+	vector< vector<double> > corr_2NN_matrix(matrix.size(), temp_vec);
+
+	for(i=0; i < matrix[i].size(); i++)
+	{
+		for(j=0; j < matrix[j].size(); j++)
+		{
+			//multiply site basis function by sbf of atom to top-right (top row/right-most column assume periodicity)
+			if(i-1<0 && j+1<matrix[j].size())
+			{
+				corr_2NN_matrix[i][j] += matrix[i][j]*matrix[matrix.size()-1][j+1];
+			}
+			else if(i-1<0 && j+1 >= matrix[j].size())
+			{
+				corr_2NN_matrix[i][j] += matrix[i][j]*matrix[matrix.size()-1][0];
+			}
+			else
+			{
+				corr_2NN_matrix[i][j] += matrix[i][j]*matrix[i-1][j+1];
+			}
+			//multiply site basis function by sbf of atom to bottom-right (bottom row/right-most column assume periodicity)
+			if(i+1>=matrix[i].size() && j+1 < matrix[j].size())
+			{
+				corr_2NN_matrix[i][j] += matrix[i][j]*matrix[0][j+1];
+			}
+			else if(i+1>=matrix[i].size() && j+1 >= matrix[j].size())
+			{
+				corr_2NN_matrix[i][j] += matrix[i][j]*matrix[0][0];
+			}
+			else
+			{
+				corr_2NN_matrix[i][j] += matrix[i][j]*matrix[i+1][j+1];
+			}
+		}
+	}
+
+	//add all 2NN correlation values
+	for(i=0;i<matrix[i].size();i++)
+	{
+		for(j=0;j<matrix[j].size();j++)
+		{
+			sum_corr_2NN += corr_2NN_matrix[i][j];
+		}
+	}
+
+	return sum_corr_2NN;
 }
 
 double calc_corr_3NN(vector< vector<int> > matrix)
 {
 	//calculates 3rd Neighbor correlation values
+	int i, j;
+	double sum_corr_3NN;
+
+	vector<double> temp_vec (matrix.size(), 0);
+	vector< vector<double> > corr_3NN_matrix(matrix.size(), temp_vec);
+
+	for(i=0; i < matrix[i].size(); i++)
+	{
+		for(j=0; j < matrix[j].size(); j++)
+		{
+			//multiple sbf by atom two spots above (assume periodicity if in top two rows)
+			if(i-2<0 && i-1>=0)
+			{
+				corr_3NN_matrix[i][j] += matrix[i][j]*matrix[matrix.size()-1][j];
+			}
+			else if(i-1<0)
+			{
+				corr_3NN_matrix[i][j] += matrix[i][j]*matrix[matrix.size()-2][j];
+			}
+			else
+			{
+				corr_3NN_matrix[i][j] += matrix[i][j]*matrix[i-2][j];
+			}
+			//multiply sbf by atom two to the right (assume periodicity if in two right-most columns)
+			if(j+2>=matrix[j].size() && j+1<matrix[j].size())
+			{
+				corr_3NN_matrix[i][j] += matrix[i][j]*matrix[i][0];
+			}
+			else if(j+1>=matrix[j].size())
+			{
+				corr_3NN_matrix[i][j] += matrix[i][j]*matrix[i][1];
+			}
+			else
+			{
+				corr_3NN_matrix[i][j] += matrix[i][j]*matrix[i][j+1];
+			}
+		}
+	}
+
+	//add all 3NN correlation values
+	for(i=0;i<matrix[i].size();i++)
+	{
+		for(j=0;j<matrix[j].size();j++)
+		{
+			sum_corr_3NN += corr_3NN_matrix[i][j];
+		}
+	}
+
+	return sum_corr_3NN;
 }
 
 //Function to create vector of correlation values
