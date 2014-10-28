@@ -163,9 +163,28 @@ vector<double> calc_delta_corr(vector< vector<int> > matrix, int row, int col, i
 double calc_delta_corr_1NN(vector< vector<int> > matrix, int row, int col, int end_atom)
 {
 	//calculates new 1st Neighbor correlation values
-	vector< vector<int> > new_matrix = matrix;
-	new_matrix[row][col] = end_atom;
-	return calc_corr_1NN(new_matrix) - calc_corr_1NN(matrix);
+	int row_above = row-1;
+	int row_below = row+1;
+	int col_left = col-1;
+	int col_right = col+1;
+	if (row_above<0)
+	{
+		row_above = matrix.size()-1;
+	}
+	if (row_below >= matrix.size())
+	{
+		row_below = 0;
+	}
+	if (col_left < 0)
+	{
+		col_left = matrix[0].size()-1;
+	}
+	if (col_right >= matrix[0].size())
+	{
+		col_right = 0;
+	}
+
+	return (end_atom - matrix[row][col])*(matrix[row][col_left] + matrix[row][col_right] + matrix [row_below][col] + matrix[row_above][col]);
 }
 
 double calc_delta_corr_2NN(vector< vector<int> > matrix, int row, int col, int end_atom)
@@ -251,7 +270,7 @@ int main()
 	vector<double> delta_corr = calc_delta_corr(random_matrix, change_row, change_col, new_value);
 	//calculate total change in energy of the system
 	double delta_total_energy = dot(delta_corr, ECI_vec);
-	cout < "The change in total energy of the configuration is: " << delta_total_energy << endl;
+	cout << "The change in total energy of the configuration is: " << delta_total_energy << endl;
 
 
 
