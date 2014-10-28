@@ -95,7 +95,7 @@ double calc_corr_1NN(vector< vector<int> > matrix)
 			//multiply site basis function’s of each atom with atom above (if on top row, assumes periodicity) and adds to 1NN correlation matrix
 			if (i-1<0)
 			{
-				corr_1NN_matrix[i][j] += matrix[i][j]*matrix[matrix[i].size()-1][j];
+				corr_1NN_matrix[i][j] += matrix[i][j]*matrix[matrix.size()-1][j];
 			}
 			else
 			{
@@ -165,11 +165,11 @@ double calc_corr_2NN(vector< vector<int> > matrix)
 				corr_2NN_matrix[i][j] += matrix[i][j]*matrix[i-1][j+1];
 			}
 			//multiply site basis function by sbf of atom to bottom-right (bottom row/right-most column assume periodicity)
-			if(i+1>=matrix[i].size() && j+1 < matrix[j].size())
+			if(i+1>=matrix.size() && j+1 < matrix[i].size())
 			{
 				corr_2NN_matrix[i][j] += matrix[i][j]*matrix[0][j+1];
 			}
-			else if(i+1>=matrix[i].size() && j+1 >= matrix[j].size())
+			else if(i+1>=matrix.size() && j+1 >= matrix[i].size())
 			{
 				corr_2NN_matrix[i][j] += matrix[i][j]*matrix[0][0];
 			}
