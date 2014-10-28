@@ -198,9 +198,28 @@ double calc_delta_corr_2NN(vector< vector<int> > matrix, int row, int col, int e
 double calc_delta_corr_3NN(vector< vector<int> > matrix, int row, int col, int end_atom)
 {
 	//calculates new 3rd Neighbor correlation values
-	vector< vector<int> > new_matrix = matrix;
-	new_matrix[row][col] = end_atom;
-	return calc_corr_3NN(new_matrix) - calc_corr_3NN(matrix);
+	int row_2above = row-2;
+	int row_2below = row+2;
+	int col_2left = col-2;
+	int col_2right = col+2;
+	if (row_2above<0)
+	{
+		row_2above = matrix.size() + row_2above;
+	}
+	if (row_2below >= matrix.size())
+	{
+		row_2below = row_2below - matrix.size();
+	}
+	if (col_2left < 0)
+	{
+		col_2left = matrix[0].size() + col_2left;
+	}
+	if (col_2right >= matrix[0].size())
+	{
+		col_2right = col_2right - matrix[0].size();
+	}
+
+	return (end_atom - matrix[row][col])*(matrix[row][col_2left] + matrix[row][col_2right] + matrix [row_2below][col] + matrix[row_2above][col]);
 }
 
 //Function to calculate energy of the system using a simple dot product of our ECI vector and our vector of correlation values
