@@ -73,7 +73,7 @@ vector<double> calc_corr(vector< vector<int> > matrix)
 	vector<double> corr_vec (3);
 	corr_vec.at(0) = calc_corr_1NN(matrix);
 	corr_vec.at(1) = calc_corr_2NN(matrix);
-	corr_vec.at(2) = calc_corr_2NN(matrix);
+	corr_vec.at(2) = calc_corr_3NN(matrix);
 	return corr_vec;
 }
 
@@ -147,16 +147,16 @@ double calc_corr_2NN(vector< vector<int> > matrix)
 	vector<double> temp_vec (matrix.size(), 0);
 	vector< vector<double> > corr_2NN_matrix(matrix.size(), temp_vec);
 
-	for(i=0; i < matrix[i].size(); i++)
+	for(i=0; i < matrix.size(); i++)
 	{
-		for(j=0; j < matrix[j].size(); j++)
+		for(j=0; j < matrix[i].size(); j++)
 		{
 			//multiply site basis function by sbf of atom to top-right (top row/right-most column assume periodicity)
-			if(i-1<0 && j+1<matrix[j].size())
+			if(i-1<0 && j+1<matrix.size())
 			{
 				corr_2NN_matrix[i][j] += matrix[i][j]*matrix[matrix.size()-1][j+1];
 			}
-			else if(i-1<0 && j+1 >= matrix[j].size())
+			else if(i-1<0 && j+1 >= matrix.size())
 			{
 				corr_2NN_matrix[i][j] += matrix[i][j]*matrix[matrix.size()-1][0];
 			}
@@ -181,14 +181,13 @@ double calc_corr_2NN(vector< vector<int> > matrix)
 	}
 
 	//add all 2NN correlation values
-	for(i=0;i<matrix[i].size();i++)
+	for(i=0;i<matrix.size();i++)
 	{
-		for(j=0;j<matrix[j].size();j++)
+		for(j=0;j<matrix[i].size();j++)
 		{
 			sum_corr_2NN += corr_2NN_matrix[i][j];
 		}
 	}
-
 	return sum_corr_2NN;
 }
 
@@ -201,9 +200,9 @@ double calc_corr_3NN(vector< vector<int> > matrix)
 	vector<double> temp_vec (matrix.size(), 0);
 	vector< vector<double> > corr_3NN_matrix(matrix.size(), temp_vec);
 
-	for(i=0; i < matrix[i].size(); i++)
+	for(i=0; i < matrix.size(); i++)
 	{
-		for(j=0; j < matrix[j].size(); j++)
+		for(j=0; j < matrix[i].size(); j++)
 		{
 			//multiple sbf by atom two spots above (assume periodicity if in top two rows)
 			if(i-2<0 && i-1>=0)
@@ -235,21 +234,14 @@ double calc_corr_3NN(vector< vector<int> > matrix)
 	}
 
 	//add all 3NN correlation values
-	for(i=0;i<matrix[i].size();i++)
+	for(i=0;i<matrix.size();i++)
 	{
-		for(j=0;j<matrix[j].size();j++)
+		for(j=0;j<matrix[i].size();j++)
 		{
 			sum_corr_3NN += corr_3NN_matrix[i][j];
 		}
 	}
-
 	return sum_corr_3NN;
-}
-
-//Function to create vector of correlation values
-vector<double> calc_corr(vector< vector<int> > matrix)
-{
-	//produces vector of correlation values to be used in final calculation?
 }
 
 //Function to create vector of correlation values on atom change
