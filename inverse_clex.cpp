@@ -190,9 +190,28 @@ double calc_delta_corr_1NN(vector< vector<int> > matrix, int row, int col, int e
 double calc_delta_corr_2NN(vector< vector<int> > matrix, int row, int col, int end_atom)
 {
 	//calculates new 2nd Neighbor correlation values
-	vector< vector<int> > new_matrix = matrix;
-	new_matrix[row][col] = end_atom;
-	return calc_corr_2NN(new_matrix) - calc_corr_2NN(matrix);
+	int row_above = row-1;
+	int row_below = row+1;
+	int col_left = col-1;
+	int col_right = col+1;
+	if (row_above<0)
+	{
+		row_above = matrix.size()-1;
+	}
+	if (row_below >= matrix.size())
+	{
+		row_below = 0;
+	}
+	if (col_left < 0)
+	{
+		col_left = matrix[0].size()-1;
+	}
+	if (col_right >= matrix[0].size())
+	{
+		col_right = 0;
+	}
+
+	return (end_atom - matrix[row][col])*(matrix[row_above][col_left] + matrix[row_above][col_right] + matrix [row_below][col_left] + matrix[row_below][col_right]);
 }
 
 double calc_delta_corr_3NN(vector< vector<int> > matrix, int row, int col, int end_atom)
@@ -218,7 +237,6 @@ double calc_delta_corr_3NN(vector< vector<int> > matrix, int row, int col, int e
 	{
 		col_2right = col_2right - matrix[0].size();
 	}
-
 	return (end_atom - matrix[row][col])*(matrix[row][col_2left] + matrix[row][col_2right] + matrix [row_2below][col] + matrix[row_2above][col]);
 }
 
