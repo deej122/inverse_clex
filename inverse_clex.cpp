@@ -218,11 +218,11 @@ double calc_corr_3NN(vector< vector<int> > matrix)
 				corr_3NN_matrix[i][j] += matrix[i][j]*matrix[i-2][j];
 			}
 			//multiply sbf by atom two to the right (assume periodicity if in two right-most columns)
-			if(j+2>=matrix[j].size() && j+1<matrix[j].size())
+			if(j+2>=matrix[i].size() && j+1<matrix[i].size())
 			{
 				corr_3NN_matrix[i][j] += matrix[i][j]*matrix[i][0];
 			}
-			else if(j+1>=matrix[j].size())
+			else if(j+1>=matrix[i].size())
 			{
 				corr_3NN_matrix[i][j] += matrix[i][j]*matrix[i][1];
 			}
