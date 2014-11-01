@@ -386,7 +386,7 @@ vector< vector<int> > metropolis(vector< vector<int> > matrix, vector<double> EC
 		if(new_energy - init_energy < 0)
 		{
 			init_energy = new_energy;
-			matrix[row][col] = matrix[row][col];
+			matrix[row][col] = matrix[row][col]*-1;
 		}
 		//otherwise (deltaE >= 0) use comparison to decided whether to keep or not
 		else
@@ -397,12 +397,12 @@ vector< vector<int> > metropolis(vector< vector<int> > matrix, vector<double> EC
 			if(comparator < random)
 			{
 				init_energy = new_energy;
-				matrix[row][col] = matrix[row][col];
+				matrix[row][col] = matrix[row][col]*-1;
 			}
 			else
 			{
 				init_energy = init_energy;
-				matrix[row][col] = (matrix[row][col])*(-1);
+				matrix[row][col] = (matrix[row][col]);
 			}
 		}
 	}
