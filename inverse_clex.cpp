@@ -374,10 +374,10 @@ vector< vector<int> > metropolis(vector< vector<int> > matrix, vector<double> EC
 		int col = rand() % matrix[0].size();
 		//flip atom in matrix row/col 
 		//TODO: [only works for binary system --> fix to work for any system]
-		matrix[row][col] = (matrix[row][col])*(-1);
+		// matrix[row][col] = (matrix[row][col])*(-1);
 
 		//calculate delta correlation value (based on atom change)
-		vector<double> delta_corr_vec = calc_delta_corr(matrix, row, col, matrix[row][col]);
+		vector<double> delta_corr_vec = calc_delta_corr(matrix, row, col, matrix[row][col]*-1);
 
 		//calculate new energy using new corr_values
 		double new_energy = dot(ECI_vec, delta_corr_vec);
@@ -392,7 +392,8 @@ vector< vector<int> > metropolis(vector< vector<int> > matrix, vector<double> EC
 		else
 		{
 			double comparator = exp(-(new_energy/(k*T)));
-			double random = rand() % 2;
+			double random = rand() % 100;
+			random = random/100;
 			if(comparator < random)
 			{
 				init_energy = new_energy;
