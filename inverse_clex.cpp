@@ -392,8 +392,8 @@ vector< vector<int> > metropolis(vector< vector<int> > matrix, vector<double> EC
 		else
 		{
 			double comparator = exp(-(new_energy/(k*T)));
-			double random = rand() % 100;
-			random = random/100;
+			double random = rand() % 1000;
+			random = random/1000;
 			if(comparator < random)
 			{
 				init_energy = new_energy;
