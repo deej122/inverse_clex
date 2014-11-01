@@ -356,6 +356,8 @@ double dot(vector<double> vector1, vector<double> vector2)
 
 }
 
+double metropolis(vector< vector<int> > matrix)
+
 //MAIN
 int main()
 {
