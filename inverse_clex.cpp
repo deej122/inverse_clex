@@ -376,15 +376,19 @@ vector< vector<int> > metropolis(vector< vector<int> > matrix, vector<double> EC
 		//TODO: [only works for binary system --> fix to work for any system]
 		matrix[row][col] = (matrix[row][col])*(-1);
 
+		//calculate delta correlation value (based on atom change)
 		vector<double> delta_corr_vec = calc_delta_corr(matrix, row, col, matrix[row][col]);
 
+		//calculate new energy using new corr_values
 		double new_energy = dot(ECI_vec, delta_corr_vec);
 
+		//if deltaE is negative, keep change
 		if(new_energy - init_energy < 0)
 		{
 			init_energy = new_energy;
 			matrix[row][col] = matrix[row][col];
 		}
+		//otherwise (deltaE >= 0) use comparison to decided whether to keep or not
 		else
 		{
 			double comparator = exp(-(new_energy/(k*T)));
@@ -402,6 +406,8 @@ vector< vector<int> > metropolis(vector< vector<int> > matrix, vector<double> EC
 		}
 	}
 
+	//print out new energy
+	//should always be <= to total_energy printed out in main
 	cout << "The new energy of the system is: " << init_energy << endl;
 
 	return matrix;
@@ -462,6 +468,8 @@ int main()
 	// cout << "The change in total energy of the configuration is: " << delta_total_energy << endl;
 
 	vector< vector<int> > new_matrix = metropolis(random_matrix, ECI_vec, total_energy, T);
+
+	//print out initial matrix
 	cout << "INITIAL MATRIX: " << endl;
 	for(int i = 0; i < random_matrix.size(); i++)
 	{
@@ -472,6 +480,7 @@ int main()
 		cout << endl;
 	}
 
+	//print out new matrix
 	cout << "NEW MATRIX: " << endl;
 	for(int i = 0; i < new_matrix.size(); i++)
 	{
