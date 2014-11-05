@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
+#include <math.h> 
 
 //kristen’s branch
 
@@ -152,11 +153,11 @@ double calc_corr_2NN(vector< vector<int> > matrix)
 		for(j=0; j < matrix[i].size(); j++)
 		{
 			//multiply site basis function by sbf of atom to top-right (top row/right-most column assume periodicity)
-			if(i-1<0 && j+1<matrix.size())
+			if(i-1<0 && j+1<matrix[i].size())
 			{
 				corr_2NN_matrix[i][j] += matrix[i][j]*matrix[matrix.size()-1][j+1];
 			}
-			else if(i-1<0 && j+1 >= matrix.size())
+			else if(i-1<0 && j+1 >= matrix[i].size())
 			{
 				corr_2NN_matrix[i][j] += matrix[i][j]*matrix[matrix.size()-1][0];
 			}
@@ -179,7 +180,6 @@ double calc_corr_2NN(vector< vector<int> > matrix)
 			}
 		}
 	}
-
 	//add all 2NN correlation values
 	for(i=0;i<matrix.size();i++)
 	{
@@ -188,6 +188,8 @@ double calc_corr_2NN(vector< vector<int> > matrix)
 			sum_corr_2NN += corr_2NN_matrix[i][j];
 		}
 	}
+
+	cout << "The total 2NN correlation value is " << sum_corr_2NN << endl;
 	return sum_corr_2NN;
 }
 
@@ -241,6 +243,8 @@ double calc_corr_3NN(vector< vector<int> > matrix)
 			sum_corr_3NN += corr_3NN_matrix[i][j];
 		}
 	}
+
+	cout << "The total 3NN correlation value is " << sum_corr_3NN << endl;
 	return sum_corr_3NN;
 }
 
@@ -356,6 +360,68 @@ double dot(vector<double> vector1, vector<double> vector2)
 
 }
 
+vector< vector<int> > metropolis(vector< vector<int> > & matrix, vector<double> & ECI_vec, double init_energy, double T)
+{
+	//boltzmann constant = k
+	double k = 8.62e-5;
+	for(int h = 0; h < 100; h ++)
+	{
+		//repeat as many times as there are atoms in the unit cell matrix
+		for(int i = 0; i < matrix.size()*matrix[0].size(); i++)
+		{
+			//create new matrix to make changes in rather than editing matrix itself?
+			// vector< vector<int> > new_matrix = matrix;
+			//generate random row, col
+			int row = rand() % matrix.size();
+			int col = rand() % matrix[0].size();
+			//flip atom in matrix row/col 
+			//TODO: [only works for binary system --> fix to work for any system]
+			// matrix[row][col] = (matrix[row][col])*(-1);
+
+			//calculate delta correlation value (based on atom change)
+			vector<double> delta_corr_vec = calc_delta_corr(matrix, row, col, matrix[row][col]*-1);
+
+			double delta_energy = dot(ECI_vec, delta_corr_vec);
+			//if deltaE is negative, keep change
+			if(delta_energy < 0)
+			{
+				init_energy = init_energy + delta_energy;
+				matrix[row][col] = matrix[row][col]*-1;
+			}
+			//otherwise (deltaE >= 0) use comparison to decided whether to keep or not
+			else
+			{
+				double comparator = exp(-(delta_energy/(k*T)));
+				double random = rand() % 1000;
+				random = random/1000;
+
+				if(comparator > random)
+				{
+					init_energy = init_energy + delta_energy;
+					matrix[row][col] = matrix[row][col]*-1;
+				}
+				else
+				{
+				}
+			}
+
+			for(int m = 0; m < matrix.size(); m++)
+			{
+				for(int n = 0; n < matrix[m].size();n++)
+				{
+					cout << matrix[m][n] << "   ";
+				}
+				cout << endl;
+			}
+		}
+	}
+	//print out new energy
+	//should always be <= to total_energy printed out in main
+	cout << "The new energy of the system is: " << init_energy << endl;
+
+	return matrix;
+}
+
 //MAIN
 int main()
 {
@@ -376,6 +442,10 @@ int main()
 		 << "Please enter value of the 3NN ECI: ";
 	cin >> ECI_3;
 	cout << endl;
+	double T;
+	cout << "Please enter the temperature of the system: ";
+	cin >> T;
+	cout << endl;
 
 	//initialie the ECI vector
 	vector<double> ECI_vec = create_ECI_vec(ECI_1, ECI_2, ECI_3);
@@ -389,25 +459,46 @@ int main()
 	cout << "The total energy of the configuration is: " << total_energy << endl;
 
 	//promt user to make a change to matrix
-	int change_row, change_col, new_value;
-	cout << "Please enter row number of site to change: ";
-	cin >> change_row;
-	cout << endl
-		 << "Please enter column number of site to change: ";
-	cin >> change_col;
-	cout << endl
-		 << "Please enter value to change site to: ";
-	cin >> new_value;
-	cout << endl;
+	// int change_row, change_col, new_value;
+	// cout << "Please enter row number of site to change: ";
+	// cin >> change_row;
+	// cout << endl
+	// 	 << "Please enter column number of site to change: ";
+	// cin >> change_col;
+	// cout << endl
+	// 	 << "Please enter value to change site to: ";
+	// cin >> new_value;
+	// cout << endl;
 
 	//calculate delta corr
-	vector<double> delta_corr = calc_delta_corr(random_matrix, change_row, change_col, new_value);
+	// vector<double> delta_corr = calc_delta_corr(random_matrix, change_row, change_col, new_value);
 	//calculate total change in energy of the system
-	double delta_total_energy = dot(delta_corr, ECI_vec);
-	cout << "The change in total energy of the configuration is: " << delta_total_energy << endl;
+	// double delta_total_energy = dot(delta_corr, ECI_vec);
+	// cout << "The change in total energy of the configuration is: " << delta_total_energy << endl;
 
+	vector< vector<int> > new_matrix = metropolis(random_matrix, ECI_vec, total_energy, T);
 
+	//print out initial matrix
+	cout << "INITIAL MATRIX: " << endl;
+	for(int i = 0; i < random_matrix.size(); i++)
+	{
+		for(int j = 0; j < random_matrix[i].size();j++)
+		{
+			cout << random_matrix[i][j] << " ";
+		}
+		cout << endl;
+	}
 
+	//print out new matrix
+	cout << "NEW MATRIX: " << endl;
+	for(int i = 0; i < new_matrix.size(); i++)
+	{
+		for(int j = 0; j < new_matrix[i].size();j++)
+		{
+			cout << new_matrix[i][j] << " ";
+		}
+		cout << endl;
+	}
 
 	return 0;
 }
