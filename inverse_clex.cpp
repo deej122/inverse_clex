@@ -360,53 +360,74 @@ double dot(vector<double> vector1, vector<double> vector2)
 
 }
 
-vector< vector<int> > metropolis(vector< vector<int> > matrix, vector<double> ECI_vec, double init_energy, double T)
+vector< vector<int> > metropolis(vector< vector<int> > & matrix, vector<double> & ECI_vec, double init_energy, double T)
 {
 	//boltzmann constant = k?
-	double k = 1.3806488*pow(10,-23);
-	//repeat as many times as there are atoms in the unit cell matrix
-	for(int i = 0; i < matrix.size()*matrix[0].size(); i++)
+	double k = 8.62e-5;
+	for(int h = 0; h < 100; h ++)
 	{
-		//create new matrix to make changes in rather than editing matrix itself?
-		// vector< vector<int> > new_matrix = matrix;
-		//generate random row, col
-		int row = rand() % matrix.size();
-		int col = rand() % matrix[0].size();
-		//flip atom in matrix row/col 
-		//TODO: [only works for binary system --> fix to work for any system]
-		// matrix[row][col] = (matrix[row][col])*(-1);
-
-		//calculate delta correlation value (based on atom change)
-		vector<double> delta_corr_vec = calc_delta_corr(matrix, row, col, matrix[row][col]*-1);
-
-		//calculate new energy using new corr_values
-		double new_energy = dot(ECI_vec, delta_corr_vec);
-
-		//if deltaE is negative, keep change
-		if(new_energy - init_energy < 0)
+		//repeat as many times as there are atoms in the unit cell matrix
+		for(int i = 0; i < matrix.size()*matrix[0].size(); i++)
 		{
-			init_energy = new_energy;
-			matrix[row][col] = matrix[row][col]*-1;
-		}
-		//otherwise (deltaE >= 0) use comparison to decided whether to keep or not
-		else
-		{
-			double comparator = exp(-(new_energy/(k*T)));
-			double random = rand() % 1000;
-			random = random/1000;
-			if(comparator < random)
+			//create new matrix to make changes in rather than editing matrix itself?
+			// vector< vector<int> > new_matrix = matrix;
+			//generate random row, col
+			int row = rand() % matrix.size();
+			int col = rand() % matrix[0].size();
+			//flip atom in matrix row/col 
+			//TODO: [only works for binary system --> fix to work for any system]
+			// matrix[row][col] = (matrix[row][col])*(-1);
+
+			//calculate delta correlation value (based on atom change)
+			vector<double> delta_corr_vec = calc_delta_corr(matrix, row, col, matrix[row][col]*-1);
+			for(int g = 0; g < delta_corr_vec.size(); g++)
 			{
-				init_energy = new_energy;
-				matrix[row][col] = matrix[row][col]*-1;
+				cout << delta_corr_vec[g] << endl;
 			}
+			//calculate new energy using new corr_values
+			//new_energy = delta_energy
+			double delta_energy = dot(ECI_vec, delta_corr_vec);
+			cout << "Delta energy: " << delta_energy;
+			//if deltaE is negative, keep change
+			if(delta_energy < 0)
+			{
+				init_energy = init_energy + delta_energy;
+				matrix[row][col] = matrix[row][col]*-1;
+				cout << " Accept" << endl;
+			}
+			//otherwise (deltaE >= 0) use comparison to decided whether to keep or not
 			else
 			{
-				init_energy = init_energy;
-				matrix[row][col] = (matrix[row][col]);
+				double comparator = exp(-(delta_energy/(k*T)));
+				double random = rand() % 1000;
+				random = random/1000;
+				cout << "k " << k << endl;
+				cout << "T " << T << endl;
+
+				cout << "Comparator: " << comparator << endl;
+				cout << "Random: " << random << endl;
+				if(comparator > random)
+				{
+					init_energy = init_energy + delta_energy;
+					matrix[row][col] = matrix[row][col]*-1;
+					cout << " Accept" << endl;
+				}
+				else
+				{
+					cout << " Reject" << endl;
+				}
+			}
+
+			for(int m = 0; m < matrix.size(); m++)
+			{
+				for(int n = 0; n < matrix[m].size();n++)
+				{
+					cout << matrix[m][n] << "   ";
+				}
+				cout << endl;
 			}
 		}
 	}
-
 	//print out new energy
 	//should always be <= to total_energy printed out in main
 	cout << "The new energy of the system is: " << init_energy << endl;
