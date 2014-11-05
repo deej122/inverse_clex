@@ -362,7 +362,7 @@ double dot(vector<double> vector1, vector<double> vector2)
 
 vector< vector<int> > metropolis(vector< vector<int> > & matrix, vector<double> & ECI_vec, double init_energy, double T)
 {
-	//boltzmann constant = k?
+	//boltzmann constant = k
 	double k = 8.62e-5;
 	for(int h = 0; h < 100; h ++)
 	{
@@ -380,20 +380,13 @@ vector< vector<int> > metropolis(vector< vector<int> > & matrix, vector<double> 
 
 			//calculate delta correlation value (based on atom change)
 			vector<double> delta_corr_vec = calc_delta_corr(matrix, row, col, matrix[row][col]*-1);
-			for(int g = 0; g < delta_corr_vec.size(); g++)
-			{
-				cout << delta_corr_vec[g] << endl;
-			}
-			//calculate new energy using new corr_values
-			//new_energy = delta_energy
+
 			double delta_energy = dot(ECI_vec, delta_corr_vec);
-			cout << "Delta energy: " << delta_energy;
 			//if deltaE is negative, keep change
 			if(delta_energy < 0)
 			{
 				init_energy = init_energy + delta_energy;
 				matrix[row][col] = matrix[row][col]*-1;
-				cout << " Accept" << endl;
 			}
 			//otherwise (deltaE >= 0) use comparison to decided whether to keep or not
 			else
@@ -401,20 +394,14 @@ vector< vector<int> > metropolis(vector< vector<int> > & matrix, vector<double> 
 				double comparator = exp(-(delta_energy/(k*T)));
 				double random = rand() % 1000;
 				random = random/1000;
-				cout << "k " << k << endl;
-				cout << "T " << T << endl;
 
-				cout << "Comparator: " << comparator << endl;
-				cout << "Random: " << random << endl;
 				if(comparator > random)
 				{
 					init_energy = init_energy + delta_energy;
 					matrix[row][col] = matrix[row][col]*-1;
-					cout << " Accept" << endl;
 				}
 				else
 				{
-					cout << " Reject" << endl;
 				}
 			}
 
