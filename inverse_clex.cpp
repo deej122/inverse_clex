@@ -378,19 +378,19 @@ void read_and_write_json (jsonParser json_in, vector< vector<int> > matrix)
 	{
 		for(int j=0; j<matrix[i].size();j++)
 		{
-			json_out["delta_correltaions"].pushback(jsonParser::object());
-			json["delta_correlations"]["row"] = i;
-			json["delta_correlations"]["col"] = j;
-			json["delta_correltaions"]["initial_atom"] = matrix[i][j];
+			json_out["delta_correltaions"].push_back(jsonParser::object());
+			json_out["delta_correlations"]["row"] = i;
+			json_out["delta_correlations"]["col"] = j;
+			json_out["delta_correltaions"]["initial_atom"] = matrix[i][j];
 			switch (matrix[i][j])
 			{
 				case 1: matrix[i][j] = 2;
-						json["delta_correlations"]["new_atom"] = matrix[i][j];
-						json["delta_correlations"]["delta_corr"] = dot(ECI_vec, calc_corr(matrix));
+						json_out["delta_correlations"]["new_atom"] = matrix[i][j];
+						json_out"delta_correlations"]["delta_corr"] = dot(ECI_vec, calc_corr(matrix));
 						break;
 				case 2: matrix[i][j] = 1;
-						json["delta_correlations"]["new_atom"] = matrix[i][j];
-						json["delta_correlations"]["delta_corr"] = dot(ECI_vec, calc_corr(matrix));
+						json_out["delta_correlations"]["new_atom"] = matrix[i][j];
+						json_out["delta_correlations"]["delta_corr"] = dot(ECI_vec, calc_corr(matrix));
 						break;
 			}
 		}
