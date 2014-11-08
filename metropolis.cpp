@@ -1,0 +1,138 @@
+#include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <math.h>
+#include "jsonParser.hh"
+#include "clex.h"
+
+using namespace std;
+
+void read_json_in (double & temp, vector<int> & dim, vector<double> & species, vector<double> & ECI_vec, int & num_passes);
+void write_json_out (const vector<double> ECI_vec, const vector< vector<int> > & matrix, jsonParser & json_out, const int & pass_count, const vector<double> & species);
+vector< vector<int> > metropolis(vector< vector<int> > & matrix, const vector<double> & ECI_vec, const double & T);
+
+
+void read_json_in (double & temp, vector<int> & dim, vector<double> & species, vector<double> & ECI_vec, int & num_passes)
+{
+	json_in.read(std::string("ECI_conditions.json"));
+	dim = json_in["Dimensions"].get< vector<int> >();
+	species = json_in["Species"].get< vector<double> >();
+	ECI_vec = json_in["ECI"].get< vector<double> >();
+	num_passes = json_in("Passes").get<int>();
+	json_in.close();
+	return;
+} 
+
+void write_json_out (const vector<double> ECI_vec, const vector< vector<int> > & matrix, jsonParser & json_out, const int & pass_count, const vector<double> & species)
+{
+	//creates another object in the data_by_pass vector of objects
+	json_out["Data_by_pass"].push_back(jsonParser::array());
+	json_out["Data_by_pass"][pass_count] = jsonParser::object();
+	json_out["Data_by_pass"][pass_count]["pass"] = pass_count;
+
+	//calculates corr vector
+	vector<double> corr_vec = calc_corr(matrix);
+	//write corr vector to object in json
+	json_out["Data_by_pass"][pass_count]["corr"] = corr_vec;
+
+	//calculates energy of the system
+	double energy = dot(corr_vec, ECI_vec);
+	//writes out energy to object to json
+	json_out["Data_by_pass"][pass_count]["energy"] = energy;
+
+	//counts how many of each species
+	vector<int> num_species (species.size(), 0);
+	int row, col;
+	for (row=0; row< matrix.size(); row++)
+	{
+		for (col=0; col<matrix[i].size(); col++)
+		{
+			for(int s=0; s<species.size(); s++)
+			{
+				if (matrix[row][col] == species[s])
+				{
+					num_species[s]++;
+				}
+			}
+		}
+	}
+	//writes out the vector of number of species to json
+	json_out["Data_by_pass"][pass_count]["num_species"] = num_species;
+
+	//creates another vector inside the site object called "sites"
+	json_out["Data_by_pass"][pass_count]["sites"] = jsonParser::array();
+	//finds the coordinates, curr_occupant, and delta_correlations for each site in matrix
+	int atom_count = 0;
+	for(row = 0; row < matrix.size(); row++)
+	{
+		for(col=0; col < matrix[i].size(); col++)
+		{
+			json_out["Data_by_pass"][pass_count]["sites"][atom_count] = jsonParser::object();
+			//creates a coordination vector and writes to json
+			vector<int> coord (2);
+			coord[0]=row;
+			coord[1]=col;
+			json_out["Data_by_pass"][pass_count]["sites"][atom_count]["coord"] = coord;
+			//writes to json the current occupants
+			json_out["Data_by_pass"][pass_count]["sites"][atom_count]["curr_occupant"] = matrix[row][col];
+			//creates a vector of delta corr values for each change in species (vector of vector)
+			json_out["Data_by_pass"][pass_count]["sites"][atom_count]["delta_corrs"] = jsonParser::array();
+			vector<double> delta_corr (3);
+			for(int s=0; s<species.size(); s++)
+			{
+				json_out["Data_by_pass"][pass_count]["sites"][atom_count]["delta_corrs"][s] = calc_delta_corr(matrix, row, col, species[s]);
+			}
+		}
+	}
+	return;
+}
+
+vector< vector<int> > metropolis(vector< vector<int> > & matrix, const vector<double> & ECI_vec, const double & T)
+{
+
+	//boltzmann constant = k
+	double k = 8.62e-5;
+
+	//calculates initial energy
+	double init_energy = dot(calc_corr(matrix), ECI_vec);
+
+	//repeat as many times as there are atoms in the unit cell matrix
+	for(int i = 0; i < matrix.size()*matrix[0].size(); i++)	
+	{
+		//create new matrix to make changes in rather than editing matrix itself?
+		// vector< vector<int> > new_matrix = matrix;
+		//generate random row, col
+		int row = rand() % matrix.size();
+		int col = rand() % matrix[0].size();		
+		//flip atom in matrix row/col 
+		//TODO: [only works for binary system --> fix to work for any system]
+		// matrix[row][col] = (matrix[row][col])*(-1);
+		//calculate delta correlation value (based on atom change)
+		vector<double> delta_corr_vec = calc_delta_corr(matrix, row, col, matrix[row][col]*-1);
+		double delta_energy = dot(ECI_vec, delta_corr_vec);
+		//if deltaE is negative, keep change
+		if(delta_energy < 0)
+		{
+			init_energy = init_energy + delta_energy;
+			matrix[row][col] = matrix[row][col]*-1;
+		}
+		//otherwise (deltaE >= 0) use comparison to decided whether to keep or not
+		else
+		{
+			double comparator = exp(-(delta_energy/(k*T)));
+			double random = rand() % 1000;
+			random = random/1000;
+
+			if(comparator > random)
+			{
+				init_energy = init_energy + delta_energy;
+				matrix[row][col] = matrix[row][col]*-1;
+			}
+		}
+
+	//print out new energy
+	//should always be <= to total_energy printed out in main
+	cout << "The new energy of the system is: " << init_energy << endl;
+
+	return matrix;
+}
