@@ -1,6 +1,8 @@
 #ifndef CLEX_H
 #define CLEX_H
 
+using namespace std;
+
 vector<double> create_ECI_vec (const double & ECI_1, const double & ECI_2, const double & ECI_3);
 vector< vector<int> > generate_matrix(const int & row, const int & col);
 vector<double> calc_corr(const vector< vector<int> > & matrix);

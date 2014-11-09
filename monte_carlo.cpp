@@ -31,7 +31,7 @@ int main()
 
 	// write out to a json file
 	int pass_count = 0;
-	write_json_out (ECI_vec, matrix, json_out, pass_count, species)
+	write_json_out (ECI_vec, matrix, json_out, pass_count, species);
 
 	for(pass_count=1; pass_count <= num_passes; pass_count++)
 	{

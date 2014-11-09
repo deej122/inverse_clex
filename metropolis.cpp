@@ -45,7 +45,7 @@ void write_json_out (const vector<double> ECI_vec, const vector< vector<int> > &
 	int row, col;
 	for (row=0; row< matrix.size(); row++)
 	{
-		for (col=0; col<matrix[i].size(); col++)
+		for (col=0; col<matrix[row].size(); col++)
 		{
 			for(int s=0; s<species.size(); s++)
 			{
@@ -65,7 +65,7 @@ void write_json_out (const vector<double> ECI_vec, const vector< vector<int> > &
 	int atom_count = 0;
 	for(row = 0; row < matrix.size(); row++)
 	{
-		for(col=0; col < matrix[i].size(); col++)
+		for(col=0; col < matrix[row].size(); col++)
 		{
 			json_out["Data_by_pass"][pass_count]["sites"][atom_count] = jsonParser::object();
 			//creates a coordination vector and writes to json
@@ -129,7 +129,7 @@ vector< vector<int> > metropolis(vector< vector<int> > & matrix, const vector<do
 				matrix[row][col] = matrix[row][col]*-1;
 			}
 		}
-
+	}
 	//print out new energy
 	//should always be <= to total_energy printed out in main
 	cout << "The new energy of the system is: " << init_energy << endl;
