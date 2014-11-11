@@ -464,6 +464,7 @@ jsonParser &jsonParser::operator=(const T &value) {
   return to_json(value, *this);
 }
 
+// Creates json template for std::vector
 template<typename T>
 jsonParser &to_json(const std::vector<T> &value, jsonParser &json);
 
