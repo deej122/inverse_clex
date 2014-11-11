@@ -26,7 +26,7 @@ endif\
 \
 \
 OBJS = execute_mc.o monte_carlo.o clex.o metropolis.o jsonParser.o\
-CXX      = g++ \
+CXX = g++ \
 CPPFLAGS += -w -O3 $(foreach i,$(INCLUDE),-I$(i))\
 \
 ifeq "$(BOOST_LIB)" ""\

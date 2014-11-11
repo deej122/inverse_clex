@@ -21,6 +21,7 @@ int main()
 
 	//outputs the conditions ot a json file
 	jsonParser json_out;
+	json_out.write(std::string("monte_carlo_calcs.json"));
 	json_out["Temp"] = temp;
 	json_out["Species"] = species;
 	json_out["Data_by_pass"] = jsonParser::array();

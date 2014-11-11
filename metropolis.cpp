@@ -14,11 +14,12 @@ vector< vector<int> > metropolis(vector< vector<int> > & matrix, const vector<do
 
 void read_json_in (double & temp, vector<int> & dim, vector<double> & species, vector<double> & ECI_vec, int & num_passes)
 {
+	jsonParser json_in;
 	json_in.read(std::string("ECI_conditions.json"));
 	dim = json_in["Dimensions"].get< vector<int> >();
 	species = json_in["Species"].get< vector<double> >();
 	ECI_vec = json_in["ECI"].get< vector<double> >();
-	num_passes = json_in("Passes").get<int>();
+	num_passes = json_in["Passes"].get<int>();
 	json_in.close();
 	return;
 } 
