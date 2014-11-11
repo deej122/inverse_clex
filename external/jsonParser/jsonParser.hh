@@ -464,7 +464,11 @@ jsonParser &jsonParser::operator=(const T &value) {
   return to_json(value, *this);
 }
 
+template<typename T>
+jsonParser &to_json(const std::vector<T> &value, jsonParser &json);
 
+template<typename T>
+void from_json(std::vector<T> &value, const jsonParser &json);
 
 
 #endif
