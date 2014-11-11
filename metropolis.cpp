@@ -2,7 +2,7 @@
 #include <vector>
 #include <cstdlib>
 #include <math.h>
-#include "jsonParser.hh"
+#include "./external/jsonParser/jsonParser.hh"
 #include "clex.h"
 
 using namespace std;
