@@ -20,7 +20,7 @@ endif
 
 
 CXX      = g++ 
-CPPFLAGS += -w $(foreach i,$(INCLUDE),-I$(i))
+CPPFLAGS += -w -O3 $(foreach i,$(INCLUDE),-I$(i))
 
 ifeq "$(BOOST_LIB)" ""
 	LFLAGS = -lboost_system
