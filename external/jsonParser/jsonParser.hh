@@ -466,10 +466,21 @@ jsonParser &jsonParser::operator=(const T &value) {
 
 // Creates json template for std::vector
 template<typename T>
-jsonParser &to_json(const std::vector<T> &value, jsonParser &json);
+jsonParser &to_json(const std::vector<T> &value, jsonParser &json){
+  json.put_array(value.size());
+  for(int i = 0; i < value.size(); i++){
+    json[i] = value[i];
+  }
+  return json;
+}
 
 template<typename T>
-void from_json(std::vector<T> &value, const jsonParser &json);
+void from_json(std::vector<T> &value, const jsonParser &json){
+  value.resize(json.size());
+  for(int i = 0; i < json.size(); i++){
+    from_json(value[i], json[i]);
+  }
+}
 
 
 #endif

@@ -50,6 +50,8 @@ vector< vector<int> > generate_matrix(const int & row, const int & col)
 			}	
 		}
 	}
+
+	return random_matrix;
 }
 
 //Function to create vector <1NN,2NN,3NN> correlation values
@@ -328,18 +330,4 @@ double dot(const vector<double> & vector1, const vector<double> & vector2)
 	}
 	return dot;
 
-}
-
-//Function that prints the matrix to the terminal
-template<class T>
-void print_matrix (const vector< vector<T> > & matrix)
-{
-	for (int i=0; i<matrix.size(); i++)
-	{
-		for(int j=0; j<matrix[i].size(); j++)
-		{
-			cout << matrix[i][j] << "  ";
-		}
-		cout << endl;
-	}
 }
