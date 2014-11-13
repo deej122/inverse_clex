@@ -3,3 +3,7 @@
 *.out
 *.app
 *inverse_clex
+*clex
+*metropolis
+*monte_carlo
+*.o
