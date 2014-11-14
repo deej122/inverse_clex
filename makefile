@@ -19,7 +19,7 @@ ifneq "$(BOOST_INCLUDE)" ""
 endif
 
 
-OBJS = o/monte_carlo.o o/clex.o o/metropolis.o external/jsonParser/jsonParser.o
+OBJS = o/clex.o o/unit_test_clex.o external/jsonParser/jsonParser.o
 CXX = g++ 
 CPPFLAGS += -w -O3 $(foreach i,$(INCLUDE),-I$(i))
 
@@ -34,17 +34,11 @@ endif
 #######################################################
 #add rule to execute both mc and inverse
 
-execute_mc : $(OBJS)
-	$(CXX) $(LFLAGS) $(CPPFLAGS) $(OBJS) -o execute_mc
+execute_clex_unit_test : $(OBJS)
+	$(CXX) $(LFLAGS) $(CPPFLAGS) $(OBJS) -o execute_clex_unit_test
 
-#add execute_inverse_clex
-
-
-o/monte_carlo.o: source/monte_carlo.cpp h/metropolis.h h/clex.h
-	$(CXX) -c source/monte_carlo.cpp $(CPPFLAGS)
-
-o/metropolis.o: h/metropolis.h source/metropolis.cpp h/clex.h
-	$(CXX) -c source/metropolis.cpp $(CPPFLAGS)
+o/unit_test_clex.o: source/unit_test_clex.cpp h/clex.h
+	$(CXX) -c source/unit_test_clex.cpp $(CPPFLAGS)
 
 o/clex.o: h/clex.h source/clex.cpp
 	$(CXX) -c source/clex.cpp $(CPPFLAGS)
