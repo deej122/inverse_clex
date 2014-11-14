@@ -31,30 +31,35 @@ int main()
 	// write out to a json file
 	int pass_count = 0;
 	int index = 0;
+
+	int i,j;
+
+	double mean_spin = 0;
+	double ensemble_average = 0;
+
 	cout << 'writing json' << endl;
 
-	for (temp=0; temp<=1000; temp+=10)
+	for (temp=0.001; temp<=1000000000; temp = temp*10)
 	{
+		double mean_spin_sum = 0;
 		for(pass_count=1; pass_count <= num_passes; pass_count++)
 		{
+			double spin_sum = 0;
 			matrix=metropolis(matrix, ECI_vec, temp);
-		}
-		cout << "finished metropolis" << endl;
-
-		double average=0;
-		int i,j;
-		for (i=0; i<matrix.size(); i++)
-		{
-			for (j=0; j<matrix[i].size(); j++)
+			for (i=0; i<matrix.size(); i++)
 			{
-				average += matrix[i][j];
-			}
+				for (j=0; j<matrix[i].size(); j++)
+				{
+					spin_sum += matrix[i][j];
+				}
 
+			}
+			mean_spin = abs(spin_sum/(matrix.size()*matrix[0].size()));
+
+			mean_spin_sum += mean_spin;
 		}
 
-		cout << "average: " << average << endl;
-
-		average = abs(average/(matrix.size()*matrix[0].size()));
+		ensemble_average = mean_spin_sum/(num_passes);
 
 		cout << "begin" << endl;
 		cout << "index: " << index << endl;
@@ -65,7 +70,7 @@ int main()
 		json_out["plotting_data"][index].push_back(temp);
 		cout << "dos" << endl;
 		// json_out["plotting_data"][index]["average"] = average;
-		json_out["plotting_data"][index].push_back(average);
+		json_out["plotting_data"][index].push_back(ensemble_average);
 		cout << "tres" << endl;
 
 		index += 1;
