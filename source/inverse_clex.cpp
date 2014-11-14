@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
+#include "jsonParser.hh"
 
 //kristen’s branch
 
@@ -95,7 +96,7 @@ double calc_corr_1NN(vector< vector<int> > matrix)
 			//multiply site basis function’s of each atom with atom above (if on top row, assumes periodicity) and adds to 1NN correlation matrix
 			if (i-1<0)
 			{
-				corr_1NN_matrix[i][j] += matrix[i][j]*matrix[matrix.size()-1][j];
+				corr_1NN_matrix[i][j] += matrix[i][j]*matrix[matrix[i].size()-1][j];
 			}
 			else
 			{
@@ -124,16 +125,16 @@ double calc_corr_1NN(vector< vector<int> > matrix)
 	}
 
 //print corr values for each site and sum 1NN corr values (comment out later)
-	cout << "The 1NN correlation values for each site: " << endl;
-	for (i=0; i<matrix.size(); i++)
-	{
-		for (j=0; j<matrix[i].size(); j++)
-		{
-			cout << corr_1NN_matrix[i][j] << "  ";
-		}
-		cout << endl;
-	}
-	cout << "The total 1NN correlation value is " << sum_corr_1NN << endl;
+//	cout << "The 1NN correlation values for each site: " << endl;
+//	for (i=0; i<matrix.size(); i++)
+//	{
+//		for (j=0; j<matrix[i].size(); j++)
+//		{
+//			cout << corr_1NN_matrix[i][j] << "  ";
+//		}
+//		cout << endl;
+//	}
+//	cout << "The total 1NN correlation value is " << sum_corr_1NN << endl;
 	
 	return sum_corr_1NN;
 }
@@ -165,11 +166,11 @@ double calc_corr_2NN(vector< vector<int> > matrix)
 				corr_2NN_matrix[i][j] += matrix[i][j]*matrix[i-1][j+1];
 			}
 			//multiply site basis function by sbf of atom to bottom-right (bottom row/right-most column assume periodicity)
-			if(i+1>=matrix.size() && j+1 < matrix[i].size())
+			if(i+1>=matrix[i].size() && j+1 < matrix[j].size())
 			{
 				corr_2NN_matrix[i][j] += matrix[i][j]*matrix[0][j+1];
 			}
-			else if(i+1>=matrix.size() && j+1 >= matrix[i].size())
+			else if(i+1>=matrix[i].size() && j+1 >= matrix[j].size())
 			{
 				corr_2NN_matrix[i][j] += matrix[i][j]*matrix[0][0];
 			}
@@ -218,11 +219,11 @@ double calc_corr_3NN(vector< vector<int> > matrix)
 				corr_3NN_matrix[i][j] += matrix[i][j]*matrix[i-2][j];
 			}
 			//multiply sbf by atom two to the right (assume periodicity if in two right-most columns)
-			if(j+2>=matrix[i].size() && j+1<matrix[i].size())
+			if(j+2>=matrix[j].size() && j+1<matrix[j].size())
 			{
 				corr_3NN_matrix[i][j] += matrix[i][j]*matrix[i][0];
 			}
-			else if(j+1>=matrix[i].size())
+			else if(j+1>=matrix[j].size())
 			{
 				corr_3NN_matrix[i][j] += matrix[i][j]*matrix[i][1];
 			}
@@ -353,6 +354,47 @@ double dot(vector<double> vector1, vector<double> vector2)
 		dot += vector1[count]*vector2[count];
 	}
 	return dot;
+
+}
+
+//Function to read in from ECI_conditions.json and write to a json file
+void read_and_write_json (jsonParser json_in, vector< vector<int> > matrix)
+{
+	//read in json
+	json_in.read(std::string("ECI_conditions.json"));
+	double temp = json_in["Temperature"].get<double>();
+	double rows = json_in["Nrows"].get<int>();
+	double cols = json_in["Ncolumns"].get<int>();
+	vector<double> ECI_vec = json_in["ECI"].get< vector<double> >();
+jsonParser json_out;
+	json_out["energy_per_unitcell"] = dot(ECI_vec, calc_corr(matrix));
+	json_out["correlations"] = calc_corr(matrix);
+	json_out["delta_correlations"] = jsonParser::vector();
+	//write out json
+	
+
+	//Creates an object in each vector space with "row" "col" "delta_corr" "initial_atom" and "initial_atom"
+	for(int i=0; i<matrix.size(); i++)
+	{
+		for(int j=0; j<matrix[i].size();j++)
+		{
+			json_out["delta_correltaions"].push_back(jsonParser::object());
+			json_out["delta_correlations"]["row"] = i;
+			json_out["delta_correlations"]["col"] = j;
+			json_out["delta_correltaions"]["initial_atom"] = matrix[i][j];
+			switch (matrix[i][j])
+			{
+				case 1: matrix[i][j] = 2;
+						json_out["delta_correlations"]["new_atom"] = matrix[i][j];
+						json_out"delta_correlations"]["delta_corr"] = dot(ECI_vec, calc_corr(matrix));
+						break;
+				case 2: matrix[i][j] = 1;
+						json_out["delta_correlations"]["new_atom"] = matrix[i][j];
+						json_out["delta_correlations"]["delta_corr"] = dot(ECI_vec, calc_corr(matrix));
+						break;
+			}
+		}
+	}
 
 }
 
