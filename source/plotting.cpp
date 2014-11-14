@@ -54,11 +54,15 @@ int main()
 				}
 
 			}
+			//add squares
+			//add non-absolute value
 			mean_spin = abs(spin_sum/(matrix.size()*matrix[0].size()));
 
 			mean_spin_sum += mean_spin;
 		}
 
+		//for non-squared, calculate average and then square
+		//calculate average for non-abs as well
 		ensemble_average = mean_spin_sum/(num_passes);
 
 		cout << "begin" << endl;
