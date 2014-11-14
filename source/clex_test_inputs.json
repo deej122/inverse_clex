@@ -1,0 +1,12 @@
+{
+	"create_ECI_vec_inputs":
+	"calc_corr_inputs":
+	"calc_corr_1NN_inputs":
+	"calc_corr_2NN_inputs":
+	"calc_corr_3NN_inputs":
+	"calc_delta_corr_inputs":
+	"calc_delta_corr_1NN_inputs":
+	"calc_delta_corr_2NN_inputs":
+	"calc_delta_corr_3NN_inputs":
+	"dot_inputs"
+}
