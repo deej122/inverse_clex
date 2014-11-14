@@ -19,7 +19,7 @@ ifneq "$(BOOST_INCLUDE)" ""
 endif
 
 
-OBJS = o/monte_carlo.o o/clex.o o/metropolis.o external/jsonParser/jsonParser.o
+OBJS = monte_carlo.o plotting.o o/clex.o o/metropolis.o external/jsonParser/jsonParser.o
 CXX = g++ 
 CPPFLAGS += -w -O3 $(foreach i,$(INCLUDE),-I$(i))
 
@@ -37,10 +37,10 @@ endif
 execute_mc : $(OBJS)
 	$(CXX) $(LFLAGS) $(CPPFLAGS) $(OBJS) -o execute_mc
 
-#add execute_inverse_clex
+plotting.o: source/plotting.cpp h/metropolis.h h/clex.h
+	$(CXX) -c source/plotting.cpp $(CPPFLAGS)
 
-
-o/monte_carlo.o: source/monte_carlo.cpp h/metropolis.h h/clex.h
+monte_carlo.o: source/monte_carlo.cpp h/metropolis.h h/clex.h
 	$(CXX) -c source/monte_carlo.cpp $(CPPFLAGS)
 
 o/metropolis.o: h/metropolis.h source/metropolis.cpp h/clex.h
@@ -56,5 +56,5 @@ FORCE:
 
 
 clean:
-	@rm -f *.o *~ monte_carlo metropolis file_out clex clex.json
+	@rm -f *.o *~ monte_carlo metropolis plotting file_out clex clex.json
 	@cd external/jsonParser; make clean
