@@ -155,7 +155,6 @@ vector< vector<int> > metropolis(vector< vector<int> > & matrix, const vector<do
 	}
 	//print out new energy
 	//should always be <= to total_energy printed out in main
-	cout << "The new energy of the system is: " << init_energy << endl;
 
 	return matrix;
 }
