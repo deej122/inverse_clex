@@ -6,4 +6,5 @@
 *clex
 *metropolis
 *monte_carlo
+*execute_mc
 *.o
