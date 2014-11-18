@@ -8,3 +8,8 @@
 *monte_carlo
 *execute_mc
 *.o
+*plotting_data.json
+*plotting_data_10.json
+*plotting_data_100.json
+*plotting_data_1000.json
+*monte_carlo_calcs.json
