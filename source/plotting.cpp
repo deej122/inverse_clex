@@ -44,7 +44,7 @@ int main()
 
 	cout << 'writing json' << endl;
 
-	for (temp=0; temp<=1000000000; temp = temp+100000)
+	for (temp=100; temp<=1e5; temp = temp*1.2)
 	{
 		double mean_spin_sum_abs = 0;
 		double mean_spin_sum = 0;
