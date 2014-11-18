@@ -44,7 +44,7 @@ int main()
 
 	cout << 'writing json' << endl;
 
-	for (temp=0.001; temp<=1000000000; temp = temp*10)
+	for (temp=0; temp<=1000000000; temp = temp+100000)
 	{
 		double mean_spin_sum_abs = 0;
 		double mean_spin_sum = 0;
@@ -54,6 +54,8 @@ int main()
 		{
 			double spin_sum = 0;
 			matrix=metropolis(matrix, ECI_vec, temp);
+
+			//adds up the spins
 			for (i=0; i<matrix.size(); i++)
 			{
 				for (j=0; j<matrix[i].size(); j++)
