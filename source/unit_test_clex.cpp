@@ -99,14 +99,14 @@ void check_create_ECI_vec(jsonParser & inputs, jsonParser & output_key)
 	int pass_counter=0;
 	for (int num_tests=0; num_tests < inputs["create_ECI_vec_inputs"].size(); num_tests++)
 	{
-		vector<double> test_ECI_vec = create_ECI_vec(inputs["create_ECI_vec_inputs"][num_tests][0], inputs["create_ECI_vec_inputs"][num_tests][1], inputs["create_ECI_vec"][num_tests][2]);
-		if ( test_ECI_vec == output_key["create_ECI_vec_outputs"][num_tests])
+		vector<double> test_ECI_vec = create_ECI_vec(inputs["create_ECI_vec_inputs"][num_tests][0].get<double>(), inputs["create_ECI_vec_inputs"][num_tests][1].get<double>(), inputs["create_ECI_vec"][num_tests][2].get<double>());
+		if ( test_ECI_vec == output_key["create_ECI_vec_outputs"][num_tests].get< vector<double> >())
 		{
 			pass_counter++;
 		}
 		else
 		{
-			cout << "Failed create_ECI_vec function on input number " << num_tests << endl;
+			cout << "Failed create_ECI_vec function on input number " << num_tests << endl
 				 << "current output is: [ " << test_ECI_vec[0] << ", " << test_ECI_vec[1] << ", " << test_ECI_vec[2] << " ]" << endl;
 		}
 		if (pass_counter == inputs["create_ECI_vec_inputs"].size())
@@ -123,8 +123,8 @@ void check_calc_corr(jsonParser & inputs, jsonParser & output_key)
 	int pass_counter=0;
 	for (int num_tests=0; num_tests < inputs["calc_corr_inputs"].size(); num_tests++)
 	{
-		vector<double> test_calc_corr = calc_corr(inputs["calc_corr_inputs"][num_tests]);
-		if ( test_calc_corr == output_key["calc_corr_outputs"][num_tests])
+		vector<double> test_calc_corr = calc_corr(inputs["calc_corr_inputs"][num_tests].get< vector< vector<int> > >());
+		if ( test_calc_corr == output_key["calc_corr_outputs"][num_tests].get< vector<double> >())
 		{
 			pass_counter++;
 		}
@@ -146,8 +146,8 @@ void check_calc_corr_1NN(jsonParser & inputs, jsonParser & output_key)
 	int pass_counter=0;
 	for(int num_tests=0; num_tests < inputs["calc_corr_1NN_inputs"].size(); num_tests++)
 	{
-		double test_calc_corr_1NN = calc_corr_1NN(inputs["calc_corr_1NN_inputs"][num_tests]);
-		if(test_calc_corr_1NN == output_key["calc_corr_1NN_outputs"][num_tests])
+		double test_calc_corr_1NN = calc_corr_1NN(inputs["calc_corr_1NN_inputs"][num_tests].get< vector< vector<int> > >());
+		if(test_calc_corr_1NN == output_key["calc_corr_1NN_outputs"][num_tests].get<double>())
 		{
 			pass_counter++;
 		}
@@ -169,8 +169,8 @@ void check_calc_corr_2NN(jsonParser & inputs, jsonParser & output_key)
 	int pass_counter=0;
 	for(int num_tests=0; num_tests < inputs["calc_corr_2NN_inputs"].size(); num_tests++)
 	{
-		double test_calc_corr_2NN = calc_corr_2NN(inputs["calc_corr_2NN_inputs"][num_tests]);
-		if(test_calc_corr_2NN == output_key["calc_corr_2NN_outputs"][num_tests])
+		double test_calc_corr_2NN = calc_corr_2NN(inputs["calc_corr_2NN_inputs"][num_tests].get< vector< vector<int> > >());
+		if(test_calc_corr_2NN == output_key["calc_corr_2NN_outputs"][num_tests].get<double>())
 		{
 			pass_counter++;
 		}
@@ -192,8 +192,8 @@ void check_calc_corr_3NN(jsonParser & inputs, jsonParser & output_key)
 	int pass_counter=0;
 	for(int num_tests=0; num_tests < inputs["calc_corr_3NN_inputs"].size(); num_tests++)
 	{
-		double test_calc_corr_3NN = calc_corr_2NN(inputs["calc_corr_3NN_inputs"][num_tests]);
-		if(test_calc_corr_3NN == output_key["calc_corr_3NN_outputs"][num_tests])
+		double test_calc_corr_3NN = calc_corr_2NN(inputs["calc_corr_3NN_inputs"][num_tests].get< vector< vector<int> > >());
+		if(test_calc_corr_3NN == output_key["calc_corr_3NN_outputs"][num_tests].get<double>())
 		{
 			pass_counter++;
 		}
@@ -216,8 +216,8 @@ void check_calc_delta_corr(jsonParser & inputs, jsonParser & output_key)
 	int pass_counter=0;
 	for (int num_tests=0; num_tests < inputs["calc_delta_corr_inputs"].size(); num_tests++)
 	{
-		vector<double> test_calc_delta_corr = calc_delta_corr(inputs["calc_delta_corr_inputs"][num_tests][0], inputs["calc_delta_corr_inputs"][num_tests][1], inputs["calc_delta_corr_inputs"][num_tests][2], inputs["calc_delta_corr_inputs"][num_tests][3]);
-		if ( test_calc_delta_corr == output_key["calc_delta_corr_outputs"][num_tests])
+		vector<double> test_calc_delta_corr = calc_delta_corr(inputs["calc_delta_corr_inputs"][num_tests][0].get< vector< vector<int> > >(), inputs["calc_delta_corr_inputs"][num_tests][1].get<int>(), inputs["calc_delta_corr_inputs"][num_tests][2].get<int>(), inputs["calc_delta_corr_inputs"][num_tests][3].get<int>());
+		if ( test_calc_delta_corr == output_key["calc_delta_corr_outputs"][num_tests].get< vector<double> >())
 		{
 			pass_counter++;
 		}
@@ -239,8 +239,8 @@ void check_calc_delta_corr_1NN(jsonParser & inputs, jsonParser & output_key)
 	int pass_counter=0;
 	for(int num_tests=0; num_tests < inputs["calc_delta_corr_1NN_inputs"].size(); num_tests++)
 	{
-		double test_calc_delta_corr_1NN = calc_delta_corr_1NN(inputs["calc_corr_1NN_inputs"][num_tests][0], inputs["calc_corr_1NN_inputs"][num_tests][1], inputs["calc_corr_1NN_inputs"][num_tests][2], inputs["calc_corr_1NN_inputs"][num_tests][3]);
-		if(test_calc_delta_corr_1NN == output_key["calc_delta_corr_1NN_outputs"][num_tests])
+		double test_calc_delta_corr_1NN = calc_delta_corr_1NN(inputs["calc_corr_1NN_inputs"][num_tests][0].get< vector< vector<int> > >(), inputs["calc_corr_1NN_inputs"][num_tests][1].get<int>(), inputs["calc_corr_1NN_inputs"][num_tests][2].get<int>(), inputs["calc_corr_1NN_inputs"][num_tests][3].get<int>());
+		if(test_calc_delta_corr_1NN == output_key["calc_delta_corr_1NN_outputs"][num_tests].get<double>())
 		{
 			pass_counter++;
 		}
@@ -262,8 +262,8 @@ void check_calc_delta_corr_2NN(jsonParser & inputs, jsonParser & output_key)
 	int pass_counter=0;
 	for(int num_tests=0; num_tests < inputs["calc_delta_corr_2NN_inputs"].size(); num_tests++)
 	{
-		double test_calc_delta_corr_2NN = calc_delta_corr_1NN(inputs["calc_corr_2NN_inputs"][num_tests][0], inputs["calc_corr_2NN_inputs"][num_tests][1], inputs["calc_corr_2NN_inputs"][num_tests][2], inputs["calc_corr_2NN_inputs"][num_tests][3]);
-		if(test_calc_delta_corr_2NN == output_key["calc_delta_corr_2NN_outputs"][num_tests])
+		double test_calc_delta_corr_2NN = calc_delta_corr_1NN(inputs["calc_corr_2NN_inputs"][num_tests][0].get< vector< vector<int> > >(), inputs["calc_corr_2NN_inputs"][num_tests][1].get<int>(), inputs["calc_corr_2NN_inputs"][num_tests][2].get<int>(), inputs["calc_corr_2NN_inputs"][num_tests][3].get<int>());
+		if(test_calc_delta_corr_2NN == output_key["calc_delta_corr_2NN_outputs"][num_tests].get<double>())
 		{
 			pass_counter++;
 		}
@@ -286,8 +286,8 @@ void check_calc_delta_corr_3NN(jsonParser & inputs, jsonParser & output_key)
 	int pass_counter=0;
 	for(int num_tests=0; num_tests < inputs["calc_delta_corr_3NN_inputs"].size(); num_tests++)
 	{
-		double test_calc_delta_corr_3NN = calc_delta_corr_3NN(inputs["calc_corr_3NN_inputs"][num_tests][0], inputs["calc_corr_3NN_inputs"][num_tests][1], inputs["calc_corr_3NN_inputs"][num_tests][2], inputs["calc_corr_3NN_inputs"][num_tests][3]);
-		if(test_calc_delta_corr_3NN == output_key["calc_delta_corr_3NN_outputs"][num_tests])
+		double test_calc_delta_corr_3NN = calc_delta_corr_3NN(inputs["calc_corr_3NN_inputs"][num_tests][0].get< vector< vector<int> > >(), inputs["calc_corr_3NN_inputs"][num_tests][1].get<int>(), inputs["calc_corr_3NN_inputs"][num_tests][2].get<int>(), inputs["calc_corr_3NN_inputs"][num_tests][3].get<int>());
+		if(test_calc_delta_corr_3NN == output_key["calc_delta_corr_3NN_outputs"][num_tests].get<double>())
 		{
 			pass_counter++;
 		}
@@ -309,8 +309,8 @@ void check_dot(jsonParser & inputs, jsonParser & output_key)
 	int pass_counter=0;
 	for(int num_tests=0; num_tests < inputs["dot_inputs"].size(); num_tests++)
 	{
-		double test_dot = dot(inputs["dot_inputs"][num_tests][0], inputs["dot_inputs"][num_tests][1]);
-		if(test_dot == out_key["dot_outputs"][num_tests])
+		double test_dot = dot(inputs["dot_inputs"][num_tests][0].get< vector<double> >(), inputs["dot_inputs"][num_tests][1].get< vector<double> >());
+		if(test_dot == output_key["dot_outputs"][num_tests].get<double>())
 		{
 			pass_counter++;
 		}
