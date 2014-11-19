@@ -6,7 +6,6 @@
 #include "../h/clex.h"
 #include "../h/metropolis.h"
 
-// comment
 using namespace std;
 
 //declare procedures
