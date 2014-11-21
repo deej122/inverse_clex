@@ -1,5 +1,9 @@
 import json
 import math
+#importing scipy
+import numpy
+from scipy.optimize import minimize
+
 
 from decimal import *
 json_mc_data = open("monte_carlo_calcs.json").read()
@@ -29,6 +33,9 @@ for site_count in range (0, len(mc_data["Data_by_pass"][len(mc_data["Data_by_pas
 		#dot product of delta_corr and ECI_vec
 		for a in range (0, len(delta_corr_vec)-1):
 			dot_product += delta_corr_vec[a]*ECI_vec[a]
+			#Where do we do this minimization? Because ECI_vec is our variable and has to be one of the inputs.
+			result = minimize(dot_product, ECI_vec, method="nelder-mead")
+		#This causes an overflow error
 		summation += e**(dot_product*beta*-1)
 		P = 1/summation
 	Q += P
