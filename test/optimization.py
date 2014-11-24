@@ -44,8 +44,6 @@ def calc_ln_Q (f_ECI_vec, f_mc_data):
 		#this loop iterates over the delta_corr vecs for a single site
 		#for delta_corr_count in f_mc_data["Data_by_pass"]["Species"]:
 		for delta_corr_count in range (0, 1):
-			#recieving an error that says site_count is a dict :(
-			# site_count = int(site_count)
 			delta_corr_count = int(delta_corr_count)
 			delta_corr_vec = last_pass_info["sites"][site_count]["delta_corrs"][delta_corr_count]
 			for a in delta_corr_vec:
