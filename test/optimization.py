@@ -36,18 +36,22 @@ def calc_ln_Q (f_ECI_vec, f_mc_data):
 	last_pass_info = f_mc_data["Data_by_pass"][len(f_mc_data["Data_by_pass"])-1]
 
 	#this loop finds the information for the matrix after the last pass
-	for site_count in last_pass_info["sites"]:
+	for site in last_pass_info["sites"]:
+		#get index of site_count item
+		site_count = last_pass_info["sites"].index(site)
 		#reset summation to 0 after each site
 		summation = 0
 		#this loop iterates over the delta_corr vecs for a single site
 		#for delta_corr_count in f_mc_data["Data_by_pass"]["Species"]:
 		for delta_corr_count in range (0, 1):
 			#recieving an error that says site_count is a dict :(
-			site_count = int(site_count)
+			# site_count = int(site_count)
 			delta_corr_count = int(delta_corr_count)
 			delta_corr_vec = last_pass_info["sites"][site_count]["delta_corrs"][delta_corr_count]
-			for a in len(delta_corr_vec)-1:
-				dot_product += delta_corr_vec[a]*f_ECI_vec[a]
+			for a in delta_corr_vec:
+				#get index of a
+				i = delta_corr_vec.index(a)
+				dot_product += delta_corr_vec[i]*f_ECI_vec[i]
 		f_ln_Q += (dot_product*beta)
 
 	return f_ln_Q
