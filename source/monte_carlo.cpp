@@ -16,9 +16,10 @@ int monte_carlo()
 	double temp;
 	vector<int> dim;
 	vector<double> ECI_vec, species;
+	string filename = "ECI_conditions.json";
 
 	//read in json information from ECI_conditions.json and set variables equal to the inputs
-	read_json_in(temp, dim, species, ECI_vec, num_passes);
+	read_json_in(temp, dim, species, ECI_vec, num_passes, filename);
 
 	//outputs the conditions ot a json file
 	jsonParser json_out;

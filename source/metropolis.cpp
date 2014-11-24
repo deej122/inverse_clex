@@ -7,15 +7,15 @@
 
 using namespace std;
 
-void read_json_in (double & temp, vector<int> & dim, vector<double> & species, vector<double> & ECI_vec, int & num_passes);
+void read_json_in (double & temp, vector<int> & dim, vector<double> & species, vector<double> & ECI_vec, int & num_passes, string & filename);
 void write_json_out (const vector<double> ECI_vec, const vector< vector<int> > & matrix, jsonParser & json_out, const int & pass_count, const vector<double> & species);
 vector< vector<int> > metropolis(vector< vector<int> > & matrix, const vector<double> & ECI_vec, const double & T);
 
 
-void read_json_in (double & temp, vector<int> & dim, vector<double> & species, vector<double> & ECI_vec, int & num_passes)
+void read_json_in (double & temp, vector<int> & dim, vector<double> & species, vector<double> & ECI_vec, int & num_passes, string & filename)
 {
 	jsonParser json_in;
-	json_in.read(std::string("ECI_conditions.json"));
+	json_in.read(std::string(filename));
 	temp = json_in["Temperature"].get<double>();
 	dim = json_in["Dimensions"].get< vector<int> >();
 	species = json_in["Species"].get< vector<double> >();
