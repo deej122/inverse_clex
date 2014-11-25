@@ -2,8 +2,9 @@ import json
 import matplotlib.pyplot as plot_ensemble_avg_abs
 import matplotlib.pyplot as plot_ensemble_avg_squared
 import matplotlib.pyplot as plot_ensemble_avg_squares
+import matplotlib.patches as mpatches
 
-input_file_name = ["plotting_data_10.json", "plotting_data_100.json", "plotting_data_1000.json"]
+input_file_name = ["plotting_data_D5x5_P1000_ECI1.json", "plotting_data_D25x25_P1000_ECI1.json", "plotting_data_D50x50_P1000_ECI1.json"]
 color = ["r", "b", "g"]
 
 fig_ensemble_avg_abs = plot_ensemble_avg_abs.figure()
@@ -60,9 +61,18 @@ plot1.set_ylim([0,1.2])
 plot2.set_ylim([0,1.2])
 plot3.set_ylim([0,1.2])
 
+#making legend
+#legend doesn't show up on the graphs :(
+r_patch = mpatches.Patch(color='red', label=input_file_name[0])
+g_patch = mpatches.Patch(color='green', label=input_file_name[1])
+b_patch = mpatches.Patch(color='blue', label=input_file_name[2])
+plot_ensemble_avg_abs.legend(handles=[r_patch, g_patch, b_patch])
+plot_ensemble_avg_squared.legend(handles=[r_patch, g_patch, b_patch])
+plot_ensemble_avg_squares.legend(handles=[r_patch, g_patch, b_patch])
+
 plot_ensemble_avg_abs.show()
-plot_ensemble_avg_squared()
-plot_ensemble_avg_squares()
+plot_ensemble_avg_squared.show()
+plot_ensemble_avg_squares.show()
 
 
 
