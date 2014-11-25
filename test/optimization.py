@@ -1,7 +1,7 @@
 import json
 import math
 #importing scipy
-import numpy
+import numpy as np
 from scipy.optimize import minimize
 
 
@@ -15,7 +15,7 @@ three_ECI = 1
 ECI_vec = [one_ECI, two_ECI, three_ECI]
 
 #function to calculate ln_Q
-#i put f in front of the variable names to not confuse it with the variables outside of the funtion
+#I put 'f' in front of the variable names to not confuse it with the variables outside of the funtion
 def calc_ln_Q (f_ECI_vec, f_mc_data):
 	"Calculates ln(Q)"
 
@@ -42,7 +42,7 @@ def calc_ln_Q (f_ECI_vec, f_mc_data):
 		#reset summation to 0 after each site
 		summation = 0
 		#this loop iterates over the delta_corr vecs for a single site
-		#for delta_corr_count in f_mc_data["Data_by_pass"]["Species"]:
+		#this only works for two species matrixes
 		for delta_corr_count in range (0, 1):
 			delta_corr_count = int(delta_corr_count)
 			delta_corr_vec = last_pass_info["sites"][site_count]["delta_corrs"][delta_corr_count]
@@ -56,3 +56,5 @@ def calc_ln_Q (f_ECI_vec, f_mc_data):
 
 ln_Q = calc_ln_Q(ECI_vec, mc_data)
 print "ln(Q) = ", ln_Q
+optimization = minimize(calc_ln_Q, ECI_vec, method='nelder-mead', args=(mc_data))
+print "ECI vector = ", ECI_vec[0], ECI_vec[1], ECI_vec[2]
