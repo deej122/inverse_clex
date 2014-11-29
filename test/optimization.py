@@ -10,14 +10,17 @@ json_mc_data = open("monte_carlo_calcs.json").read()
 mc_data = json.loads(json_mc_data)
 
 one_ECI = 1
-two_ECI = 1
-three_ECI = 1
+two_ECI = 0
+three_ECI = 0
 ECI_vec = [one_ECI, two_ECI, three_ECI]
 
 #function to calculate ln_Q
-#I put 'f' in front of the variable names to not confuse it with the variables outside of the funtion
-def calc_ln_Q (f_ECI_vec, f_mc_data):
+#I put 'f' in front of the variable names to not confuse it with the variables outside of the function
+def calc_ln_Q (f_ECI_vec):
 	"Calculates ln(Q)"
+
+	#set mc_data in function rather than taking input
+	f_mc_data = mc_data
 
 	#set up needed variables
 	delta_corr_count = 0
@@ -54,7 +57,14 @@ def calc_ln_Q (f_ECI_vec, f_mc_data):
 
 	return f_ln_Q
 
-ln_Q = calc_ln_Q(ECI_vec, mc_data)
+# ln_Q = calc_ln_Q(ECI_vec, mc_data)
+ln_Q = calc_ln_Q(ECI_vec)
 print "ln(Q) = ", ln_Q
-optimization = minimize(calc_ln_Q, ECI_vec, method='nelder-mead', args=(mc_data))
+# optimization = minimize(calc_ln_Q, ECI_vec, method='nelder-mead', args=(mc_data))
+optimization = minimize(calc_ln_Q, ECI_vec, method='nelder-mead')
+#prints original ECI vector
 print "ECI vector = ", ECI_vec[0], ECI_vec[1], ECI_vec[2]
+#display returned optimization stats
+#this is a MAXIMIZATION of ln_Q. We want this to be a minimization. So should we change line 58 to return 1/f_ln_Q ?
+print optimization
+#x = new ECI_vector?
