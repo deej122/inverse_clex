@@ -57,14 +57,19 @@ def calc_ln_Q (f_ECI_vec):
 
 	return f_ln_Q
 
-# ln_Q = calc_ln_Q(ECI_vec, mc_data)
+# old: ln_Q = calc_ln_Q(ECI_vec, mc_data)
 ln_Q = calc_ln_Q(ECI_vec)
 print "ln(Q) = ", ln_Q
-# optimization = minimize(calc_ln_Q, ECI_vec, method='nelder-mead', args=(mc_data))
+# old: optimization = minimize(calc_ln_Q, ECI_vec, method='nelder-mead', args=(mc_data))
 optimization = minimize(calc_ln_Q, ECI_vec, method='nelder-mead')
+
 #prints original ECI vector
 print "ECI vector = ", ECI_vec[0], ECI_vec[1], ECI_vec[2]
+
 #display returned optimization stats
-#this is a MAXIMIZATION of ln_Q. We want this to be a minimization. So should we change line 58 to return 1/f_ln_Q ?
+#this is a MAXIMIZATION of ln_Q. We want this to be a MINIMIZATION. So should we change line 58 to return 1/f_ln_Q ?
 print optimization
 #x = new ECI_vector?
+
+#success = False 
+#because it reaches max number of iterations. Does this mean it's not actually optimized?
