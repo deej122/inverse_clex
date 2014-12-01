@@ -69,19 +69,19 @@ int main()
 				for (j=0; j<matrix[i].size(); j++)
 				{
 					spin_sum += matrix[i][j];
-					x_vec.pushback(i);
-					y_vec.pushback(j);
+					x_vec.push_back(i);
+					y_vec.push_back(j);
 					switch (matrix[i][j])
 					{
-						case 1: color_vec.pushback('b');
+						case 1: color_vec.push_back('b');
 								break;
-						case -1: color_vec.pushback('r');
+						case -1: color_vec.push_back('r');
 								break;
 					}
 				}
-			json_anim["x"].pushback(x_vec);
-			json_anim["y"].pushback(y_vec);
-			json_anim["color"].pushback(color_vec);
+			json_anim["x"].push_back(x_vec);
+			json_anim["y"].push_back(y_vec);
+			json_anim["color"].push_back(color_vec);
 			}
 			//absolute value of mean spin
 			mean_spin_abs = abs(spin_sum/(matrix.size()*matrix[0].size()));
@@ -126,7 +126,7 @@ int main()
 	
 	cout << "here 100" << endl;
 	json_out.write(std::string("plotting_data.json"));
-	json_anim.write(std::strong("animation_data.json"));
+	json_anim.write(std::string("animation_data.json"));
 	
 	return 0;
 }
