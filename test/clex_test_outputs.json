@@ -1,0 +1,15 @@
+{
+	"create_ECI_vec_outputs":[
+	[1, 2, 3]
+	[0.1, 0.2, 0.3]
+	]
+	"calc_corr_outputs":
+	"calc_corr_1NN_outputs":
+	"calc_corr_2NN_outputs":
+	"calc_corr_3NN_outputs":
+	"calc_delta_corr_outputs":
+	"calc_delta_corr_1NN_outputs":
+	"calc_delta_corr_2NN_outputs":
+	"calc_delta_corr_3NN_outputs":
+	"dot_outputs"
+}

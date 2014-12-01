@@ -1,0 +1,15 @@
+{
+	"create_ECI_vec_inputs": [
+	[1, 2, 3]
+	[0.1, 0.2, 0.3]
+	]
+	"calc_corr_inputs":
+	"calc_corr_1NN_inputs":
+	"calc_corr_2NN_inputs":
+	"calc_corr_3NN_inputs":
+	"calc_delta_corr_inputs":
+	"calc_delta_corr_1NN_inputs":
+	"calc_delta_corr_2NN_inputs":
+	"calc_delta_corr_3NN_inputs":
+	"dot_inputs"
+}
