@@ -61,15 +61,18 @@ def calc_ln_Q (f_ECI_vec):
 ln_Q = calc_ln_Q(ECI_vec)
 print "ln(Q) = ", ln_Q
 # old: optimization = minimize(calc_ln_Q, ECI_vec, method='nelder-mead', args=(mc_data))
-optimization = minimize(calc_ln_Q, ECI_vec, method='nelder-mead')
+optimization_NM = minimize(calc_ln_Q, ECI_vec, method='nelder-mead')
+# should calculate derivative and pass in using jas = "derivative" property
+#right now it calculates derivative using first differences approximation
+optimization_BFGS = minimize(calc_ln_Q, ECI_vec, method='BFGS')
 
 #prints original ECI vector
 print "ECI vector = ", ECI_vec[0], ECI_vec[1], ECI_vec[2]
 
 #display returned optimization stats
-#this is a MAXIMIZATION of ln_Q. We want this to be a MINIMIZATION. So should we change line 58 to return 1/f_ln_Q ?
-print optimization
+print "Nelder-Mead Approximation: ", optimization_NM
+print "Broyden-Fletcher-Goldfarb-Shanno Approximation: ", optimization_BFGS
 #x = new ECI_vector?
 
-#success = False 
+#success = False for Nelder-Mead
 #because it reaches max number of iterations. Does this mean it's not actually optimized?
