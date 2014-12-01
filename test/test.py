@@ -3,6 +3,7 @@ import matplotlib.pyplot as plot_ensemble_avg_abs
 import matplotlib.pyplot as plot_ensemble_avg_squared
 import matplotlib.pyplot as plot_ensemble_avg_squares
 import matplotlib.patches as mpatches
+import matplotlib.pyplot as matrix_anim
 
 input_file_name = ["plotting_data_D5x5_P1000_ECI1.json", "plotting_data_D25x25_P1000_ECI1.json", "plotting_data_D50x50_P1000_ECI1.json"]
 color = ["r", "b", "g"]
@@ -44,12 +45,32 @@ for index in range(3):
 	ensemble_average_squared = []
 	ensemble_average_squares = []
 
+	#declare x, y, and color vectors to plot animation these will be 3D matrices
+	x_list = []
+	y_list = []
+	color_list = []
+	x_matrix = []
+	y_matrix = []
+	color_matrix = []
+	x_coor = []
+	y_coor = []
+	color_coor = []
+
 	for i in range(0, length):
 		temperature.append(result["plotting_data"][i][0])
 		ensemble_average_absolute.append(result["plotting_data"][i][1])
 		ensemble_average_squared.append(result["plotting_data"][i][2])
 		ensemble_average_squares.append(result["plotting_data"][i][3])
 
+		#fill in x_coor, y_coor, and color_coor to plot animation
+		x_list.append(result["plotting_data"][i][])
+		x_matrix.append(x_list)
+		y_matrix.append(y_list)
+		color_matrix.append(color_list)
+
+	x_coor.append(x_matrix)
+	y_coor.append(y_matrix)
+	color_coor.append(color_matrix)
 
 
 	plot1.plot(temperature, ensemble_average_absolute, 'o-', c=color[index])

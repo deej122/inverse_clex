@@ -24,6 +24,14 @@ int main()
 	jsonParser json_out;
 	json_out["plotting_data"] = jsonParser::array();
 
+	//outputs information to a json for animation of matrix
+	jsonParser json_anim;
+	json_anim["x"] = jsonParser::array();
+	json_anim["y"] = jsonParser::array();
+	json_anim["color"] = jsonParser::array();
+	vector<int> x_vec, y_vec;
+	string color_vec;
+
 
 	vector< vector<int> > matrix = generate_matrix(dim[0], dim[1]);
 	cout << "generated matrix" << endl;
@@ -61,8 +69,19 @@ int main()
 				for (j=0; j<matrix[i].size(); j++)
 				{
 					spin_sum += matrix[i][j];
+					x_vec.pushback(i);
+					y_vec.pushback(j);
+					switch (matrix[i][j])
+					{
+						case 1: color_vec.pushback('b');
+								break;
+						case -1: color_vec.pushback('r');
+								break;
+					}
 				}
-
+			json_anim["x"].pushback(x_vec);
+			json_anim["y"].pushback(y_vec);
+			json_anim["color"].pushback(color_vec);
 			}
 			//absolute value of mean spin
 			mean_spin_abs = abs(spin_sum/(matrix.size()*matrix[0].size()));
@@ -107,6 +126,7 @@ int main()
 	
 	cout << "here 100" << endl;
 	json_out.write(std::string("plotting_data.json"));
+	json_anim.write(std::strong("animation_data.json"));
 	
 	return 0;
 }
