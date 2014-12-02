@@ -50,39 +50,47 @@ int main()
 	double ensemble_average_squared = 0;
 	double ensemble_average_squares = 0;
 
-	cout << 'writing json' << endl;
+	cout << "writing json" << endl;
 
 	for (temp=100; temp<=1e5; temp = temp*1.2)
 	{
+		cout << "in first for-loop" << endl;
 		double mean_spin_sum_abs = 0;
 		double mean_spin_sum = 0;
 		double mean_spin_sum_squares = 0;
 
 		for(pass_count=1; pass_count <= num_passes; pass_count++)
 		{
+			cout << "in second for-loop" << endl;
 			double spin_sum = 0;
 			matrix=metropolis(matrix, ECI_vec, temp);
 
 			//adds up the spins
 			for (i=0; i<matrix.size(); i++)
 			{
+				cout << "in third for-loop" << endl;
 				for (j=0; j<matrix[i].size(); j++)
 				{
+					//cout << "in fourth for-loop" << endl;
 					spin_sum += matrix[i][j];
 					x_vec.push_back(i);
 					y_vec.push_back(j);
 					switch (matrix[i][j])
 					{
 						case 1: color_vec.push_back('b');
+								//cout << "in case 1" << endl;
 								break;
 						case -1: color_vec.push_back('r');
+								//cout << "in case 2" << endl;
 								break;
 					}
 				}
+				cout << "here 1" << std::endl;
 			json_anim["x"].push_back(x_vec);
 			json_anim["y"].push_back(y_vec);
 			json_anim["color"].push_back(color_vec);
 			}
+			cout << "here 2" << std::endl;
 			//absolute value of mean spin
 			mean_spin_abs = abs(spin_sum/(matrix.size()*matrix[0].size()));
 			//non-absolute value of mean spin
@@ -96,6 +104,7 @@ int main()
 			mean_spin_sum += mean_spin;
 			//sum of squared mean spins
 			mean_spin_sum_squares += mean_spin_square;
+			cout << "here 3" << std::endl;
 		}
 
 		//for non-squared, calculate average and then square
