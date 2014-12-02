@@ -21,20 +21,31 @@ int main()
 	read_json_in(temp, dim, species, ECI_vec, num_passes);
 
 	//outputs the conditions ot a json file
-	jsonParser json_out;
-	json_out["plotting_data"] = jsonParser::array();
+	jsonParser json_out_plotting;
+	json_out_plotting["plotting_data"] = jsonParser::array();
+
+	jsonParser json_out_mc;
+	json_out_mc["Temp"] = temp;
+	json_out_mc["Species"] = species;
+	json_out_mc["Data_by_pass"] = jsonParser::array();
 
 	//outputs information to a json for animation of matrix
-	jsonParser json_anim;
-	json_anim["x"] = jsonParser::array();
-	json_anim["y"] = jsonParser::array();
-	json_anim["color"] = jsonParser::array();
-	vector<int> x_vec, y_vec;
-	string color_vec;
+	//jsonParser json_anim;
+	//json_anim["x"] = jsonParser::array();
+	//json_anim["y"] = jsonParser::array();
+	//json_anim["color"] = jsonParser::array();
+	//vector<int> x_vec, y_vec;
+	//string color_vec;
 
 
 	vector< vector<int> > matrix = generate_matrix(dim[0], dim[1]);
 	cout << "generated matrix" << endl;
+
+	// allow the matrix to equilibriate. these passes are not considered when doing any calculations
+	for(int equilibriate=0; equilibriate < 1000; equilibriate++)
+	{
+		matrix=metropolis(matrix, ECI_vec, temp);
+	}
 
 	// write out to a json file
 	int pass_count = 0;
@@ -51,6 +62,20 @@ int main()
 	double ensemble_average_squares = 0;
 
 	cout << "writing json" << endl;
+
+	write_json_out (ECI_vec, matrix, json_out_mc, pass_count, species);
+	//for given temperature write json to monte_carlo_calcs
+	for(pass_count=1; pass_count <= num_passes; pass_count++)
+	{
+		matrix=metropolis(matrix, ECI_vec, temp);
+		write_json_out (ECI_vec, matrix, json_out_mc, pass_count, species);
+
+	}
+
+	//reset passcount to 0
+	pass_count=0;
+
+	json_out_mc.write(std::string("monte_carlo_calcs.json"));
 
 	for (temp=100; temp<=1e5; temp = temp*1.2)
 	{
@@ -73,22 +98,22 @@ int main()
 				{
 					//cout << "in fourth for-loop" << endl;
 					spin_sum += matrix[i][j];
-					x_vec.push_back(i);
-					y_vec.push_back(j);
-					switch (matrix[i][j])
-					{
-						case 1: color_vec.push_back('b');
-								//cout << "in case 1" << endl;
-								break;
-						case -1: color_vec.push_back('r');
-								//cout << "in case 2" << endl;
-								break;
-					}
+					//x_vec.push_back(i);
+					//y_vec.push_back(j);
+					//switch (matrix[i][j])
+					//{
+					//	case 1: color_vec.push_back('b');
+					//			//cout << "in case 1" << endl;
+					//			break;
+					//	case -1: color_vec.push_back('r');
+					//			//cout << "in case 2" << endl;
+					//			break;
+					//}
 				}
 				cout << "here 1" << std::endl;
-			json_anim["x"].push_back(x_vec);
-			json_anim["y"].push_back(y_vec);
-			json_anim["color"].push_back(color_vec);
+			//json_anim["x"].push_back(x_vec);
+			//json_anim["y"].push_back(y_vec);
+			//json_anim["color"].push_back(color_vec);
 			}
 			cout << "here 2" << std::endl;
 			//absolute value of mean spin
@@ -118,24 +143,24 @@ int main()
 
 		cout << "begin" << endl;
 		cout << "index: " << index << endl;
-		json_out["plotting_data"].push_back(jsonParser::array());
+		json_out_plotting["plotting_data"].push_back(jsonParser::array());
 		// json_out["plotting_data"][index].push_back(jsonParser::array());
 		cout << "uno" << endl;
 		// json_out["plotting_data"][index]["temperature"] = temp;
-		json_out["plotting_data"][index].push_back(temp);
+		json_out_plotting["plotting_data"][index].push_back(temp);
 		cout << "dos" << endl;
 		// json_out["plotting_data"][index]["average"] = average;
-		json_out["plotting_data"][index].push_back(ensemble_average_abs);
-		json_out["plotting_data"][index].push_back(ensemble_average_squared);
-		json_out["plotting_data"][index].push_back(ensemble_average_squares);
+		json_out_plotting["plotting_data"][index].push_back(ensemble_average_abs);
+		json_out_plotting["plotting_data"][index].push_back(ensemble_average_squared);
+		json_out_plotting["plotting_data"][index].push_back(ensemble_average_squares);
 		cout << "tres" << endl;
 
 		index += 1;
 	}
 	
 	cout << "here 100" << endl;
-	json_out.write(std::string("plotting_data.json"));
-	json_anim.write(std::string("animation_data.json"));
+	json_out_plotting.write(std::string("plotting_data.json"));
+	//json_anim.write(std::string("animation_data.json"));
 	
 	return 0;
 }
