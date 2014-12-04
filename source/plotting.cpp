@@ -42,10 +42,10 @@ int main()
 	cout << "generated matrix" << endl;
 
 	// allow the matrix to equilibriate. these passes are not considered when doing any calculations
-	for(int equilibriate=0; equilibriate < 1000; equilibriate++)
-	{
-		matrix=metropolis(matrix, ECI_vec, temp);
-	}
+	//for(int equilibriate=0; equilibriate < 1000; equilibriate++)
+	//{
+	//	matrix=metropolis(matrix, ECI_vec, temp);
+	//}
 
 	// write out to a json file
 	int pass_count = 0;

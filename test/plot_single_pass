@@ -1,0 +1,40 @@
+import json
+import matplotlib.pyplot as plot_pass_v_abs_spin
+
+input_file_name = ["monte_carlo_calcs_T100_dim5x5.json", "monte_carlo_calcs_T100_dim10x10.json", "monte_carlo_calcs_T100_dim20x20.json"]
+color = ["r","b","g"]
+
+fig_plot_pass_v_avg_abs_spin = plot_pass_v_abs_spin.figure()
+
+plot_1 = fig_plot_pass_v_avg_abs_spin.add_subplot(111)
+plot_1.set_title('Pass vs Absolute Spin Sum')
+plot_1.set_xlabel('Pass Number')
+plot_1.set_ylabel('Absolute Spin Sum')
+
+fetch_json_data = open('monte_carlo_calcs.json').read()
+json_data = json.loads(fetch_json_data)
+
+abs_avg_spin_sum_vec = []
+pass_vec = []
+abs_spin_sum = 0
+
+for index in range(3):
+	fetch_json_data = open(open_file_name[index].read())
+	json_data = json.loads(fetch_json_data)
+
+	abs_avg_spin_sum_vec = []
+	pass_vec = []
+	abs_spin_sum = 0
+
+	for current_pass in json_data["Data_by_pass"]:
+		pass_vec.append(current_pass["pass"])
+		abs_spin_sum = 0
+		for current_pass_sites in current_pass["sites"]:
+			abs_spin_sum += current_pass_sites["curr_occupant"]
+		abs_spin_sum = abs(abs_spin_sum)
+		abs_spin_sum = abs_spin_sum/len(json_data["Data_by_pass"][0]["sites"])
+		abs_avg_spin_sum_vec.append(abs_spin_sum)
+
+	plot_1.plot(pass_vec, abs_avg_spin_sum_vec, 'o-', c=color[index])
+	plot_1.set_xlim([0, 1000])
+	plot_pass_v_abs_spin.show()
