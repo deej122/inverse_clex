@@ -6,8 +6,14 @@ from math import *
 
 
 from decimal import *
-json_mc_data = open("monte_carlo_calcs.json").read()
-mc_data = json.loads(json_mc_data)
+json_mc_data_100 = open("monte_carlo_calcs_100.json").read()
+json_mc_data_1000 = open("monte_carlo_calcs_1000.json").read()
+json_mc_data_10000 = open("monte_carlo_calcs_10000.json").read()
+mc_data_100 = json.loads(json_mc_data_100)
+mc_data_1000 = json.loads(json_mc_data_1000)
+mc_data_10000 = json.loads(json_mc_data_10000)
+
+mc_data = [mc_data_100, mc_data_1000, mc_data_10000]
 
 one_ECI = 0
 two_ECI = 0
@@ -29,16 +35,16 @@ def calc_ln_Q (f_ECI_vec, f_mc_data):
 
 	#set up needed variables
 	delta_corr_count = 0
-	temp = f_mc_data["Temp"]
-	beta = 1/(temp*8.62*10**-5)
-	#Q is the probablity we see the matrix we found. To avoid multiplying all the P's together, we can say lnQ = ln(sum of P's)
 	f_ln_Q = 0
-	pass_info = f_mc_data["Data_by_pass"]
-#add loop to iterate over different files
-	for iteration in pass_info:
-		for site in iteration["sites"]:
-			f_ln_Q += ln_Ps(site, f_ECI_vec, beta)
-
+	#loop to do for data at three temperatures
+	for data_set in f_mc_data:
+		temp = data_set["Temp"] #set temp to "temp" in data set
+		beta = 1/(temp*8.62*10**-5)
+		#Q is the probablity we see the matrix we found. To avoid multiplying all the P's together, we can say lnQ = ln(sum of P's)
+		pass_info = data_set["Data_by_pass"]
+		for iteration in pass_info:
+			for site in iteration["sites"]:
+				f_ln_Q += ln_Ps(site, f_ECI_vec, beta)
 	return f_ln_Q
 
 ln_Q = calc_ln_Q(ECI_vec, mc_data)
@@ -46,11 +52,11 @@ print "ln(Q) = ", ln_Q
 optimization_NM = minimize(calc_ln_Q, ECI_vec, method='nelder-mead', args=(mc_data,))
 # should calculate derivative and pass in using jas = "derivative" property
 #right now it calculates derivative using first differences approximation
-optimization_BFGS = minimize(calc_ln_Q, ECI_vec, method='BFGS', args=(mc_data,))
+# optimization_BFGS = minimize(calc_ln_Q, ECI_vec, method='BFGS', args=(mc_data,))
 
 #prints original ECI vector
 print "ECI vector = ", ECI_vec[0], ECI_vec[1], ECI_vec[2]
 
 #display returned optimization stats
 print "Nelder-Mead Approximation: ", optimization_NM
-print "Broyden-Fletcher-Goldfarb-Shanno Approximation: ", optimization_BFGS
+# print "Broyden-Fletcher-Goldfarb-Shanno Approximation: ", optimization_BFGS
