@@ -6,14 +6,16 @@ from math import *
 
 
 from decimal import *
+json_mc_data_10 = open("monte_carlo_calcs_10.json").read()
 json_mc_data_100 = open("monte_carlo_calcs_100.json").read()
 json_mc_data_1000 = open("monte_carlo_calcs_1000.json").read()
 json_mc_data_10000 = open("monte_carlo_calcs_10000.json").read()
+mc_data_10 = json.loads(json_mc_data_10)
 mc_data_100 = json.loads(json_mc_data_100)
 mc_data_1000 = json.loads(json_mc_data_1000)
 mc_data_10000 = json.loads(json_mc_data_10000)
 
-mc_data = [mc_data_100, mc_data_1000, mc_data_10000]
+mc_data = [mc_data_10, mc_data_100, mc_data_1000, mc_data_10000]
 
 one_ECI = 0
 two_ECI = 0

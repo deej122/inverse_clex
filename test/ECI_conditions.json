@@ -1,5 +1,5 @@
 {
-	"Temperature": 10000,
+	"Temperature": 10,
 	"Dimensions": [5, 5],
 	"Species": [1, -1],
 	"ECI": [-1, 0, 0],

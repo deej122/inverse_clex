@@ -9,7 +9,7 @@
 // comment
 using namespace std;
 
-int monte_carlo()
+int main()
 {
 	//declare variables
 	int num_passes;
@@ -41,14 +41,20 @@ int monte_carlo()
 	write_json_out (ECI_vec, matrix, json_out, pass_count, species);
 
 	cout << 'writing json' << endl;
+
+	// allow the matrix to equilibriate. these passes are not considered when doing any calculations
+	for(int equilibriate=0; equilibriate < 1000; equilibriate++)
+	{
+		matrix=metropolis(matrix, ECI_vec, temp);
+	}
+
 	for(pass_count=1; pass_count <= num_passes; pass_count++)
 	{
 		matrix=metropolis(matrix, ECI_vec, temp);
 		write_json_out (ECI_vec, matrix, json_out, pass_count, species);
-
 	}
 
-	json_out.write(std::string("monte_carlo_calcs.json"));
+	json_out.write(std::string("monte_carlo_calcs_10.json"));
 	
 	return 0;
 }
