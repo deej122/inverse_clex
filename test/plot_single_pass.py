@@ -32,7 +32,7 @@ for index in range(3):
 		for current_pass_sites in current_pass["sites"]:
 			abs_spin_sum += current_pass_sites["curr_occupant"]
 		abs_spin_sum = abs(abs_spin_sum)
-		abs_spin_sum = abs_spin_sum/len(json_data["Data_by_pass"][0]["sites"])
+		abs_spin_sum = float(abs_spin_sum)/len(json_data["Data_by_pass"][0]["sites"])
 		abs_avg_spin_sum_vec.append(abs_spin_sum)
 
 	plot_1.plot(pass_vec, abs_avg_spin_sum_vec, 'o-', c=color[index])
