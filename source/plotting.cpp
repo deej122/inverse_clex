@@ -42,6 +42,12 @@ int main()
 	double ensemble_average_squared = 0;
 	double ensemble_average_squares = 0;
 
+	// allow the matrix to equilibriate. these passes are not considered when doing any calculations
+	for(int equilibriate=0; equilibriate < 1000; equilibriate++)
+	{
+		matrix=metropolis(matrix, ECI_vec, temp);
+	}
+
 	cout << 'writing json' << endl;
 
 	for (temp=100; temp<=1e5; temp = temp*1.2)
