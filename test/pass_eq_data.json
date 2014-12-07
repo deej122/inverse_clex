@@ -1,0 +1,6 @@
+{
+  "average_passes_till_equilibrium" : 1.0,
+  "maximum_passes_till_equilibrium" : 1,
+  "minumum_passes_till_equilibrium" : 1,
+  "passes_till_eqilibrium" : [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+}
