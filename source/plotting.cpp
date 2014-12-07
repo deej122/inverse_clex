@@ -9,7 +9,7 @@
 // comment
 using namespace std;
 
-int main()
+int plotting()
 {
 	//declare variables
 	int num_passes;

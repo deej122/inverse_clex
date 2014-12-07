@@ -19,7 +19,7 @@ ifneq "$(BOOST_INCLUDE)" ""
 endif
 
 
-OBJS = monte_carlo.o plotting.o o/clex.o o/metropolis.o external/jsonParser/jsonParser.o
+OBJS = monte_carlo.o plotting.o o/clex.o o/metropolis.o o/pass_eq_data.o external/jsonParser/jsonParser.o 
 CXX = g++ 
 CPPFLAGS += -w -O3 $(foreach i,$(INCLUDE),-I$(i))
 
@@ -36,6 +36,9 @@ endif
 
 execute_mc : $(OBJS)
 	$(CXX) $(LFLAGS) $(CPPFLAGS) $(OBJS) -o execute_mc
+
+o/pass_eq_data.o: source/pass_eq_data.cpp h/metropolis.h h/clex.h
+	$(CXX) -c source/pass_eq_data.cpp $(CPPFLAGS)
 
 plotting.o: source/plotting.cpp h/metropolis.h h/clex.h
 	$(CXX) -c source/plotting.cpp $(CPPFLAGS)
