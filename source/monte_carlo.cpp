@@ -43,7 +43,7 @@ int main()
 	cout << 'writing json' << endl;
 
 	// allow the matrix to equilibriate. these passes are not considered when doing any calculations
-	for(int equilibriate=0; equilibriate < 1000; equilibriate++)
+	for(int equilibriate=0; equilibriate < 10000; equilibriate++)
 	{
 		matrix=metropolis(matrix, ECI_vec, temp);
 	}
