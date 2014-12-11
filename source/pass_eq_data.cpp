@@ -8,7 +8,7 @@
 
 using namespace std;
 
-int main()
+int pass_eq()
 {
 	//declare variables
 	int num_passes;
@@ -42,7 +42,8 @@ int main()
 
 		//for every trial, generates a new matrix
 		vector< vector<int> > matrix = generate_matrix(dim[0], dim[1]);
-
+		//print out matrix 
+		print_matrix(matrix);
 		bool passed_eq_test = false;
 
 		//tests for how many passes it must go through to have a matrix of all the same values (equilibrate)

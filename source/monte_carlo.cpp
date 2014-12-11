@@ -9,7 +9,7 @@
 // comment
 using namespace std;
 
-int monte_carlo()
+int main()
 {
 	//declare variables
 	int num_passes;
