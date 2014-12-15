@@ -54,7 +54,7 @@ int main()
 		write_json_out (ECI_vec, matrix, json_out, pass_count, species);
 	}
 
-	json_out.write(std::string("monte_carlo_calcs_10.json"));
+	json_out.write(std::string("monte_carlo_calcs_300000.json"));
 	
 	return 0;
 }

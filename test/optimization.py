@@ -6,22 +6,33 @@ from math import *
 
 
 from decimal import *
-json_mc_data_10 = open("monte_carlo_calcs_10.json").read()
-json_mc_data_100 = open("monte_carlo_calcs_100.json").read()
+# json_mc_data_10 = open("monte_carlo_calcs_10.json").read()
+# json_mc_data_100 = open("monte_carlo_calcs_100.json").read()
 json_mc_data_1000 = open("monte_carlo_calcs_1000.json").read()
 json_mc_data_10000 = open("monte_carlo_calcs_10000.json").read()
-mc_data_10 = json.loads(json_mc_data_10)
-mc_data_100 = json.loads(json_mc_data_100)
+json_mc_data_30000 = open("monte_carlo_calcs_30000.json").read()
+json_mc_data_100000 = open("monte_carlo_calcs_100000.json").read()
+json_mc_data_200000 = open("monte_carlo_calcs_200000.json").read()
+json_mc_data_300000 = open("monte_carlo_calcs_300000.json").read()
+#add temperatures > 30000K
+# mc_data_10 = json.loads(json_mc_data_10)
+# mc_data_100 = json.loads(json_mc_data_100)
 mc_data_1000 = json.loads(json_mc_data_1000)
 mc_data_10000 = json.loads(json_mc_data_10000)
+mc_data_30000 = json.loads(json_mc_data_30000)
+mc_data_100000 = json.loads(json_mc_data_100000)
+mc_data_200000 = json.loads(json_mc_data_200000)
+mc_data_300000 = json.loads(json_mc_data_300000)
 
-mc_data = [mc_data_10, mc_data_100, mc_data_1000, mc_data_10000]
+mc_data = [mc_data_1000, mc_data_10000, mc_data_30000, mc_data_100000, mc_data_200000, mc_data_300000]
 
 one_ECI = 0
 two_ECI = 0
 three_ECI = 0
 ECI_vec = [one_ECI, two_ECI, three_ECI]
 
+#move to separate file and import inverse_clex
+#make contour plot using matplotlib
 def ln_Ps(site, ECI_vec, beta):
 	P = 0
 	val = [-beta*np.dot(np.array(delta_corr_vec), ECI_vec) for delta_corr_vec in site["delta_corrs"]]
@@ -47,6 +58,7 @@ def calc_ln_Q (f_ECI_vec, f_mc_data):
 		for iteration in pass_info:
 			for site in iteration["sites"]:
 				f_ln_Q += ln_Ps(site, f_ECI_vec, beta)
+	print f_ln_Q, f_ECI_vec
 	return f_ln_Q
 
 ln_Q = calc_ln_Q(ECI_vec, mc_data)
