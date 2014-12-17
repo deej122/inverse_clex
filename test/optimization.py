@@ -26,7 +26,7 @@ mc_data_300000 = json.loads(json_mc_data_300000)
 
 mc_data = [mc_data_1000, mc_data_10000, mc_data_30000, mc_data_100000, mc_data_200000, mc_data_300000]
 
-one_ECI = 0
+one_ECI = 1
 two_ECI = 0
 three_ECI = 0
 ECI_vec = [one_ECI, two_ECI, three_ECI]
