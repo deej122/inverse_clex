@@ -1,12 +1,15 @@
 import json
-#importing scipy
+import matplotlib
 import numpy as np
-from scipy.optimize import minimize
-from math import *
+import matplotlib.cm as cm
+import matplotlib.mlab as mlab
+import matplotlib.pyplot as plt
+
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
+from matplotlib.ticker import LinearLocator, FormatStrFormatter
 from lnQ import calc_ln_Q
 
-
-from decimal import *
 # json_mc_data_10 = open("monte_carlo_calcs_10.json").read()
 # json_mc_data_100 = open("monte_carlo_calcs_100.json").read()
 # json_mc_data_1000 = open("monte_carlo_calcs_1000.json").read()
@@ -25,23 +28,35 @@ mc_data_30000 = json.loads(json_mc_data_30000)
 # mc_data_200000 = json.loads(json_mc_data_200000)
 # mc_data_300000 = json.loads(json_mc_data_300000)
 
-# mc_data = [mc_data_1000, mc_data_10000, mc_data_30000, mc_data_100000, mc_data_200000, mc_data_300000]
 mc_data = [mc_data_30000]
-one_ECI = 1
-two_ECI = 0
-three_ECI = 0
-ECI_vec = [one_ECI, two_ECI, three_ECI]
 
-ln_Q = calc_ln_Q(ECI_vec, mc_data)
-print "ln(Q) = ", ln_Q
-optimization_NM = minimize(calc_ln_Q, ECI_vec, method='nelder-mead', args=(mc_data,), options={'xtol': 1e-8})
-# should calculate derivative and pass in using jas = "derivative" property
-#right now it calculates derivative using first differences approximation
-# optimization_BFGS = minimize(calc_ln_Q, ECI_vec, method='BFGS', args=(mc_data,))
+delta = .05
 
-#prints original ECI vector
-print "ECI vector = ", ECI_vec[0], ECI_vec[1], ECI_vec[2]
+x = np.arange(0.5, 1.5, delta)
+y = np.arange(-1.0, 1.0, delta)
 
-#display returned optimization stats
-print "Nelder-Mead Approximation: ", optimization_NM
-# print "Broyden-Fletcher-Goldfarb-Shanno Approximation: ", optimization_BFGS
+X, Y = np.meshgrid(x,y)
+Z = np.zeros(np.shape(X))
+
+for i in range(np.shape(X)[0]):
+	for j in range(np.shape(X)[1]):
+		ECI = [X[i, j], 0, Y[i, j]]
+		print ECI
+		Z[i, j] = calc_ln_Q(ECI, mc_data)
+		# json.dump("contour_data.json")
+
+# 2D contour plot
+plt.figure()
+contour = plt.contour(X, Y, Z, 20)
+plt.show()
+
+# 3D surface plot
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+surface = ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap=cm.coolwarm,
+        linewidth=0, antialiased=False)
+ax.zaxis.set_major_locator(LinearLocator(10))
+ax.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
+fig.colorbar(surface, shrink=0.5, aspect=5)
+plt.show()
+
