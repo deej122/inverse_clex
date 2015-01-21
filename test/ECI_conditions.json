@@ -1,7 +1,17 @@
 {
-	"Temperature": 1000,
-	"Dimensions": [5, 5],
-	"Species": [1, -1],
-	"ECI": [1, 0, 0],
-	"Passes": 1000
+    "Passes": 100000, 
+    "Species": [
+        1, 
+        -1
+    ], 
+    "Temperature": 30000000, 
+    "ECI": [
+        0.3, 
+        -0.7, 
+        0.05
+    ], 
+    "Dimensions": [
+        50, 
+        50
+    ]
 }

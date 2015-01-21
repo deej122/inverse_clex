@@ -7,26 +7,10 @@ from lnQ import calc_ln_Q
 
 
 from decimal import *
-# json_mc_data_10 = open("monte_carlo_calcs_10.json").read()
-# json_mc_data_100 = open("monte_carlo_calcs_100.json").read()
-# json_mc_data_1000 = open("monte_carlo_calcs_1000.json").read()
-# json_mc_data_10000 = open("monte_carlo_calcs_10000.json").read()
-json_mc_data_30000 = open("monte_carlo_calcs_30000.json").read()
-# json_mc_data_100000 = open("monte_carlo_calcs_100000.json").read()
-# json_mc_data_200000 = open("monte_carlo_calcs_200000.json").read()
-# json_mc_data_300000 = open("monte_carlo_calcs_300000.json").read()
-#add temperatures > 30000K
-# mc_data_10 = json.loads(json_mc_data_10)
-# mc_data_100 = json.loads(json_mc_data_100)
-# mc_data_1000 = json.loads(json_mc_data_1000)
-# mc_data_10000 = json.loads(json_mc_data_10000)
-mc_data_30000 = json.loads(json_mc_data_30000)
-# mc_data_100000 = json.loads(json_mc_data_100000)
-# mc_data_200000 = json.loads(json_mc_data_200000)
-# mc_data_300000 = json.loads(json_mc_data_300000)
+json_mc_data = open("monte_carlo_calcs.json").read()
+mc_data = json.loads(json_mc_data)
 
-# mc_data = [mc_data_1000, mc_data_10000, mc_data_30000, mc_data_100000, mc_data_200000, mc_data_300000]
-mc_data = [mc_data_30000]
+mc_data = [mc_data]
 one_ECI = 1
 two_ECI = 0
 three_ECI = 0
