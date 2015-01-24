@@ -1,6 +1,8 @@
 import numpy as np
 import json
 import os
+import pbs
+
 
 ECI_vec = [[1,0,0], [-1,0,0], [.3,-.7,.05]]
 transition_temp = 30000
@@ -19,7 +21,6 @@ for ECI in ECI_vec:
 				json.dump({'Temperature': temperature, 'Dimensions': dimensions, 'Species': species, 'ECI': ECI, 'Passes': num_passes}, outfile, indent=4)
 			# run in the cluster
 			# copy all files over to flux and compile files (make execute_mc)
-			import pbs
 			eci_index = str(ECI_vec.index(ECI))
 			dim_index = str(dim_small_vec.index(small_dimensions))
 			temp_index = str(temp_vec.index(temperature))
@@ -47,7 +48,6 @@ for ECI in ECI_vec:
 				json.dump({'Temperature': temperature, 'Dimensions': dimensions, 'Species': species, 'ECI': ECI, 'Passes': num_passes}, outfile, indent=4)
 			# run in the cluster
 			# copy all files over to flux and compile files (make execute_mc)
-			import pbs
 			eci_index = str(ECI_vec.index(ECI))
 			dim_index = str(dim_small_vec.index(small_dimensions))
 			temp_index = str(temp_vec.index(temperature))
