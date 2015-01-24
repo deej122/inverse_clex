@@ -49,7 +49,7 @@ for ECI in ECI_vec:
 			# run in the cluster
 			# copy all files over to flux and compile files (make execute_mc)
 			eci_index = str(ECI_vec.index(ECI))
-			dim_index = str(dim_small_vec.index(small_dimensions))
+			dim_index = str(dim_large_vec.index(large_dimensions))
 			temp_index = str(temp_vec.index(temperature))
 			directory = "large_" + eci_index + "_" + dim_index + "_" + temp_index
 			print directory
