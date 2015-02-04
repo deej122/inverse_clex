@@ -66,7 +66,7 @@ for ECI in ECI_vec:
 			print os.getcwd() #test
 			print job.qsub_string() #test
 
-		        job.submit() # --> submits job
+		    job.submit() # --> submits job
 			
 			os.chdir(parent)
 
