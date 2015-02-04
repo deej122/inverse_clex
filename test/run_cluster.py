@@ -65,8 +65,9 @@ for ECI in ECI_vec:
 			# test it first
 			print os.getcwd() #test
 			print job.qsub_string() #test
-			os.chdir(parent)
 		        job.submit() # --> submits job
+			
+			os.chdir(parent)
 
 		print "ECI: ", ECI
 		print "T: ", temperature
