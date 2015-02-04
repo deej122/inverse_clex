@@ -17,8 +17,6 @@ for ECI in ECI_vec:
 	for small_dimensions in dim_small_vec:
 		dimensions = [small_dimensions, small_dimensions]
 		for temperature in temp_vec:
-			with open("ECI_conditions.json", "w") as outfile:
-				json.dump({'Temperature': temperature, 'Dimensions': dimensions, 'Species': species, 'ECI': ECI, 'Passes': num_passes}, outfile, indent=4)
 			# run in the cluster
 			# copy all files over to flux and compile files (make execute_mc)
 			eci_index = str(ECI_vec.index(ECI))
@@ -32,11 +30,13 @@ for ECI in ECI_vec:
 			if not os.path.exists(directory):
 				os.makedirs(directory)
 			os.chdir(directory) # --> create a new folder every time running with different ECI_conditions and THEN submit the job
+			with open("ECI_conditions.json", "w") as outfile:
+				json.dump({'Temperature': temperature, 'Dimensions': dimensions, 'Species': species, 'ECI': ECI, 'Passes': num_passes}, outfile, indent=4)
 			job = pbs.templates.NonPrismsJob(command='execute_mc')
 			# test it first
 			print os.getcwd() #test
 			print job.qsub_string() #test
-		        job.submit() # --> submits job
+		    job.submit() # --> submits job
 
 			#CD BACK TO PARENT DIRECTORY
 			os.chdir(parent)
@@ -47,8 +47,6 @@ for ECI in ECI_vec:
 	for large_dimensions in dim_large_vec:
 		dimensions = [large_dimensions, large_dimensions]
 		for temperature in temp_vec:
-			with open("ECI_conditions.json", "w") as outfile:
-				json.dump({'Temperature': temperature, 'Dimensions': dimensions, 'Species': species, 'ECI': ECI, 'Passes': num_passes}, outfile, indent=4)
 			# run in the cluster
 			# copy all files over to flux and compile files (make execute_mc)
 			eci_index = str(ECI_vec.index(ECI))
@@ -61,10 +59,13 @@ for ECI in ECI_vec:
 			if not os.path.exists(directory):
 				os.makedirs(directory)
 			os.chdir(directory) # --> create a new folder every time running with different ECI_conditions and THEN submit the job
+			with open("ECI_conditions.json", "w") as outfile:
+				json.dump({'Temperature': temperature, 'Dimensions': dimensions, 'Species': species, 'ECI': ECI, 'Passes': num_passes}, outfile, indent=4)
 			job = pbs.templates.NonPrismsJob(command='execute_mc')
 			# test it first
 			print os.getcwd() #test
 			print job.qsub_string() #test
+
 		        job.submit() # --> submits job
 			
 			os.chdir(parent)
