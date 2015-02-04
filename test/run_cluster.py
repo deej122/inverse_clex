@@ -27,19 +27,19 @@ for ECI in ECI_vec:
 
 			parent = os.getcwd() #find parent directory and save it (CD back to this later)
 			directory = "small_" + eci_index + "_" + dim_index + "_" + temp_index #join path using os.path.join (look up how this works)
-
+			os.chdir(parent)
 			print directory
 			if not os.path.exists(directory):
 				os.makedirs(directory)
-			chdir(directory) # --> create a new folder every time running with different ECI_conditions and THEN submit the job
+			os.chdir(directory) # --> create a new folder every time running with different ECI_conditions and THEN submit the job
 			job = pbs.templates.NonPrismsJob(command='execute_mc')
 			# test it first
 			print os.getcwd() #test
 			print job.qsub_string() #test
-			# job.submit() # --> submits job
+		        job.submit() # --> submits job
 
 			#CD BACK TO PARENT DIRECTORY
-			
+			os.chdir(parent)
 		print "ECI: ", ECI
 		print "T: ", temperature
 		print "Passes: ", num_passes
@@ -54,16 +54,19 @@ for ECI in ECI_vec:
 			eci_index = str(ECI_vec.index(ECI))
 			dim_index = str(dim_large_vec.index(large_dimensions))
 			temp_index = str(temp_vec.index(temperature))
+			parent = os.getcwd()
 			directory = "large_" + eci_index + "_" + dim_index + "_" + temp_index
+			os.chdir(parent)
 			print directory
 			if not os.path.exists(directory):
 				os.makedirs(directory)
-			chdir(directory) # --> create a new folder every time running with different ECI_conditions and THEN submit the job
+			os.chdir(directory) # --> create a new folder every time running with different ECI_conditions and THEN submit the job
 			job = pbs.templates.NonPrismsJob(command='execute_mc')
 			# test it first
 			print os.getcwd() #test
 			print job.qsub_string() #test
-			# job.submit() # --> submits job
+			os.chdir(parent)
+		        job.submit() # --> submits job
 
 		print "ECI: ", ECI
 		print "T: ", temperature
