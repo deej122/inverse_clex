@@ -32,7 +32,7 @@ for ECI in ECI_vec:
 			os.chdir(directory) # --> create a new folder every time running with different ECI_conditions and THEN submit the job
 			with open("ECI_conditions.json", "w") as outfile:
 				json.dump({'Temperature': temperature, 'Dimensions': dimensions, 'Species': species, 'ECI': ECI, 'Passes': num_passes}, outfile, indent=4)
-			job = pbs.templates.NonPrismsJob(command='execute_mc')
+			job = pbs.templates.NonPrismsJob(message = None, ppn = '1', command='execute_mc')
 			# test it first
 			print os.getcwd() #test
 			print job.qsub_string() #test
@@ -61,7 +61,7 @@ for ECI in ECI_vec:
 			os.chdir(directory) # --> create a new folder every time running with different ECI_conditions and THEN submit the job
 			with open("ECI_conditions.json", "w") as outfile:
 				json.dump({'Temperature': temperature, 'Dimensions': dimensions, 'Species': species, 'ECI': ECI, 'Passes': num_passes}, outfile, indent=4)
-			job = pbs.templates.NonPrismsJob(command='execute_mc')
+			job = pbs.templates.NonPrismsJob(message = None, ppn = '1', command='execute_mc')
 			# test it first
 			print os.getcwd() #test
 			print job.qsub_string() #test
