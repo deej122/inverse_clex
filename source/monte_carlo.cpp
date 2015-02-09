@@ -26,21 +26,21 @@ int main()
 	json_out["Species"] = species;
 	json_out["Data_by_pass"] = jsonParser::array();
 
-	cout << "Output" << endl;
+	//cout << "Output" << endl;
 	//generates the matrix
 	//will have to change this when have more than 2 atoms and when theyre different than 1 and -1
 	cout << dim[0] << endl;
 	cout << dim[1] << endl;
 	vector< vector<int> > matrix = generate_matrix(dim[0], dim[1]);
 
-	print_matrix(matrix);
+	//print_matrix(matrix);
 
-	cout << "generated matrix" << endl;
+	//cout << "generated matrix" << endl;
 	// write out to a json file
 	int pass_count = 0;
 	write_json_out (ECI_vec, matrix, json_out, pass_count, species);
 
-	cout << 'writing json' << endl;
+	//cout << 'writing json' << endl;
 
 	// allow the matrix to equilibriate. these passes are not considered when doing any calculations
 	for(int equilibriate=0; equilibriate < 10000; equilibriate++)
