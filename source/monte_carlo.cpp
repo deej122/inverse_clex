@@ -20,7 +20,7 @@ int main()
 	//read in json information from ECI_conditions.json and set variables equal to the inputs
 	read_json_in(temp, dim, species, ECI_vec, num_passes);
 
-	//outputs the conditions ot a json file
+	//outputs the conditions to a json file
 	jsonParser json_out;
 	json_out["Temp"] = temp;
 	json_out["Species"] = species;
@@ -52,8 +52,20 @@ int main()
 	{
 		matrix=metropolis(matrix, ECI_vec, temp);
 		write_json_out (ECI_vec, matrix, json_out, pass_count, species);
+		
+		// So we should write to a new json file after every pass, like this?
+		// Will this automatically clear the jsonParser variable after 'write', or is there something we need to add to do that?
+		/* THE CODE:
+
+		string pc = to_string(pass_count);
+		string filename = "monte_carlo_calcs_" + pc + ".json";
+		json_out.write(std::string(filename));
+
+		*/
 	}
 
+	// Instead of writing out, here?
+	// If so, we need to concatenate the written files from the loop into one file (probably done here, after the loop finishes)
 	json_out.write(std::string("monte_carlo_calcs.json"));
 	
 	return 0;
