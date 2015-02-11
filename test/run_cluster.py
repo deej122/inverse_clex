@@ -12,6 +12,7 @@ num_passes = 100000
 dim_small_vec = [10, 20, 50]
 dim_large_vec = [100, 1000]
 species = [1, -1]
+
 for ECI in ECI_vec:
 	print ECI
 	for small_dimensions in dim_small_vec:
