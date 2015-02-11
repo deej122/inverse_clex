@@ -59,15 +59,15 @@ int main()
 		// How do we clear the jsonParser variable?
  
 		/* THE CODE:*/
-		std::ostringstream ostr;
-		ostr << pass_count;
-		string pc = ostr.str();
-		string filename = "monte_carlo_calcs_" + pc + ".json";
-		json_out.write(std::string(filename));
-		json_out["Data_by_pass"] = jsonParser::array();
+		// std::ostringstream ostr;
+		// ostr << pass_count;
+		// string pc = ostr.str();
+		// string filename = "monte_carlo_calcs_" + pc + ".json";
+		// json_out.write(std::string(filename));
+		// json_out["Data_by_pass"] = jsonParser::array();
 	}
 	// We need to concatenate the written files from the loop into one file (probably done here, after the loop finishes)
-	//	json_out.write(std::string("monte_carlo_calcs.json"));
+		json_out.write(std::string("monte_carlo_calcs.json"));
 	
 	return 0;
 }

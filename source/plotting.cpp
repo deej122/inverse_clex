@@ -111,7 +111,6 @@ int plotting()
 		index += 1;
 	}
 	
-	cout << "here 100" << endl;
 	json_out.write(std::string("plotting_data.json"));
 	
 	return 0;
