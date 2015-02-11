@@ -1,4 +1,5 @@
 # Executables
+.DS_Store
 *.exe
 *.out
 *.app
