@@ -6,13 +6,15 @@ import sys
 
 # renames all the json files to be the same name as the directory it was in then makes a copy into a consolidated folder 'json_calcs'
 rootDir = '../mc_raw_data'
-for dirName, subdirList, files in os.walk(rootDir):
-	for filename in files:
-		os.rename(filename, subdirList)
-		shutil.copy(filename, 'json_calcs')
 
+files = []
+for dir, subdir, filelist in os.walk(rootDir):
+	for f in filelist:
+		files.append(os.path.join(dir,f))
 
-for filename in os.listdir("json_calc"):
+for path_name in files:
+	#get last part of path
+	filename = os.path.basename('path_name')
 	filename.split("_")
 	size = filename[1]
 	ECI_index = filename[2]
@@ -107,4 +109,3 @@ for filename in os.listdir("json_calc"):
 					if temp_index3 == '1' and ECI_index2 == ECI_index3 and dim_index3 == dim_index2:
 						job = pbs.templates.NonPrismsJob(message = 1, ppn = '1', command='python optimization.py, 2, filename, filename2, filename3')
 						#compare the critical value
-s
