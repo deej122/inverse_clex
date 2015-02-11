@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+#include <sstream>
 #include <vector>
 #include <cstdlib>
 #include <math.h>
@@ -53,20 +55,18 @@ int main()
 		matrix=metropolis(matrix, ECI_vec, temp);
 		write_json_out (ECI_vec, matrix, json_out, pass_count, species);
 		
-		// So we should write to a new json file after every pass, like this?
-		// Will this automatically clear the jsonParser variable after 'write', or is there something we need to add to do that?
-		/* THE CODE:
-
-		string pc = to_string(pass_count);
+		// So we should write to a new json file after every pass, like this:
+		// How do we clear the jsonParser variable?
+ 
+		/* THE CODE:*/
+		std::ostringstream ostr;
+		ostr << pass_count;
+		string pc = ostr.str();
 		string filename = "monte_carlo_calcs_" + pc + ".json";
 		json_out.write(std::string(filename));
-
-		*/
 	}
-
-	// Instead of writing out, here?
-	// If so, we need to concatenate the written files from the loop into one file (probably done here, after the loop finishes)
-	json_out.write(std::string("monte_carlo_calcs.json"));
+	// We need to concatenate the written files from the loop into one file (probably done here, after the loop finishes)
+	//	json_out.write(std::string("monte_carlo_calcs.json"));
 	
 	return 0;
 }
