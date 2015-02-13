@@ -19,7 +19,7 @@ ifneq "$(BOOST_INCLUDE)" ""
 endif
 
 
-OBJS = monte_carlo.o plotting.o o/clex.o o/metropolis.o external/jsonParser/jsonParser.o
+OBJS = source/monte_carlo.o source/plotting.o source/clex.o source/metropolis.o external/jsonParser/jsonParser.o
 CXX = g++ 
 CPPFLAGS += -w -O3 $(foreach i,$(INCLUDE),-I$(i))
 
@@ -34,20 +34,20 @@ endif
 #######################################################
 #add rule to execute both mc and inverse
 
-execute_mc : $(OBJS)
-	$(CXX) $(LFLAGS) $(CPPFLAGS) $(OBJS) -o execute_mc
+source/monte_carlo : $(OBJS)
+	$(CXX) $(LFLAGS) $(CPPFLAGS) $(OBJS) -o source/monte_carlo
 
-plotting.o: source/plotting.cpp h/metropolis.h h/clex.h
-	$(CXX) -c source/plotting.cpp $(CPPFLAGS)
+source/plotting.o: source/plotting.cpp h/metropolis.h h/clex.h
+	cd source && $(CXX) -c plotting.cpp $(CPPFLAGS)
 
-monte_carlo.o: source/monte_carlo.cpp h/metropolis.h h/clex.h
-	$(CXX) -c source/monte_carlo.cpp $(CPPFLAGS)
+source/monte_carlo.o: source/monte_carlo.cpp h/metropolis.h h/clex.h
+	cd source && $(CXX) -c monte_carlo.cpp $(CPPFLAGS)
 
-o/metropolis.o: h/metropolis.h source/metropolis.cpp h/clex.h
-	$(CXX) -c source/metropolis.cpp $(CPPFLAGS)
+source/metropolis.o: h/metropolis.h source/metropolis.cpp h/clex.h
+	cd source && $(CXX) -c metropolis.cpp $(CPPFLAGS)
 
-o/clex.o: h/clex.h source/clex.cpp
-	$(CXX) -c source/clex.cpp $(CPPFLAGS)
+source/clex.o: h/clex.h source/clex.cpp
+	cd source && $(CXX) -c clex.cpp $(CPPFLAGS)
 
 external/jsonParser/jsonParser.o: FORCE
 	cd external/jsonParser; make
