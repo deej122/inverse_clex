@@ -5,6 +5,7 @@ from scipy.optimize import minimize
 from math import *
 from lnQ import calc_ln_Q
 import sys
+import os
 
 ECI_vec_key = [[1,0,0], [-1,0,0], [.3,-.7,.05]]
 transition_temp_key = 30000
@@ -14,6 +15,8 @@ num_passes_key = 100000
 dim_small_vec_key = [10, 20, 50]
 dim_large_vec_key = [100, 1000]
 species_key = [1, -1]
+
+mc_data_list = []
 
 #read in from the arguments
 for filename in str(sys.argv):
@@ -25,10 +28,16 @@ for filename in str(sys.argv):
 	num_passes = 100
 
 from decimal import *
-json_mc_data = open("monte_carlo_calcs.json").read()
-mc_data = json.loads(json_mc_data)
 
-mc_data = [mc_data]
+for filename in str(sys.argv):
+	parent = os.cwd
+	os.chdir(filename)
+	json_mc_data = open("monte_carlo_calcs.json").read()
+	mc_data = json.loads(json_mc_data)
+	os.chdir(parent)
+	mc_data_list.append(mc_data)
+
+# mc_data = [mc_data]
 one_ECI = 1
 two_ECI = 0
 three_ECI = 0
@@ -36,7 +45,7 @@ ECI_vec = [one_ECI, two_ECI, three_ECI]
 
 ln_Q = calc_ln_Q(ECI_vec, mc_data)
 print "ln(Q) = ", ln_Q
-optimization_NM = minimize(calc_ln_Q, ECI_vec, method='nelder-mead', args=(mc_data,), options={'xtol': 1e-8})
+optimization_NM = minimize(calc_ln_Q, ECI_vec, method='nelder-mead', args=(mc_data_list,), options={'xtol': 1e-8})
 # should calculate derivative and pass in using jas = "derivative" property
 #right now it calculates derivative using first differences approximation
 # optimization_BFGS = minimize(calc_ln_Q, ECI_vec, method='BFGS', args=(mc_data,))

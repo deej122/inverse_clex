@@ -9,7 +9,7 @@ transition_temp = 30000
 temp_mult = [.001, .01, .1, .2, .5, .9, 1, 1.1, 1.5, 10, 100, 1000]
 temp_vec = [transition_temp*multiple for multiple in temp_mult]
 #experiment is one pass of 100 atoms
-num_experiments = 10,000
+num_experiments = 10000
 #num_passes = 100000
 dim_small_vec = [10, 20, 50]
 dim_large_vec = [100, 1000]
@@ -50,7 +50,7 @@ for ECI in ECI_vec:
 		print "Dimension: ", small_dimensions
 	if False: #for large_dimensions in dim_large_vec:
 		dimensions = [large_dimensions, large_dimensions]
-		num_passes = num_experiemts/(large_dimensions*large_dimensions/100)
+		num_passes = num_experiments/(large_dimensions*large_dimensions/100)
 		for temperature in temp_vec:
 			# run in the cluster
 			# copy all files over to flux and compile files (make execute_mc)
