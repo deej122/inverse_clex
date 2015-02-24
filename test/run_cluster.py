@@ -50,7 +50,7 @@ for ECI in ECI_vec:
 		print "Dimension: ", small_dimensions
 	for large_dimensions in dim_large_vec:
 		dimensions = [large_dimensions, large_dimensions]
-		num_passes = num_experiemts/(large_dimensions*large_dimensions/100)
+		num_passes = num_experiments/(large_dimensions*large_dimensions/100)
 		for temperature in temp_vec:
 			# run in the cluster
 			# copy all files over to flux and compile files (make execute_mc)

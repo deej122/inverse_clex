@@ -76,12 +76,12 @@ void write_json_out (const vector<double> ECI_vec, const vector< vector<int> > &
 			tjson.push_back(jsonParser::object());
 			atom_count = tjson.size()-1;
 			//creates a coordination vector and writes to json
-			vector<int> coord (2);
-			coord[0]=row;
-			coord[1]=col;
-			tjson[atom_count]["coord"] = coord;
+			//vector<int> coord (2);
+			//coord[0]=row;
+			//coord[1]=col;
+			//tjson[atom_count]["coord"] = coord;
 			//writes to json the current occupants
-			tjson[atom_count]["curr_occupant"] = matrix[row][col];
+			//tjson[atom_count]["curr_occupant"] = matrix[row][col];
 			//creates a vector of delta corr values for each change in species (vector of vector)
 			tjson[atom_count]["delta_corrs"] = jsonParser::array();
 			vector<double> delta_corr (3);
