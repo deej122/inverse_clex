@@ -13,7 +13,7 @@ def ln_Ps(site, ECI_vec, beta):
 
 #function to calculate ln_Q
 #I put 'f' in front of the variable names to not confuse it with the variables outside of the function
-def calc_ln_Q (f_ECI_vec, f_mc_partial_data_list):
+def calc_ln_Q (f_ECI_vec, f_mc_partial_data_list, known_sites_list):
 	#set up needed variables
 	f_mc_full_data_list = []
 	delta_corr_count = 0
@@ -22,7 +22,8 @@ def calc_ln_Q (f_ECI_vec, f_mc_partial_data_list):
 	#fill in missing atoms in partial mc_data files
 	for f_partial_mc_data in f_mc_partial_data_list:
 		#call unknown_mc function with f_partial_mc_data as input to fill in matrix
-		subprocess.call(['unknown_monte_carlo'], f_partial_mc_data)
+			#create a json file with known_sites, dimension, temp, eci, species, passes
+		subprocess.call(['unknown_monte_carlo'])
 		#read mc_data
 		json_mc_full_data = open("monte_carlo_calcs.json").read()
 		mc_full_data = json.loads(json_mc_full_data)

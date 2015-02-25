@@ -14,7 +14,7 @@ vector< vector<int> > fill_in_matrix(vector< vector<int> > & known_sites, vector
 vector< vector<int> > unknown_metropolis(vector< vector<int> > & matrix, const vector<double> & ECI_vec, const double & T, vector< vector<int> > unknown_sites);
 
 
-main()
+int main()
 {
 	//declaring variables
 	vector< vector<int> > known_sites;
