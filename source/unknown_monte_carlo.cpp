@@ -4,23 +4,81 @@
 #include <math.h>
 #include "../external/jsonParser/jsonParser.hh"
 #include "../h/clex.h"
+#include "../h/metropolis.h"
+
 
 using namespace std;
 
 //declaring functions
 vector< vector<int> > fill_in_matrix(vector< vector<int> > & known_sites, vector<int> & dim_size);
+vector< vector<int> > unknown_metropolis(vector< vector<int> > & matrix, const vector<double> & ECI_vec, const double & T, vector< vector<int> > unknown_sites);
 
 
 main()
 {
-	//take in known x,y,and species
+	//declaring variables
+	vector< vector<int> > known_sites;
+	vector<int> dim_size;
+	double temp;
+	vector< vector<double> > ECI_vec;
+	vector<double> species;
+	int num_passes;
+
+	//take in known conditions from json file known_species_conditions.json
+	jsonParser known_species_in;
+	known_species_in.read(std::string("known_species_conditions.json"));
+	known_sites = known_species_in["Known_Species"].get< vector< vector<int> > >();
+	dim_size = known_species_in["Dimensions"].get< vector<int> >();
+	temp = known_species_in["Temp"].get<double>();
+	ECI_vec = known_species_in["ECI"].get< vector<double> >();
+	species = known_species_in["Species"].get< vector<double> >();
+	passes = known_species_in["Passes"].get<int>();
+
+	//create a unknown_sites vector of vectors containing the coordinates of unknown sites
+	vector< vector<int> > unknown_sites;
+	vector<int>temporary_row (dim_size[0], 0);
+	vector< vector<int> > binary_matrix (dim_size[1], temporary_row);
+	for(int count = 0; count < known_sites.size(); count++)
+	{
+		binary_matrix[known_sites[count][0]][known_sites[count][1]] = 1;
+	}
+	vector<int> holder (2,0);
+	for(int x=0; x<dim_size[0]; x++)
+	{
+		for(int y=0l y<dim_size[1]; y++)
+		{
+			if (binary_matrix[x][y] ==0)
+			{
+				holder[0]=x;
+				holder[1]=y;
+				unknown_sites.append(holder);
+			}
+		}
+	}
+
 
 	//fill in matrix
 	vector< vector<int> > filled_matrix = fill_in_matrix(known_sites, dm_size);
 
-	//based on an estimated eci (?) run montecarlo, only flipping unknown site
+	//based on an ECI from input run montecarlo, only flipping unknown site
+	int pass_count = 0;
+	write_json_out (ECI_vec, matrix, json_out, pass_count, species);
 
-	//run optimization 
+
+	// allow the matrix to equilibriate. these passes are not considered when doing any calculations
+	for(int equilibriate=0; equilibriate < 10000; equilibriate++)
+	{
+		matrix=unknown_metropolis(filled_matrix, ECI_vec, temp, unknown_sites);
+	}
+
+	//run for number of passes 
+	for(pass_count=1; pass_count <= num_passes; pass_count++)
+	{
+		matrix=unknown_metropolis(filled_matrix, ECI_vec, temp, unknown_sites);
+		write_json_out (ECI_vec, matrix, json_out, pass_count, species);
+	}
+
+	return 0;
 }
 
 //function that fills in unfixed atoms
