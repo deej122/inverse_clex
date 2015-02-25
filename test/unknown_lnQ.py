@@ -1,5 +1,6 @@
 import numpy as np
 from math import *
+import subprocess
 #move to separate file and import inverse_clex
 #make contour plot using matplotlib
 def ln_Ps(site, ECI_vec, beta):
@@ -12,12 +13,23 @@ def ln_Ps(site, ECI_vec, beta):
 
 #function to calculate ln_Q
 #I put 'f' in front of the variable names to not confuse it with the variables outside of the function
-def calc_ln_Q (f_ECI_vec, f_mc_data_list):
+def calc_ln_Q (f_ECI_vec, f_mc_partial_data_list):
 	#set up needed variables
+	f_mc_full_data_list = []
 	delta_corr_count = 0
 	f_ln_Q = 0
+
+	#fill in missing atoms in partial mc_data files
+	for f_partial_mc_data in f_mc_partial_data_list:
+		#call unknown_mc function with f_partial_mc_data as input to fill in matrix
+		subprocess.call(['unknown_monte_carlo'], f_partial_mc_data)
+		#read mc_data
+		json_mc_full_data = open("monte_carlo_calcs.json").read()
+		mc_full_data = json.loads(json_mc_full_data)
+		f_mc_full_data_list.append(mc_full_data)
+
 	#loop to do for data at three temperatures
-	for f_mc_data in f_mc_data_list:
+	for f_mc_data in f_mc_full_data_list:
 		for data_set in f_mc_data:
 			temp = data_set["Temp"] #set temp to "temp" in data set
 			beta = 1/(temp*8.62*10**-5)
