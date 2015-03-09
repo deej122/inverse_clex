@@ -3,6 +3,8 @@ import json
 import numpy as np
 from scipy.optimize import minimize
 from math import *
+from decimal import *
+import random
 from unknown_lnQ import calc_ln_Q
 import sys
 import os
@@ -15,19 +17,23 @@ num_passes_key = 100000
 dim_small_vec_key = [10, 20, 50]
 dim_large_vec_key = [100, 1000]
 species_key = [1, -1]
+percent_known = 0.80
+
+#subset of known atoms for each snapshot
+known_sites_subset = []
+#list of all subsets of known atoms (passed into calc_lnQ optimization)
+known_sites_list = []
 
 mc_partial_data_list = []
 
 #read in from the arguments
-for filename in str(sys.argv):
-	filename.split("_")
-	size = filename[1]
-	ECI_index = filename[2]
-	dim_index = filename[3]
-	temp_index = filename[4]
-	num_passes = 100
-
-from decimal import *
+# for filename in str(sys.argv):
+# 	filename.split("_")
+# 	size = filename[1]
+# 	ECI_index = filename[2]
+# 	dim_index = filename[3]
+# 	temp_index = filename[4]
+# 	num_passes = 100
 
 for filename in str(sys.argv):
 	parent = os.cwd
@@ -37,11 +43,24 @@ for filename in str(sys.argv):
 	os.chdir(parent)
 	mc_partial_data_list.append(mc_data)
 
+
 #take percent (m) of known atoms as input
 #open json files
 #create a vector of known sites including x, y, species information (known_sites_list)
 ##For every atom in each snapshot:
 ###choose a random number between 0 and 1. If number < m, add atom to vector of known sites. Else, ignore it.
+for data in mc_partial_data_list:
+	for subset in data:
+		for atom in subset:
+			random = random.random()
+			#add ~known_percent of atoms to known subset for this snapshot
+			if random < percent_known:
+				atom = atom
+				known_sites_subset.append(atom)
+			else:
+				known_sites_subset = known_sites_subset
+		#add the known atoms list for each snapshot to the overall known atoms list which is passed into calc_lnQ
+		known_sites_list.append(known_sites_subset)
 
 # mc_data = [mc_data]
 one_ECI = 1
