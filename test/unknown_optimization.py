@@ -49,18 +49,25 @@ for filename in str(sys.argv):
 #create a vector of known sites including x, y, species information (known_sites_list)
 ##For every atom in each snapshot:
 ###choose a random number between 0 and 1. If number < m, add atom to vector of known sites. Else, ignore it.
+
+#for every file that we appended
 for data in mc_partial_data_list:
-	for subset in data:
-		for atom in subset:
-			random = random.random()
-			#add ~known_percent of atoms to known subset for this snapshot
-			if random < percent_known:
-				atom = atom
-				known_sites_subset.append(atom)
-			else:
-				known_sites_subset = known_sites_subset
-		#add the known atoms list for each snapshot to the overall known atoms list which is passed into calc_lnQ
-		known_sites_list.append(known_sites_subset)
+	#for each "Data_by_pass list in each of those files"
+	for data_by_pass in data:
+		#for every object in the data_by_pass list
+		for _pass in data_by_pass:
+			#for each site in every object
+			for atom in _pass[sites]
+				#generate random number
+				random = random.random()
+				#add ~known_percent of atoms to known subset for this snapshot
+				if random < percent_known:
+					known_sites_subset.append(atom)
+				#otherwise ignore the atom
+				else:
+					known_sites_subset = known_sites_subset
+			#add the known atoms list for each snapshot to the overall known atoms list which is passed into calc_lnQ
+			known_sites_list.append(known_sites_subset)
 
 # mc_data = [mc_data]
 one_ECI = 1
