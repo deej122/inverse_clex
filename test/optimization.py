@@ -55,4 +55,6 @@ print "ECI vector = ", ECI_vec[0], ECI_vec[1], ECI_vec[2]
 
 #display returned optimization stats
 print "Nelder-Mead Approximation: ", optimization_NM
+#append this to a json file (ECI value, file names aka conditions, calculate difference squared of known ECI and write to json)
+
 # print "Broyden-Fletcher-Goldfarb-Shanno Approximation: ", optimization_BFGS
