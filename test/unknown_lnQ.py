@@ -19,6 +19,7 @@ def calc_ln_Q (f_ECI_vec, f_mc_partial_data_list, known_sites_list):
 	delta_corr_count = 0
 	f_ln_Q = 0
 
+#NEED TO TAKE A LOOK AT HOW THIS WORKS WITH UNKNOWN_MC FUNCTION
 	#fill in missing atoms in partial mc_data files
 	for f_partial_mc_data in f_mc_partial_data_list:
 		#call unknown_mc function with f_partial_mc_data as input to fill in matrix
