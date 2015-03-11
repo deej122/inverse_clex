@@ -57,7 +57,7 @@ for data in mc_partial_data_list:
 		#for every object in the data_by_pass list
 		for _pass in data_by_pass:
 			#for each site in every object
-			for atom in _pass[sites]
+			for atom in _pass.sites
 				#generate random number
 				random = random.random()
 				#add ~known_percent of atoms to known subset for this snapshot
