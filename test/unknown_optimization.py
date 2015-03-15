@@ -18,6 +18,7 @@ dim_small_vec_key = [10, 20, 50]
 dim_large_vec_key = [100, 1000]
 species_key = [1, -1]
 percent_known = 0.80
+mc_passes = 10 #use this in calc_lnQ when creating conditions.json
 
 #subset of known atoms for each snapshot
 known_sites_subset = []
@@ -40,6 +41,19 @@ for filename in str(sys.argv):
 	os.chdir(filename)
 	json_mc_data = open("monte_carlo_calcs.json").read()
 	mc_data = json.loads(json_mc_data)
+	for _pass in mc_data["Data_by_pass"]:
+		#for each site in every object
+		for atom in _pass["sites"]
+			#generate random number
+			random = random.random()
+			#add ~known_percent of atoms to known subset for this snapshot
+			if random < percent_known:
+				#MAKE THIS AND THEN NO NEED TO PASS KNOWN_SITES_LIST
+				#mc_partial_data_list is a list of files > list of passes > list of known atoms (coordinates and current occupant)
+				known_sites_subset.append(atom)
+			#otherwise ignore the atom
+			else:
+				known_sites_subset = known_sites_subset
 	os.chdir(parent)
 	mc_partial_data_list.append(mc_data)
 
@@ -50,24 +64,22 @@ for filename in str(sys.argv):
 ##For every atom in each snapshot:
 ###choose a random number between 0 and 1. If number < m, add atom to vector of known sites. Else, ignore it.
 
-#for every file that we appended
-for data in mc_partial_data_list:
-	#for each "Data_by_pass list in each of those files"
-	for data_by_pass in data:
-		#for every object in the data_by_pass list
-		for _pass in data_by_pass:
-			#for each site in every object
-			for atom in _pass.sites
-				#generate random number
-				random = random.random()
-				#add ~known_percent of atoms to known subset for this snapshot
-				if random < percent_known:
-					known_sites_subset.append(atom)
-				#otherwise ignore the atom
-				else:
-					known_sites_subset = known_sites_subset
-			#add the known atoms list for each snapshot to the overall known atoms list which is passed into calc_lnQ
-			known_sites_list.append(known_sites_subset)
+# #for every file that we appended
+# for data in mc_partial_data_list:
+# 	#for every object in the data_by_pass list
+# 	for _pass in data:
+# 		#for each site in every object
+# 		for atom in _pass.sites
+# 			#generate random number
+# 			random = random.random()
+# 			#add ~known_percent of atoms to known subset for this snapshot
+# 			if random < percent_known:
+# 				known_sites_subset.append(atom)
+# 			#otherwise ignore the atom
+# 			else:
+# 				known_sites_subset = known_sites_subset
+		#add the known atoms list for each snapshot to the overall known atoms list which is passed into calc_lnQ
+		known_sites_list.append(known_sites_subset)
 
 # mc_data = [mc_data]
 one_ECI = 1

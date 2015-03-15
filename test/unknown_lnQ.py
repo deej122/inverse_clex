@@ -22,13 +22,14 @@ def calc_ln_Q (f_ECI_vec, f_mc_partial_data_list, known_sites_list):
 #NEED TO TAKE A LOOK AT HOW THIS WORKS WITH UNKNOWN_MC FUNCTION
 	#fill in missing atoms in partial mc_data files
 	for f_partial_mc_data in f_mc_partial_data_list:
-		#call unknown_mc function with f_partial_mc_data as input to fill in matrix
-			#create a json file with known_sites, dimension, temp, eci, species, passes
-		subprocess.call(['unknown_monte_carlo'])
-		#read mc_data
-		json_mc_full_data = open("monte_carlo_calcs.json").read()
-		mc_full_data = json.loads(json_mc_full_data)
-		f_mc_full_data_list.append(mc_full_data)
+		for _pass in f_partial_mc_data:
+			#create a json file for every pass with known_sites, dimension, temp (depends on file), eci (depends on file), species, passes (~ 10 -> same number passes)
+				#conditions.json
+			subprocess.call(['unknown_monte_carlo'])
+			#read mc_data
+			json_mc_full_data = open("monte_carlo_calcs.json").read()
+			mc_full_data = json.loads(json_mc_full_data)
+			f_mc_full_data_list.append(mc_full_data)
 
 	#loop to do for data at three temperatures
 	for f_mc_data in f_mc_full_data_list:
@@ -40,5 +41,5 @@ def calc_ln_Q (f_ECI_vec, f_mc_partial_data_list, known_sites_list):
 			for iteration in pass_info:
 				for site in iteration["sites"]:
 					f_ln_Q += ln_Ps(site, f_ECI_vec, beta)
-	# print f_ln_Q, f_ECI_vec
-	# return f_ln_Q
+	print f_ln_Q, f_ECI_vec
+	return f_ln_Q
