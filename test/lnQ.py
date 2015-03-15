@@ -27,4 +27,4 @@ def calc_ln_Q (f_ECI_vec, f_mc_data_list):
 				for site in iteration["sites"]:
 					f_ln_Q += ln_Ps(site, f_ECI_vec, beta)
 	# print f_ln_Q, f_ECI_vec
-	# return f_ln_Q
+	return f_ECI_vec
