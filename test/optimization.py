@@ -30,7 +30,7 @@ for filename in str(sys.argv):
 from decimal import *
 
 for filename in str(sys.argv):
-	parent = os.cwd
+	parent = os.getcwd()
 	os.chdir(filename)
 	json_mc_data = open("monte_carlo_calcs.json").read()
 	mc_data = json.loads(json_mc_data)
