@@ -22,7 +22,7 @@ for path_name in files:
 	temp_index = filename[4]
 	num_passes = 100
 
-	parent = os.cwd()
+	parent = os.getcwd()
 
 	#run all the tests with the highest temp
 	if temp_index == '12':
