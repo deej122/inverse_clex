@@ -13,7 +13,7 @@ def ln_Ps(site, ECI_vec, beta):
 
 #function to calculate ln_Q
 #I put 'f' in front of the variable names to not confuse it with the variables outside of the function
-def calc_ln_Q (f_ECI_vec, f_mc_partial_data_list, known_sites_list):
+def calc_ln_Q (f_ECI_vec, f_mc_partial_data_list):
 	#set up needed variables
 	f_mc_full_data_list = []
 	delta_corr_count = 0
@@ -22,10 +22,15 @@ def calc_ln_Q (f_ECI_vec, f_mc_partial_data_list, known_sites_list):
 #NEED TO TAKE A LOOK AT HOW THIS WORKS WITH UNKNOWN_MC FUNCTION
 	#fill in missing atoms in partial mc_data files
 	for f_partial_mc_data in f_mc_partial_data_list:
+		#file_name
 		for _pass in f_partial_mc_data:
+			#file_info
 			#create a json file for every pass with known_sites, dimension, temp (depends on file), eci (depends on file), species, passes (~ 10 -> same number passes)
 				#conditions.json
-			subprocess.call(['unknown_monte_carlo'])
+			data = {'known_sites': _pass["Known_Sites"], 'Dimensions': _pass["Dimensions"], 'Temperature': _pass["Temperature"], 'ECI': _pass["ECI"]}
+			with open('conditions.json', 'w') as f:
+				json.dump(data, f)
+			subprocess.call(["unknown_monte_carlo('conditions.json')"])
 			#read mc_data
 			json_mc_full_data = open("monte_carlo_calcs.json").read()
 			mc_full_data = json.loads(json_mc_full_data)

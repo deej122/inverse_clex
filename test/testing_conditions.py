@@ -14,7 +14,7 @@ for dir, subdir, filelist in os.walk(rootDir):
 
 for path_name in files:
 	#get last part of path
-	filename = os.path.basename('path_name')
+	filename = os.path.basename(path_name)
 	filename.split("_")
 	size = filename[1]
 	ECI_index = filename[2]
