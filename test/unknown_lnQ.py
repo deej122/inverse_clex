@@ -28,9 +28,9 @@ def calc_ln_Q (f_ECI_vec, f_mc_partial_data_list):
 			#create a json file for every pass with known_sites, dimension, temp (depends on file), eci (depends on file), species, passes (~ 10 -> same number passes)
 				#conditions.json
 			data = {'known_sites': _pass["Known_Sites"], 'Dimensions': _pass["Dimensions"], 'Temperature': _pass["Temperature"], 'ECI': _pass["ECI"]}
-			with open('conditions.json', 'w') as f:
+			with open('known_species_conditions.json', 'w') as f:
 				json.dump(data, f)
-			subprocess.call(["unknown_monte_carlo('conditions.json')"])
+			subprocess.call(["unknown_monte_carlo()"])
 			#read mc_data
 			json_mc_full_data = open("monte_carlo_calcs.json").read()
 			mc_full_data = json.loads(json_mc_full_data)
