@@ -57,6 +57,10 @@ for filename in str(sys.argv):
 	file_info["Temperature"] = temp_vec_key[temp_index]
 	file_info["ECI"] = ECI_vec_key[ECI_index]
 
+	#create a constructor that, given a set of files, outputs a json object (conditions.json stuff from lnQ) for an [i][j] corresponding to [file][pass]
+		#would be a lot easier to use and understand
+		#run some tests and make sure this works well first
+
 	json_mc_data = open("monte_carlo_calcs.json").read()
 	mc_data = json.loads(json_mc_data)
 	for _pass in mc_data["Data_by_pass"]:
