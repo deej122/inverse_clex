@@ -1,8 +1,6 @@
 import numpy as np
 from math import *
 import subprocess
-#move to separate file and import inverse_clex
-#make contour plot using matplotlib
 def ln_Ps(site, ECI_vec, beta):
 	P = 0
 	val = [-beta*np.dot(np.array(delta_corr_vec), ECI_vec) for delta_corr_vec in site["delta_corrs"]]
@@ -19,7 +17,6 @@ def calc_ln_Q (f_ECI_vec, f_mc_partial_data_list):
 	delta_corr_count = 0
 	f_ln_Q = 0
 
-#NEED TO TAKE A LOOK AT HOW THIS WORKS WITH UNKNOWN_MC FUNCTION
 	#fill in missing atoms in partial mc_data files
 	for f_partial_mc_data in f_mc_partial_data_list:
 		#file_name

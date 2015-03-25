@@ -20,11 +20,6 @@ species_key = [1, -1]
 percent_known = 0.80
 mc_passes = 10 #use this in calc_lnQ when creating conditions.json
 
-#subset of known atoms for each snapshot
-# known_sites_subset = []
-#list of all subsets of known atoms (passed into calc_lnQ optimization)
-# known_sites_list = []
-
 mc_partial_data_list = []
 
 for filename in str(sys.argv):
@@ -36,6 +31,7 @@ for filename in str(sys.argv):
 
 	parent = os.getcwd()
 	os.chdir(filename)
+
 	#create dict consisting of a list of files
 	file_name = filename
 	_file = {file_name:[]}
@@ -64,7 +60,6 @@ for filename in str(sys.argv):
 			random = random.random()
 			#add ~known_percent of atoms to known subset for this snapshot
 			if random < percent_known:
-				#MAKE THIS AND THEN NO NEED TO PASS KNOWN_SITES_LIST
 				#mc_partial_data_list is a list of files > list of passes > list of known atoms (coordinates and current occupant)
 				#create object of known_atom and add it to list for this pass
 				known_atom = {"coordinate": atom["coordinate"], "current_occupant": atom["current_occupant"]}
