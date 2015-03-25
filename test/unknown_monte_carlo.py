@@ -32,6 +32,7 @@ def create_mc_partial_list(file_name, file_info, mc_partial_data_list):
 
 		_file[file_name].append(file_info)
 
+	return _file
 
 def create_complete_mc(f_mc_partial_data_list):
 	#fill in missing atoms in partial mc_data files
@@ -49,3 +50,5 @@ def create_complete_mc(f_mc_partial_data_list):
 			json_mc_full_data = open("monte_carlo_calcs.json").read()
 			mc_full_data = json.loads(json_mc_full_data)
 			f_mc_full_data_list.append(mc_full_data)
+
+	return f_mc_full_data_list
