@@ -1,6 +1,12 @@
 import numpy as np
 from math import *
 def ln_Ps(site, ECI_vec, beta):
+	"""
+	site = 
+	ECI_vec =
+	beta =
+	"""
+	
 	P = 0
 	val = [-beta*np.dot(np.array(delta_corr_vec), ECI_vec) for delta_corr_vec in site["delta_corrs"]]
 	m = max(val)
@@ -11,8 +17,11 @@ def ln_Ps(site, ECI_vec, beta):
 #function to calculate ln_Q
 #I put 'f' in front of the variable names to not confuse it with the variables outside of the function
 def calc_ln_Q (f_ECI_vec, f_mc_full_data_list):
-	#set up needed variables
-	# f_mc_full_data_list = []
+	"""
+	f_ECI_vec =
+	f_mc_full_data_list = 
+	"""
+
 	delta_corr_count = 0
 	f_ln_Q = 0
 

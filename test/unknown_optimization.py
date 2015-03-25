@@ -23,6 +23,7 @@ mc_passes = 10 #use this in calc_lnQ when creating conditions.json
 
 mc_partial_data_list = []
 
+#document file structure needed for this to work
 for filename in str(sys.argv):
 	split_filename = filename.split("_")
 	size = split_filename[0]
@@ -43,8 +44,11 @@ for filename in str(sys.argv):
 		file_info["Dimension"] = dim_small_vec_key[dim_index]
 	file_info["Temperature"] = temp_vec_key[temp_index]
 	file_info["ECI"] = ECI_vec_key[ECI_index]
+	file_info["Sampling_Passes"] = mc_passes
+	file_info["Equilibriation_Passes"] = 10000
+	file_info["Sampling_Increment"] = 100
 
-	_file = create_mc_partial_data(file_name, file_info)
+	_file = create_mc_partial_data(file_name, file_info, percent_known)
 	#add completed list of known items in each pass within a file, to a list of all
 	mc_partial_data_list.append(_file)
 	os.chdir(parent)
