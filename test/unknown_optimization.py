@@ -27,21 +27,12 @@ mc_passes = 10 #use this in calc_lnQ when creating conditions.json
 
 mc_partial_data_list = []
 
-# #read in from the arguments
-# for filename in str(sys.argv):
-	# filename.split("_")
-	# size = filename[1]
-	# ECI_index = filename[2]
-	# dim_index = filename[3]
-	# temp_index = filename[4]
-	# num_passes = 100
-
 for filename in str(sys.argv):
-	filename.split("_")
-	size = filename[1]
-	ECI_index = filename[2]
-	dim_index = filename[3]
-	temp_index = filename[4]
+	file_name = filename.split("_")
+	size = file_name[0]
+	ECI_index = file_name[1]
+	dim_index = file_name[2]
+	temp_index = file_name[3]
 
 	parent = os.getcwd()
 	os.chdir(filename)
@@ -90,30 +81,6 @@ for filename in str(sys.argv):
 
 	#add completed list of known items in each pass within a file, to a list of all
 	mc_partial_data_list.append(_file)
-
-
-#take percent (m) of known atoms as input
-#open json files
-#create a vector of known sites including x, y, species information (known_sites_list)
-##For every atom in each snapshot:
-###choose a random number between 0 and 1. If number < m, add atom to vector of known sites. Else, ignore it.
-
-# #for every file that we appended
-# for data in mc_partial_data_list:
-# 	#for every object in the data_by_pass list
-# 	for _pass in data:
-# 		#for each site in every object
-# 		for atom in _pass.sites
-# 			#generate random number
-# 			random = random.random()
-# 			#add ~known_percent of atoms to known subset for this snapshot
-# 			if random < percent_known:
-# 				known_sites_subset.append(atom)
-# 			#otherwise ignore the atom
-# 			else:
-# 				known_sites_subset = known_sites_subset
-		#add the known atoms list for each snapshot to the overall known atoms list which is passed into calc_lnQ
-		# known_sites_list.append(known_sites_subset)
 
 # mc_data = [mc_data]
 one_ECI = 1
