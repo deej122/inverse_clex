@@ -13,25 +13,24 @@ for dir, subdir, filelist in os.walk(rootDir):
     if( os.path.isdir(os.path.join(dir,d))): 
       dirs.append(os.path.join(dir,d))
 
+filename_list = []
 
 for path_name in dirs:
 #print path_name
 	#get last part of path
-        print "path_name:", path_name
+    print "path_name:", path_name
 	filename = os.path.basename(path_name)
-	#filename_list = filename.split("/")
 	print "filename:", filename
-	#print "filename_list:", filename_list
-	#filename_subset = filename_list[3]
-        filename_subset = filename.split("_")
+    filename_subset = filename.split("_")
 	print filename_subset
+	filename_list.append(filename_subset)
 	size = filename_subset[0]
 	ECI_index = filename_subset[1]
 	dim_index = filename_subset[2]
 	temp_index = filename_subset[3]
 	num_passes = 100
         
-        print filename, size, ECI_index, dim_index, temp_index
+    print filename, size, ECI_index, dim_index, temp_index
         
 	parent = os.getcwd()
 
@@ -96,7 +95,7 @@ for path_name in dirs:
 
 	# runs all combinations of lowest and transition temp for same dim size and ECI
 	if temp_index == '1':
-		for filename2 in os.listdir("json_calcs"):
+		for filename2 in filename_list:
 			filename2.split("_")
 			size2 = filename2[1]
 			ECI_index2 = filename2[2]
@@ -118,7 +117,7 @@ for path_name in dirs:
 
 	# runs all combinations of highest and transition temp for same dim size and ECI
 	if temp_index == '12':
-		for filename2 in os.listdir("json_calcs"):
+		for filename2 in filename_list:
 			filename2.split("_")
 			size2 = filename2[1]
 			ECI_index2 = filename2[2]
@@ -139,7 +138,7 @@ for path_name in dirs:
 
 	# runs all combinations of highest and transition temp
 	if temp_index == '12':
-		for filename2 in os.listdir("json_calcs"):
+		for filename2 in filename_list:
 			filename2.split("_")
 			size2 = filename2[1]
 			ECI_index2 = filename2[2]
@@ -147,7 +146,7 @@ for path_name in dirs:
 			temp_index2 = filename2[4]
 			num_passes2 = 100
 			if temp_index2 == '7' and ECI_index == ECI_index2 and dim_index == dim_index2:
-				for filename3 in os.listdir("json_calc"):
+				for filename3 in filename_list:
 					filename3.split("_")
 					size3 = filename3[1]
 					ECI_index3 = filename3[2]
