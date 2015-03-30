@@ -2,9 +2,10 @@ import numpy as np
 from math import *
 def ln_Ps(site, ECI_vec, beta):
 	"""
-	site = 
-	ECI_vec =
-	beta =
+	calculates the natural log of P to be summed in order to calculate the lnQ we are optimizing
+	site = position in the matrix used in this calculation
+	ECI_vec = ECI values used in the dot product for calculation of ln(P)
+	beta = 1/kT -> constant (depending on temperature of the system) used in calculating ln(P)
 	"""
 	
 	P = 0
@@ -18,8 +19,9 @@ def ln_Ps(site, ECI_vec, beta):
 #I put 'f' in front of the variable names to not confuse it with the variables outside of the function
 def calc_ln_Q (f_ECI_vec, f_mc_full_data_list):
 	"""
-	f_ECI_vec =
-	f_mc_full_data_list = 
+	calculates natural log of Q (the value we are minimizingby changing ECI)
+	f_ECI_vec = the inputted, initial ECI values that will be optimized
+	f_mc_full_data_list = A filled in matrix of atoms which represent the system of atoms for which we want to optimize the ECI values
 	"""
 
 	delta_corr_count = 0
