@@ -58,12 +58,11 @@ optimization_NM = minimize(calc_ln_Q, ECI_vec, method='nelder-mead', args=(mc_da
 
 #display returned optimization stats
 print "Nelder-Mead Approximation: ", optimization_NM
-<<<<<<< HEAD
 # print "Broyden-Fletcher-Goldfarb-Shanno Approximation: ", optimization_BFGS
-=======
 #append this to a json file "optimization_results.json" (ECI value, file names aka conditions, calculate difference squared of known ECI and write to json)
 ECI_diff_squared = (ECI_vec_key[ECI_index][1] - optimization_NM[1])^2 + (ECI_vec_key[ECI_index][2] - optimization_NM[2])^2 + (ECI_vec_key[ECI_index][3] - optimization_NM[3])^2
 new_dict = {'ECI_calculation': {'ECI': ECI_vec_key[ECI_index], 'Filenames': file_list, 'Aprroximated_ECI': optimization_NM, 'ECI_sum_diff_squared': ECI_diff_squared}}
+#print file in each folder
 with open('optimization_results.json') as f:
 	data = json.load(f)
 data.update(new_dict)
@@ -71,4 +70,3 @@ with open('optimization_results.json', 'w') as f:
 	json.dump(data, f)
 
 # print "Broyden-Fletcher-Goldfarb-Shanno Approximation: ", optimization_BFGS
->>>>>>> 806ab208a5e9010bbfa74cf084ef4b948efdc72c
