@@ -23,7 +23,7 @@ for path_name in dirs:
 	print "filename:", filename
     filename_subset = filename.split("_")
 	print filename_subset
-	filename_list.append(filename_subset)
+	filename_list.append(filename)
 	size = filename_subset[0]
 	ECI_index = filename_subset[1]
 	dim_index = filename_subset[2]
@@ -38,7 +38,7 @@ for path_name in dirs:
 	if temp_index == '12':
 	#run the optimization
 	#compare optimization if it's within a certian min squared mean then map
-		directory = "highestT_" + filename
+		directory = "highest_" + filename
 		if not os.path.exists(directory):
 			os.makedirs(directory)
 		os.chdir(directory)
@@ -50,7 +50,7 @@ for path_name in dirs:
 	# runs all the tests with lowest temp
 	if temp_index == '1':
 	#run the optimization
-		directory = "lowestT_" + filename
+		directory = "lowest_" + filename
 		if not os.path.exists(directory):
 			os.makedirs(directory)
 		os.chdir(directory)
@@ -64,7 +64,7 @@ for path_name in dirs:
 	# runs all the tests with transition temp
 	if temp_index == '7':
 	#run the optimization
-		directory = "transitionT" + filename
+		directory = "transition_" + filename
 		if not os.path.exists(directory):
 			os.makedirs(directory)
 		os.chdir(directory)
@@ -75,7 +75,7 @@ for path_name in dirs:
 
 	# runs all combinations of lowest and highest temp for same dim size and ECI
 	if temp_index == '1':
-		for filename2 in os.listdir("json_calcs"):
+		for filename2 in filename_list:
 			filename2.split("_")
 			size2 = filename[1]
 			ECI_index2 = filename[2]
