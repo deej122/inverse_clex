@@ -92,7 +92,7 @@ int main()
 vector< vector<int> > fill_in_matrix(vector< vector<int> > & known_sites, vector<int> & dim_size)
 {
 	//generates a random matrix filling in with 1 and -1 at random
-	filled_matrix = generate_matrix(dim_size[0], dim_size[1]);
+	vector< vector<int> > filled_matrix = generate_matrix(dim_size[0], dim_size[1]);
 	
 	//changes the known sites
 	for(int counter = 0; counter < known_sites.size(); counter++)
