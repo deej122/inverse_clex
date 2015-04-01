@@ -23,6 +23,7 @@ int main()
 	vector< vector<double> > ECI_vec;
 	vector<double> species;
 	int num_passes;
+	int sampling_increment;
 
 	//take in known conditions from json file known_species_conditions.json
 	jsonParser known_species_in;
@@ -32,7 +33,9 @@ int main()
 	temp = known_species_in["Temp"].get<double>();
 	ECI_vec = known_species_in["ECI"].get< vector<double> >();
 	species = known_species_in["Species"].get< vector<double> >();
-	passes = known_species_in["Passes"].get<int>();
+	num_passes = known_species_in["Sampling_Passes"].get<int>();
+	equilibriation_passes = known_species_in["Equilibriation_Passes"].get<int>();
+	sampling_increment = known_species_in["Sampling_Increment"].get<int>();
 
 	//create a unknown_sites vector of vectors containing the coordinates of unknown sites
 	vector< vector<int> > unknown_sites;
@@ -66,7 +69,7 @@ int main()
 
 
 	// allow the matrix to equilibriate. these passes are not considered when doing any calculations
-	for(int equilibriate=0; equilibriate < 10000; equilibriate++)
+	for(int equilibriate=0; equilibriate < equilibriation_passes; equilibriate++)
 	{
 		matrix=unknown_metropolis(filled_matrix, ECI_vec, temp, unknown_sites);
 	}
