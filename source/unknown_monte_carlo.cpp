@@ -32,14 +32,14 @@ int main()
 	//take in known conditions from json file known_species_conditions.json
 	jsonParser known_species_in;
 	known_species_in.read(std::string("known_species_conditions.json"));
-	known_sites = known_species_in["Known_Species"].get< vector< vector<int> > >();
-	dim_size = known_species_in["Dimensions"].get< vector<int> >();
-	temp = known_species_in["Temp"].get<double>();
-	ECI_vec = known_species_in["ECI"].get< vector<double> >();
-	species = known_species_in["Species"].get< vector<double> >();
-	num_passes = known_species_in["Sampling_Passes"].get<int>();
-	equilibriation_passes = known_species_in["Equilibriation_Passes"].get<int>();
-	sampling_increment = known_species_in["Sampling_Increment"].get<int>();
+	< vector< vector<int> > >known_sites = known_species_in["Known_Species"].get< vector< vector<int> > >();
+	< vector<int> >dim_size = known_species_in["Dimensions"].get< vector<int> >();
+	<double>temp = known_species_in["Temp"].get<double>();
+	< vector<double> >ECI_vec = known_species_in["ECI"].get< vector<double> >();
+	< vector<double> >species = known_species_in["Species"].get< vector<double> >();
+	<int>num_passes = known_species_in["Sampling_Passes"].get<int>();
+	<int>equilibriation_passes = known_species_in["Equilibriation_Passes"].get<int>();
+	<int>sampling_increment = known_species_in["Sampling_Increment"].get<int>();
 
 	//create a unknown_sites vector of vectors containing the coordinates of unknown sites
 	vector< vector<int> > unknown_sites;
@@ -58,7 +58,9 @@ int main()
 			{
 				holder[0]=x;
 				holder[1]=y;
-				unknown_sites.append(holder);
+				// unknown_sites.append(holder);
+				//is this doing the right thing?
+				unknown_sites[x][y] = holder;
 			}
 		}
 	}
