@@ -1,0 +1,19 @@
+import os
+import shutil, errno
+import sys
+import pbs
+
+rootDir = '../mc_raw_data'
+
+dirs = []
+for dir, subdir, filelist in os.walk(rootDir):
+  for d in subdir:
+    if( os.path.isdir(os.path.join(dir,d))): 
+      dirs.append(os.path.join(dir,d))
+
+filename_list = []
+
+for path_name in dirs:
+	#get list of all the directories
+	filename = os.path.basename(path_name)
+	filename_list.append(filename)
