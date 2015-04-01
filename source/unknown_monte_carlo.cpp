@@ -60,7 +60,7 @@ int main()
 				holder[1]=y;
 				// unknown_sites.append(holder);
 				//is this doing the right thing?
-				unknown_sites[x][y] = holder;
+				unknown_sites[x] = holder;
 			}
 		}
 	}
