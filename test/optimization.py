@@ -62,7 +62,7 @@ print "Nelder-Mead Approximation: ", optimization_NM
 #append this to a json file "optimization_results.json" (ECI value, file names aka conditions, calculate difference squared of known ECI and write to json)
 ECI_diff_squared = (ECI_vec_key[ECI_index][1] - optimization_NM[1])^2 + (ECI_vec_key[ECI_index][2] - optimization_NM[2])^2 + (ECI_vec_key[ECI_index][3] - optimization_NM[3])^2
 #prints an "optimization_results.json" file in each folder. contains (Actual ECI, Approximated ECI, file names aka conditions, difference squared of known ECI)
-with open('optimization_results.json') as outfile:
+with open("optimization_results.json") as outfile:
 	json.dump({'ECI_calculation': {'ECI': ECI_vec_key[ECI_index], 'Filenames': file_list, 'Aprroximated_ECI': optimization_NM, 'ECI_sum_diff_squared': ECI_diff_squared}})
 
 
