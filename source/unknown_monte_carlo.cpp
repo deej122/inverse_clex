@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+#include <sstream>
 #include <vector>
 #include <cstdlib>
 #include <math.h>
@@ -26,9 +28,6 @@ int main()
 	int num_passes;
 	int sampling_increment;
 
-	//create output json file
-	jsonParser json_out;
-
 	//take in known conditions from json file known_species_conditions.json
 	jsonParser known_species_in;
 	known_species_in.read(std::string("known_species_conditions.json"));
@@ -40,6 +39,9 @@ int main()
 	num_passes = known_species_in["Sampling_Passes"].get<int>();
 	equilibriation_passes = known_species_in["Equilibriation_Passes"].get<int>();
 	sampling_increment = known_species_in["Sampling_Increment"].get<int>();
+
+	//create output json file
+	jsonParser json_out;
 
 	//create a unknown_sites vector of vectors containing the coordinates of unknown sites
 	vector< vector<int> > unknown_sites;
