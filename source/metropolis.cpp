@@ -42,7 +42,7 @@ void write_json_out (const vector<double> ECI_vec, const vector< vector<int> > &
 	double energy = dot(corr_vec, ECI_vec);
 	//writes out energy to object to json
 	json_out["Data_by_pass"][pass_count]["energy"] = energy;
-
+	json_out["Data_by_pass"][pass_count]["filled_matrix"] = matrix;
 	//counts how many of each species
 	vector<int> num_species (species.size(), 0);
 	int row, col;

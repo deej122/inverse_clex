@@ -42,16 +42,22 @@ int main()
 
 	//create output json file
 	jsonParser json_out;
+	json_out["Temp"] = temp;
+	json_out["Species"] = species;
+	json_out["Input"] = known_species_in;
+	json_out["Data_by_pass"] = jsonParser::array();
 
 	//create a unknown_sites vector of vectors containing the coordinates of unknown sites
 	vector< vector<int> > unknown_sites;
 	vector<int>temporary_row (dim_size[0], 0);
 	vector< vector<int> > binary_matrix (dim_size[1], temporary_row);
+	cout << "Before first for loop" << endl;
 	for(int count = 0; count < known_sites.size(); count++)
 	{
 		binary_matrix[known_sites[count][0]][known_sites[count][1]] = 1;
 	}
 	vector<int> holder (2,0);
+	cout << "Second" << endl;
 	for(int x=0; x<dim_size[0]; x++)
 	{
 		for(int y=0; y<dim_size[1]; y++)
@@ -62,7 +68,7 @@ int main()
 				holder[1]=y;
 				// unknown_sites.append(holder);
 				//is this doing the right thing?
-				unknown_sites[x] = holder;
+				unknown_sites.push_back(holder);
 			}
 		}
 	}
@@ -71,23 +77,28 @@ int main()
 	//fill in matrix
 	vector< vector<int> > filled_matrix = fill_in_matrix(known_sites, dim_size);
 
+	cout << "before writing out json" << endl;
 	//based on an ECI from input run montecarlo, only flipping unknown site
 	int pass_count = 0;
 	write_json_out (ECI_vec, filled_matrix, json_out, pass_count, species);
 
 
 	// allow the matrix to equilibriate. these passes are not considered when doing any calculations
+	cout << "Third" << endl;
 	for(int equilibriate=0; equilibriate < equilibriation_passes; equilibriate++)
 	{
 		filled_matrix=unknown_metropolis(filled_matrix, ECI_vec, temp, unknown_sites);
 	}
 
 	//run for number of passes 
+	cout << "Fourth" << endl;
 	for(pass_count=1; pass_count <= num_passes; pass_count++)
 	{
 		filled_matrix=unknown_metropolis(filled_matrix, ECI_vec, temp, unknown_sites);
 		write_json_out (ECI_vec, filled_matrix, json_out, pass_count, species);
 	}
+
+	json_out.write(std::string("unknown_monte_carlo_calcs.json"));
 
 	return 0;
 }
@@ -99,6 +110,9 @@ vector< vector<int> > fill_in_matrix(vector< vector<int> > & known_sites, vector
 	vector< vector<int> > filled_matrix = generate_matrix(dim_size[0], dim_size[1]);
 	
 	//changes the known sites
+	cout << "fill_in_matrix function" << endl;
+	cout << "size of known_sites: " << known_sites.size() << endl;
+	cout << "size of known_sites[0]: " << known_sites[0].size() << endl;
 	for(int counter = 0; counter < known_sites.size(); counter++)
 	{
 		filled_matrix[known_sites[counter][0]][known_sites[counter][1]] = known_sites[counter][2];
