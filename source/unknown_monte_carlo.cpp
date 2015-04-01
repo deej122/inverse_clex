@@ -22,6 +22,7 @@ int main()
 	double temp;
 	vector< vector<double> > ECI_vec;
 	vector<double> species;
+	int equilibriation_passes;
 	int num_passes;
 	int sampling_increment;
 
@@ -48,7 +49,7 @@ int main()
 	vector<int> holder (2,0);
 	for(int x=0; x<dim_size[0]; x++)
 	{
-		for(int y=0l y<dim_size[1]; y++)
+		for(int y=0; y<dim_size[1]; y++)
 		{
 			if (binary_matrix[x][y] ==0)
 			{
@@ -61,11 +62,11 @@ int main()
 
 
 	//fill in matrix
-	vector< vector<int> > filled_matrix = fill_in_matrix(known_sites, dm_size);
+	vector< vector<int> > filled_matrix = fill_in_matrix(known_sites, dim_size);
 
 	//based on an ECI from input run montecarlo, only flipping unknown site
 	int pass_count = 0;
-	write_json_out (ECI_vec, matrix, json_out, pass_count, species);
+	write_json_out (ECI_vec, filled_matrix, json_out, pass_count, species);
 
 
 	// allow the matrix to equilibriate. these passes are not considered when doing any calculations
