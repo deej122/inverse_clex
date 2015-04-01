@@ -26,6 +26,9 @@ int main()
 	int num_passes;
 	int sampling_increment;
 
+	//create output json file
+	jsonParser json_out;
+
 	//take in known conditions from json file known_species_conditions.json
 	jsonParser known_species_in;
 	known_species_in.read(std::string("known_species_conditions.json"));
@@ -72,14 +75,14 @@ int main()
 	// allow the matrix to equilibriate. these passes are not considered when doing any calculations
 	for(int equilibriate=0; equilibriate < equilibriation_passes; equilibriate++)
 	{
-		matrix=unknown_metropolis(filled_matrix, ECI_vec, temp, unknown_sites);
+		filled_matrix=unknown_metropolis(filled_matrix, ECI_vec, temp, unknown_sites);
 	}
 
 	//run for number of passes 
 	for(pass_count=1; pass_count <= num_passes; pass_count++)
 	{
-		matrix=unknown_metropolis(filled_matrix, ECI_vec, temp, unknown_sites);
-		write_json_out (ECI_vec, matrix, json_out, pass_count, species);
+		filled_matrix=unknown_metropolis(filled_matrix, ECI_vec, temp, unknown_sites);
+		write_json_out (ECI_vec, filled_matrix, json_out, pass_count, species);
 	}
 
 	return 0;
