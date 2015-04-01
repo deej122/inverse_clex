@@ -7,6 +7,7 @@
 *clex
 *metropolis
 *monte_carlo
+*unknown_monte_carlo
 *execute_mc
 *.o
 *plotting_data.json
@@ -23,3 +24,4 @@
 *monte_carlo_calcs_100000.json
 *monte_carlo_calcs_200000.json
 *monte_carlo_calcs_300000.json
+*unknown_monte_carlo.json
