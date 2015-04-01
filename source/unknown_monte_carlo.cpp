@@ -20,7 +20,7 @@ int main()
 	vector< vector<int> > known_sites;
 	vector<int> dim_size;
 	double temp;
-	vector< vector<double> > ECI_vec;
+	vector<double> ECI_vec;
 	vector<double> species;
 	int equilibriation_passes;
 	int num_passes;
