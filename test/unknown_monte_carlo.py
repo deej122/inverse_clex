@@ -26,34 +26,16 @@ def create_mc_partial_list(file_name, file_info, percent_known):
 				"Known_Sites": [
 					current_pass{
 						1: [
-							{
-								"coordinate": [0, 1],
-								"current_occupant": 1
-							},
-							{
-								"coordinate": [0, 2],
-								"current_occupant": 0
-							},
-							{
-								"coordinate": [0, 3],
-								"current_occupant": 1
-							},
+							[0,0,1],
+							[1,1,0],
+							[2,2,1],
 						]
 					},
 					current_pass{
 						2: [
-							{
-								"coordinate": [0, 1],
-								"current_occupant": 1
-							},
-							{
-								"coordinate": [0, 2],
-								"current_occupant": 0
-							},
-							{
-								"coordinate": [0, 3],
-								"current_occupant": 1
-							},
+							[0,0,1],
+							[1,1,0],
+							[2,2,1],
 						]
 					},
 				]
@@ -78,7 +60,11 @@ def create_mc_partial_list(file_name, file_info, percent_known):
 			if random < percent_known:
 				#mc_partial_data_list is a list of files > list of passes > list of known atoms (coordinates and current occupant)
 				#create object of known_atom and add it to list for this pass
-				known_atom = {"coordinate": atom["coordinate"], "current_occupant": atom["current_occupant"]}
+				# known_atom = [{"coordinate": atom["coordinate"], "current_occupant": atom["current_occupant"]}]
+				known_atom = []
+				known_atom.append(atom["coordinate"][0])
+				known_atom.append(atom["coordinate"][1])
+				known_atom.append(atom["current_occupant"])
 				current_pass[pass_number].append(known_atom)
 			#otherwise ignore the atom
 			else:

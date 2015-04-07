@@ -19,7 +19,7 @@ def ln_Ps(site, ECI_vec, beta):
 #I put 'f' in front of the variable names to not confuse it with the variables outside of the function
 def calc_ln_Q (f_ECI_vec, f_mc_full_data_list):
 	"""
-	calculates natural log of Q (the value we are minimizingby changing ECI)
+	calculates natural log of Q (the value we are minimizing by changing ECI)
 	f_ECI_vec = the inputted, initial ECI values that will be optimized
 	f_mc_full_data_list = A filled in matrix of atoms which represent the system of atoms for which we want to optimize the ECI values
 	"""
