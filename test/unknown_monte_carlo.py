@@ -24,20 +24,25 @@ def create_mc_partial_list(file_name, file_info, percent_known):
 				"Equilibriation_Passes": 10000,
 				"Sampling_Increment": 100,
 				"Known_Sites": [
-					current_pass{
-						1: [
-							[0,0,1],
-							[1,1,0],
-							[2,2,1],
-						]
-					},
-					current_pass{
-						2: [
-							[0,0,1],
-							[1,1,0],
-							[2,2,1],
-						]
-					},
+						[0,0,1],
+						[1,1,0],
+						[2,2,1],
+					# //this format is commented out	
+					# current_pass{
+					# 	1: [
+					# 		[0,0,1],
+					# 		[1,1,0],
+					# 		[2,2,1],
+					# 	]
+					# },
+					# current_pass{
+					# 	2: [
+					# 		[0,0,1],
+					# 		[1,1,0],
+					# 		[2,2,1],
+					# 	]
+					# },
+					# ////////////////
 				]
 			}
 		]
@@ -51,7 +56,8 @@ def create_mc_partial_list(file_name, file_info, percent_known):
 	for _pass in mc_data["Data_by_pass"]:
 		#create dict consisting of list of passes
 		pass_number = _pass["pass"]
-		current_pass = {pass_number:[]}
+		# current_pass = {pass_number:[]}
+		file_info["Known_Sites"] = []
 		#for each site in every object
 		for atom in _pass["sites"]
 			#generate random number
@@ -65,13 +71,15 @@ def create_mc_partial_list(file_name, file_info, percent_known):
 				known_atom.append(atom["coordinate"][0])
 				known_atom.append(atom["coordinate"][1])
 				known_atom.append(atom["current_occupant"])
-				current_pass[pass_number].append(known_atom)
+				file_info["Known_Sites"].append(known_atom)
+				# current_pass[pass_number].append(known_atom)
 			#otherwise ignore the atom
 			else:
-				current_pass = current_pass
+				file_info["Known_Sites"] = file_info["Known_Sites"]
+				# current_pass = current_pass
 		#add pass to list in this file
-		file_info["Known_Sites"] = []
-		file_info["Known_Sites"].append(current_pass)
+		# file_info["Known_Sites"] = []
+		# file_info["Known_Sites"].append(current_pass)
 
 		_file[file_name].append(file_info)
 
