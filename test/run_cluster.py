@@ -47,7 +47,7 @@ for ECI in ECI_vec:
 		print "T: ", temperature
 		print "Passes: ", num_passes
 		print "Dimension: ", small_dimensions
-	for large_dimensions in dim_large_vec:
+	if False: #for large_dimensions in dim_large_vec:
 		dimensions = [large_dimensions, large_dimensions]
 		num_passes = num_experiments/(large_dimensions*large_dimensions/100)
 		for temperature in temp_vec:
