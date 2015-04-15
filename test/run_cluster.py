@@ -32,7 +32,7 @@ for ECI in ECI_vec:
 			os.chdir(parent)
 			print directory
 			if not os.path.exists(directory):
-				os.makedirs(directory)3unning with different ECI_conditions and THEN submit the job
+				os.makedirs(directory) #running with different ECI_conditions and THEN submit the job
 			with open("ECI_conditions.json", "w") as outfile:
 				json.dump({'Temperature': temperature, 'Dimensions': dimensions, 'Species': species, 'ECI': ECI, 'Passes': num_passes}, outfile, indent=4)
 			job = pbs.templates.NonPrismsJob(message = None, ppn = '1', command='monte_carlo')
