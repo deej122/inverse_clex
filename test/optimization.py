@@ -1,3 +1,5 @@
+#!/usr/bin/env python 
+
 import json
 #importing scipy
 import numpy as np
@@ -6,6 +8,8 @@ from math import *
 from lnQ import calc_ln_Q
 import sys
 import os
+
+print "here1"
 
 ECI_vec_key = [[1,0,0], [-1,0,0], [.3,-.7,.05]]
 transition_temp_key = 30000
