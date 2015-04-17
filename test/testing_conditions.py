@@ -99,11 +99,11 @@ for path_name in dirs:
     # runs all combinations of lowest and transition temp for same dim size and ECI
     if temp_index == '0':
         for filename2 in filename_list:
-            filename2.split("_")
-            size2 = filename2[1]
-            ECI_index2 = filename2[2]
-            dim_index2 = filename2[3]
-            temp_index2 = filename2[4]
+            filename2_subset = filename2.split("_")
+            size2 = filename2_subset[1]
+            ECI_index2 = filename2_subset[2]
+            dim_index2 = filename2_subset[3]
+            temp_index2 = filename2_subset[4]
             num_passes2 = 100
             if temp_index2 == '6' and ECI_index == ECI_index2 and dim_index == dim_index2:
                 #run the optimization
@@ -121,11 +121,11 @@ for path_name in dirs:
     # runs all combinations of highest and transition temp for same dim size and ECI
     if temp_index == '11':
         for filename2 in filename_list:
-            filename2.split("_")
-            size2 = filename2[1]
-            ECI_index2 = filename2[2]
-            dim_index2 = filename2[3]
-            temp_index2 = filename2[4]
+            filename2_subset = filename2.split("_")
+            size2 = filename2_subset[1]
+            ECI_index2 = filename2_subset[2]
+            dim_index2 = filename2_subset[3]
+            temp_index2 = filename2_subset[4]
             num_passes2 = 100
             if temp_index2 == '6' and ECI_index == ECI_index2 and dim_index == dim_index2:
                 #run the optimization
@@ -142,19 +142,19 @@ for path_name in dirs:
     # runs all combinations of highest and transition temp
     if temp_index == '11':
         for filename2 in filename_list:
-            filename2.split("_")
-            size2 = filename2[1]
-            ECI_index2 = filename2[2]
-            dim_index2 = filename2[3]
-            temp_index2 = filename2[4]
+            filename2_subset = filename2.split("_")
+            size2 = filename2_subset[1]
+            ECI_index2 = filename2_subset[2]
+            dim_index2 = filename2_subset[3]
+            temp_index2 = filename2_subset[4]
             num_passes2 = 100
             if temp_index2 == '6' and ECI_index == ECI_index2 and dim_index == dim_index2:
                 for filename3 in filename_list:
-                    filename3.split("_")
-                    size3 = filename3[1]
-                    ECI_index3 = filename3[2]
-                    dim_index3 = filename3[3]
-                    temp_index3 = filename3[4]
+                    filename3_subset = filename3.split("_")
+                    size3 = filename3_subset[1]
+                    ECI_index3 = filename3_subset[2]
+                    dim_index3 = filename3_subset[3]
+                    temp_index3 = filename3_subset[4]
                     num_passes3 = 100
                     #run the optimization
                     if temp_index3 == '0' and ECI_index2 == ECI_index3 and dim_index3 == dim_index2:
