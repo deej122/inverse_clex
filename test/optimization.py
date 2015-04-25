@@ -35,8 +35,10 @@ from decimal import *
 
 file_list = []
 
-for filename in str(sys.argv):
+print sys.argv
+for filename in sys.argv[1:]:
 	parent = os.getcwd()
+	print "filename",  filename
 	os.chdir(filename)
 	json_mc_data = open("monte_carlo_calcs.json").read()
 	mc_data = json.loads(json_mc_data)
