@@ -9,12 +9,12 @@ from lnQ import calc_ln_Q
 import sys
 import os
 
-print "here1"
+#print "here1"
 
 ECI_vec_key = [[1,0,0], [-1,0,0], [.3,-.7,.05]]
 transition_temp_key = 30000
 temp_mult_key = [.001, .01, .1, .2, .5, .9, 1, 1.1, 1.5, 10, 100, 1000]
-temp_vec_key = [transition_temp*multiple for multiple in temp_mult_key]
+temp_vec_key = [transition_temp_key*multiple for multiple in temp_mult_key]
 num_passes_key = 100000
 dim_small_vec_key = [10, 20, 50]
 dim_large_vec_key = [100, 1000]
@@ -23,20 +23,22 @@ species_key = [1, -1]
 mc_data_list = []
 
 #read in from the arguments
-for filename in str(sys.argv):
-	filename.split("_")
-	size = filename[1]
-	ECI_index = filename[2]
-	dim_index = filename[3]
-	temp_index = filename[4]
-	num_passes = 100
+#for filename in str(sys.argv):
+#	filename_subset = filename.split("_")
+#	size = filename_subset[0]
+#	ECI_index = filename_subset[1]
+#	dim_index = filename_subset[2]
+#	temp_index = filename_subset[3]
+#	num_passes = 100
 
 from decimal import *
 
 file_list = []
 
-for filename in str(sys.argv):
+print sys.argv
+for filename in sys.argv[1:]:
 	parent = os.getcwd()
+	print "filename",  filename
 	os.chdir(filename)
 	json_mc_data = open("monte_carlo_calcs.json").read()
 	mc_data = json.loads(json_mc_data)

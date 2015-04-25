@@ -19,6 +19,8 @@ def calc_ln_Q (f_ECI_vec, f_mc_data_list):
 	#loop to do for data at three temperatures
 	for f_mc_data in f_mc_data_list:
 		for data_set in f_mc_data:
+			print data_set.keys()
+			print "temp", data_set["Temp"]
 			temp = data_set["Temp"] #set temp to "temp" in data set
 			beta = 1/(temp*8.62*10**-5)
 			#Q is the probablity we see the matrix we found. To avoid multiplying all the P's together, we can say lnQ = ln(sum of P's)

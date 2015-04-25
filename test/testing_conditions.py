@@ -77,15 +77,15 @@ for path_name in dirs:
     # runs all combinations of lowest and highest temp for same dim size and ECI
     if temp_index == '0':
         for filename2 in filename_list:
-            filename2.split("_")
-            size2 = filename[1]
-            ECI_index2 = filename[2]
-            dim_index2 = filename[3]
-            temp_index2 = filename[4]
+            filename2_subset = filename2.split("_")
+            size2 = filename2_subset[0]
+            ECI_index2 = filename2_subset[1]
+            dim_index2 = filename2_subset[2]
+            temp_index2 = filename1_subset[3]
             num_passes2 = 100
             if temp_index2 == '11' and ECI_index == ECI_index2 and dim_index == dim_index2:
                 #run the optimization
-                directory = "low_" + filename1 + "high_" + filename2
+                directory = "low_" + filename1 + "_high_" + filename2
                 if not os.path.exists(directory):
                     os.makedirs(directory)
                 os.chdir(directory)
@@ -98,14 +98,14 @@ for path_name in dirs:
     if temp_index == '0':
         for filename2 in filename_list:
             filename2_subset = filename2.split("_")
-            size2 = filename2_subset[1]
-            ECI_index2 = filename2_subset[2]
-            dim_index2 = filename2_subset[3]
-            temp_index2 = filename2_subset[4]
+            size2 = filename2_subset[0]
+            ECI_index2 = filename2_subset[1]
+            dim_index2 = filename2_subset[2]
+            temp_index2 = filename2_subset[3]
             num_passes2 = 100
             if temp_index2 == '6' and ECI_index == ECI_index2 and dim_index == dim_index2:
                 #run the optimization
-                directory = "low_" + filename1 + "transition_" + filename2
+                directory = "low_" + filename + "_transition_" + filename2
                 if not os.path.exists(directory):
                     os.makedirs(directory)
                 os.chdir(directory)
@@ -120,14 +120,14 @@ for path_name in dirs:
     if temp_index == '11':
         for filename2 in filename_list:
             filename2_subset = filename2.split("_")
-            size2 = filename2_subset[1]
-            ECI_index2 = filename2_subset[2]
-            dim_index2 = filename2_subset[3]
-            temp_index2 = filename2_subset[4]
+            size2 = filename2_subset[0]
+            ECI_index2 = filename2_subset[1]
+            dim_index2 = filename2_subset[2]
+            temp_index2 = filename2_subset[3]
             num_passes2 = 100
             if temp_index2 == '6' and ECI_index == ECI_index2 and dim_index == dim_index2:
                 #run the optimization
-                directory = "high_" + filename1 + "transition_" + filename2
+                directory = "high_" + filename + "_transition_" + filename2
                 if not os.path.exists(directory):
                         os.makedirs(directory)
                 os.chdir(directory)
@@ -141,22 +141,22 @@ for path_name in dirs:
     if temp_index == '11':
         for filename2 in filename_list:
             filename2_subset = filename2.split("_")
-            size2 = filename2_subset[1]
-            ECI_index2 = filename2_subset[2]
-            dim_index2 = filename2_subset[3]
-            temp_index2 = filename2_subset[4]
+            size2 = filename2_subset[0]
+            ECI_index2 = filename2_subset[1]
+            dim_index2 = filename2_subset[2]
+            temp_index2 = filename2_subset[3]
             num_passes2 = 100
             if temp_index2 == '6' and ECI_index == ECI_index2 and dim_index == dim_index2:
                 for filename3 in filename_list:
                     filename3_subset = filename3.split("_")
-                    size3 = filename3_subset[1]
-                    ECI_index3 = filename3_subset[2]
-                    dim_index3 = filename3_subset[3]
-                    temp_index3 = filename3_subset[4]
+                    size3 = filename3_subset[0]
+                    ECI_index3 = filename3_subset[1]
+                    dim_index3 = filename3_subset[2]
+                    temp_index3 = filename3_subset[3]
                     num_passes3 = 100
                     #run the optimization
                     if temp_index3 == '0' and ECI_index2 == ECI_index3 and dim_index3 == dim_index2:
-                        directory = "high_" + filename + "transition_" + filename2 + "high_" + filename3
+                        directory = "high_" + filename + "_transition_" + filename2 + "_high_" + filename3
                         if not os.path.exists(directory):
                             os.makedirs(directory)
                         os.chdir(directory)
