@@ -81,11 +81,11 @@ for path_name in dirs:
             size2 = filename2_subset[0]
             ECI_index2 = filename2_subset[1]
             dim_index2 = filename2_subset[2]
-            temp_index2 = filename1_subset[3]
+            temp_index2 = filename2_subset[3]
             num_passes2 = 100
             if temp_index2 == '11' and ECI_index == ECI_index2 and dim_index == dim_index2:
                 #run the optimization
-                directory = "low_" + filename1 + "_high_" + filename2
+                directory = "low_" + filename + "_high_" + filename2
                 if not os.path.exists(directory):
                     os.makedirs(directory)
                 os.chdir(directory)
