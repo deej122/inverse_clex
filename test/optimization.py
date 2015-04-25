@@ -40,6 +40,14 @@ for filename in sys.argv[1:]:
 	parent = os.getcwd()
 	print "filename",  filename
 	os.chdir(filename)
+
+    filename_subset = filename.split("_")
+    #print filename_subset
+    size = filename_subset[0]
+    ECI_index = int(filename_subset[1])
+    dim_index = int(filename_subset[2])
+    temp_index = int(filename_subset[3])
+
 	json_mc_data = open("monte_carlo_calcs.json").read()
 	mc_data = json.loads(json_mc_data)
 	os.chdir(parent)
@@ -54,7 +62,7 @@ ECI_vec = [one_ECI, two_ECI, three_ECI]
 
 ln_Q = calc_ln_Q(ECI_vec, mc_data)
 #print "ln(Q) = ", ln_Q
-optimization_NM = minimize(calc_ln_Q, ECI_vec, method='nelder-mead', args=(mc_data_list,), options={'xtol': 1e-8})
+optimization_NM = minimize(calc_ln_Q, ECI_vec, method='nelder-mead', args=(mc_data_list,), options={'xtol': 1e-8, 'maxfun': 50000})
 # should calculate derivative and pass in using jas = "derivative" property
 #right now it calculates derivative using first differences approximation
 # optimization_BFGS = minimize(calc_ln_Q, ECI_vec, method='BFGS', args=(mc_data,))
