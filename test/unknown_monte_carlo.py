@@ -23,7 +23,7 @@ def create_mc_partial_list(file_name, file_info, percent_known):
 				"Sampling_Passes": 10,
 				"Equilibriation_Passes": 10000,
 				"Sampling_Increment": 100,
-				"Known_Sites": [
+				"Known_Species": [
 						[0,0,1],
 						[1,1,0],
 						[2,2,1],
@@ -57,7 +57,7 @@ def create_mc_partial_list(file_name, file_info, percent_known):
 		#create dict consisting of list of passes
 		pass_number = _pass["pass"]
 		# current_pass = {pass_number:[]}
-		file_info["Known_Sites"] = []
+		file_info["Known_Species"] = []
 		#for each site in every object
 		for atom in _pass["sites"]
 			#generate random number
@@ -71,11 +71,11 @@ def create_mc_partial_list(file_name, file_info, percent_known):
 				known_atom.append(atom["coordinate"][0])
 				known_atom.append(atom["coordinate"][1])
 				known_atom.append(atom["current_occupant"])
-				file_info["Known_Sites"].append(known_atom)
+				file_info["Known_Species"].append(known_atom)
 				# current_pass[pass_number].append(known_atom)
 			#otherwise ignore the atom
 			else:
-				file_info["Known_Sites"] = file_info["Known_Sites"]
+				file_info["Known_Species"] = file_info["Known_Species"]
 				# current_pass = current_pass
 		#add pass to list in this file
 		# file_info["Known_Sites"] = []
@@ -99,7 +99,7 @@ def create_complete_mc(f_mc_partial_data_list):
 			#file_info
 			#create a json file for every pass with known_sites, dimension, temp (depends on file), eci (depends on file), species, passes (~ 10 -> same number passes)
 				#conditions.json
-			data = {'known_sites': _pass["Known_Sites"], 'Dimensions': _pass["Dimensions"], 'Temperature': _pass["Temperature"], 'ECI': _pass["ECI"], 'Sampling_Passes': _pass["Sampling_Passes"], 'Equilibriation_Passes': _pass["Equilibriation_Passes"], _pass["Sampling_Increment"]}
+			data = {'known_species': _pass["Known_Species"], 'Dimensions': _pass["Dimensions"], 'Temperature': _pass["Temperature"], 'ECI': _pass["ECI"], 'Sampling_Passes': _pass["Sampling_Passes"], 'Equilibriation_Passes': _pass["Equilibriation_Passes"], _pass["Sampling_Increment"]}
 			with open('known_species_conditions.json', 'w') as f:
 				json.dump(data, f)
 			subprocess.call(["unknown_monte_carlo()"])
