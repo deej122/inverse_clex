@@ -24,12 +24,12 @@ mc_passes = 10 #use this in calc_lnQ when creating conditions.json
 mc_partial_data_list = []
 
 #document file structure needed for this to work
-for filename in str(sys.argv):
-	split_filename = filename.split("_")
-	size = split_filename[0]
-	ECI_index = split_filename[1]
-	dim_index = split_filename[2]
-	temp_index = split_filename[3]
+for filename in sys.argv[1]:
+	filename_subset = filename.split("_")
+	size = filename_subset[0]
+	ECI_index = int(filename_subset[1])
+	dim_index = int(filename_subset[2])
+	temp_index = int(filename_subset[3])
 
 	parent = os.getcwd()
 	os.chdir(filename)
