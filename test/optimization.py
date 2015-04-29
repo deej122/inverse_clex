@@ -62,7 +62,7 @@ ECI_vec = [one_ECI, two_ECI, three_ECI]
 
 ln_Q = calc_ln_Q(ECI_vec, mc_data)
 #print "ln(Q) = ", ln_Q
-optimization_NM = minimize(calc_ln_Q, ECI_vec, method='nelder-mead', args=(mc_data_list,), options={'xtol': 1e-8, 'maxfun': 50000})
+optimization_NM = minimize(calc_ln_Q, ECI_vec, method='nelder-mead', args=(mc_data_list,), options={'xtol': 1e-8})
 # should calculate derivative and pass in using jas = "derivative" property
 #right now it calculates derivative using first differences approximation
 # optimization_BFGS = minimize(calc_ln_Q, ECI_vec, method='BFGS', args=(mc_data,))
@@ -72,16 +72,13 @@ optimization_NM = minimize(calc_ln_Q, ECI_vec, method='nelder-mead', args=(mc_da
 
 #display returned optimization stats
 print "Nelder-Mead Approximation: ", optimization_NM
+print "optimization_NM.get('x'): ", optimization_NM.get('x')
 # print "Broyden-Fletcher-Goldfarb-Shanno Approximation: ", optimization_BFGS
 #append this to a json file "optimization_results.json" (ECI value, file names aka conditions, calculate difference squared of known ECI and write to json)
-ECI_diff_squared = (ECI_vec_key[ECI_index][1] - optimization_NM[1])^2 + (ECI_vec_key[ECI_index][2] - optimization_NM[2])^2 + (ECI_vec_key[ECI_index][3] - optimization_NM[3])^2
+print "ECI_vec_key: ", ECI_vec_key[ECI_index]
+ECI_diff_squared = (ECI_vec_key[ECI_index][0] - optimization_NM.get('x')[0])**2 + (ECI_vec_key[ECI_index][1] - optimization_NM.get('x')[1])**2 + (ECI_vec_key[ECI_index][2] - optimization_NM.get('x')[2])**2
 #prints an "optimization_results.json" file in each folder. contains (Actual ECI, Approximated ECI, file names aka conditions, difference squared of known ECI)
-with open("optimization_results.json") as outfile:
-	json.dump({'ECI_calculation': {'ECI': ECI_vec_key[ECI_index], 'Filenames': file_list, 'Aprroximated_ECI': optimization_NM, 'ECI_sum_diff_squared': ECI_diff_squared}})
+with open("optimization_results.json", "w") as outfile:
+	json.dump({'ECI_calculation': {'ECI': ECI_vec_key[ECI_index], 'Filenames': file_list, 'Aprroximated_ECI': optimization_NM, 'ECI_sum_diff_squared': ECI_diff_squared}}, outfile)
 
-<<<<<<< HEAD
-# print "Broyden-Fletcher-Goldfarb-Shanno Approximation: ", optimization_BFGS
-=======
 
-# print "Broyden-Fletcher-Goldfarb-Shanno Approximation: ", optimization_BFGS
->>>>>>> d1e3b48295e2ca737cbdb6838e537c09a2cd4bc6
