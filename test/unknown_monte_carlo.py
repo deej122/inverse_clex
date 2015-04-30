@@ -24,7 +24,7 @@ def create_mc_partial_list(file_name, file_info, percent_known):
 				"Equilibriation_Passes": 10000,
 				"Sampling_Increment": 100,
 				"Known_Species": [
-						[0,0,1],
+						[0,0,1], // [row, column, species]
 						[1,1,0],
 						[2,2,1],
 					# //this format is commented out	
