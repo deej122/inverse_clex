@@ -43,7 +43,7 @@ for path_name in dirs:
             os.makedirs(directory)
         os.chdir(directory)
         #job = pbs.templates.NonPrismsJob(message = 1, ppn = '1', command='python optimization.py ../' + filename)
-        job = pbs.templates.NonPrismsJob(message = 1, ppn = '1', command='optimization.py ../' + filename)
+        job = pbs.templates.NonPrismsJob(message = 1, ppn = '1', command='python ~/bin/optimization.py ../' + filename)
         job.submit()
         os.chdir(parent)
 
@@ -55,7 +55,7 @@ for path_name in dirs:
         if not os.path.exists(directory):
             os.makedirs(directory)
         os.chdir(directory)
-        job = pbs.templates.NonPrismsJob(message = 1, ppn = '1', command='optimization.py ../' + filename)
+        job = pbs.templates.NonPrismsJob(message = 1, ppn = '1', command='python ~/bin/optimization.py ../' + filename)
         job.submit()
         os.chdir(parent)
     #compare optimization if it's within a certian min squared mean then map
@@ -69,7 +69,7 @@ for path_name in dirs:
         if not os.path.exists(directory):
             os.makedirs(directory)
         os.chdir(directory)
-        job = pbs.templates.NonPrismsJob(message = 1, ppn = '1', command='optimization.py ../' + filename)
+        job = pbs.templates.NonPrismsJob(message = 1, ppn = '1', command='python ~/bin/optimization.py ../' + filename)
         job.submit()
         os.chdir(parent)
     #compare optimization if it's within a certian min squared mean then map
@@ -89,7 +89,7 @@ for path_name in dirs:
                 if not os.path.exists(directory):
                     os.makedirs(directory)
                 os.chdir(directory)
-                job = pbs.templates.NonPrismsJob(message = 1, ppn = '1', command='optimization.py ../' + filename + ' ../' + filename2)
+                job = pbs.templates.NonPrismsJob(message = 1, ppn = '1', command='python ~/bin/optimization.py ../' + filename + ' ../' + filename2)
                 job.submit()
                 os.chdir(parent)
                 #compare the critical value
@@ -109,7 +109,7 @@ for path_name in dirs:
                 if not os.path.exists(directory):
                     os.makedirs(directory)
                 os.chdir(directory)
-                job = pbs.templates.NonPrismsJob(message = 1, ppn = '1', command='optimization.py ../' + filename + ' ../' + filename2)
+                job = pbs.templates.NonPrismsJob(message = 1, ppn = '1', command='python ~/bin/optimization.py ../' + filename + ' ../' + filename2)
                 job.submit()
                 os.chdir(parent)
                 #compare the critical value
@@ -131,7 +131,7 @@ for path_name in dirs:
                 if not os.path.exists(directory):
                         os.makedirs(directory)
                 os.chdir(directory)
-                job = pbs.templates.NonPrismsJob(message = 1, ppn = '1', command='optimization.py ../' + filename + ' ../' + filename2)
+                job = pbs.templates.NonPrismsJob(message = 1, ppn = '1', command='python ~/bin/optimization.py ../' + filename + ' ../' + filename2)
                 job.submit()
                 os.chdir(parent)
                 #compare the critical value
@@ -160,7 +160,7 @@ for path_name in dirs:
                         if not os.path.exists(directory):
                             os.makedirs(directory)
                         os.chdir(directory)
-                        job = pbs.templates.NonPrismsJob(message = 1, ppn = '1', command='optimization.py ../' + filename + ' ../' + filename2 + ' ../' + filename3)
+                        job = pbs.templates.NonPrismsJob(message = 1, ppn = '1', command='python ~/bin/optimization.py ../' + filename + ' ../' + filename2 + ' ../' + filename3)
                         job.submit()
                         os.chdir(parent)
                         #compare the critical value

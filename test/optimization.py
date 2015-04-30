@@ -79,6 +79,6 @@ print "ECI_vec_key: ", ECI_vec_key[ECI_index]
 ECI_diff_squared = (ECI_vec_key[ECI_index][0] - optimization_NM.get('x')[0])**2 + (ECI_vec_key[ECI_index][1] - optimization_NM.get('x')[1])**2 + (ECI_vec_key[ECI_index][2] - optimization_NM.get('x')[2])**2
 #prints an "optimization_results.json" file in each folder. contains (Actual ECI, Approximated ECI, file names aka conditions, difference squared of known ECI)
 with open("optimization_results.json", "w") as outfile:
-	json.dump({'ECI_calculation': {'ECI': ECI_vec_key[ECI_index], 'Filenames': file_list, 'Aprroximated_ECI': optimization_NM, 'ECI_sum_diff_squared': ECI_diff_squared}}, outfile)
+	json.dump({'ECI_calculation': {'ECI': ECI_vec_key[ECI_index], 'Filenames': file_list, 'Aprroximated_ECI': list(optimization_NM.get('x')), 'ECI_sum_diff_squared': ECI_diff_squared}}, outfile)
 
 
